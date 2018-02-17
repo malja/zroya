@@ -39,11 +39,22 @@ def click_callback(nid, data):
     print("User clicked on your notification!")
     quit = True
 
+def timeout_callback(nid, data):
+    global quit
+
+    print('Notification timeout!')
+    quit = True
+
 # Create instance of NotificationCenter
 nc = NotificationCenter()
 
-# Create new notification
-nc.create("Test Notification", "Longer notification description. \n With multiline support!", on_click = click_callback)
+# Create new notification, with the defined callbacks
+nc.create(
+    "Test Notification",
+    "Longer notification description. \n With multiline support!",
+    on_click=click_callback
+    on_timeout=timeout_callback
+)
 
 # Update function should be called in your event loop. In this example, we will create our own event loop:
 while nc.update():
