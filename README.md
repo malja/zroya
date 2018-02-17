@@ -1,7 +1,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation Status](https://readthedocs.org/projects/zroya/badge/?version=master)](http://zroya.readthedocs.io/en/master/?badge=master)
+[![PyPI version](https://badge.fury.io/py/zroya.svg)](https://pypi.python.org/pypi/zroya/)
+[![PyPI status](https://img.shields.io/pypi/status/zroya.svg)](https://pypi.python.org/pypi/zroya/)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://gitHub.com/malja/zroya/graphs/commit-activity)
 
 # zroya
-Zroya is python wrapper around win32 API for creating Windows notification.
+Zroya is python wrapper around win32 API for creating Windows notification. See [Read The Docs documentation](http://zroya.readthedocs.io).
 
 ## Prerequisites
 
