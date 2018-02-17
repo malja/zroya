@@ -15,7 +15,7 @@ EMAIL = 'jan@malcakov.cz'
 AUTHOR = 'Jan Malčák'
 
 # What packages are required for this module to be executed?
-if os.environ.get('READTHEDOCS') == 'True'
+if os.environ.get('READTHEDOCS') == 'True':
     REQUIRED = []
 else:
     REQUIRED = [
