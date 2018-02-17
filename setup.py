@@ -15,9 +15,12 @@ EMAIL = 'jan@malcakov.cz'
 AUTHOR = 'Jan Malčák'
 
 # What packages are required for this module to be executed?
-REQUIRED = [
-    "pypiwin32"
-]
+if os.environ.get('READTHEDOCS') == 'True':
+    REQUIRED = []
+else:
+    REQUIRED = [
+        "pypiwin32"
+    ]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
