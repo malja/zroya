@@ -47,3 +47,44 @@ while nc.update():
         nc.quit()
 ```
 
+## In action
+
+You may use one for three predefined notification types:
+
+**NotificationCenter.ICON_INFO**
+
+```python
+nc.create("Info notification", "This is informative notification.\nClick on me!", icon=NotificationCenter.ICON_INFO)
+```
+
+![Info notification][info_notification]
+
+**NotificationCenter.ICON_WARNING**
+
+```python
+nc.create("Warning notification", "This is warning notification.\nClick on me for sure!", icon=NotificationCenter.ICON_WARNING)
+```
+
+![Warning notification][warning_notification]
+
+**NotificationCenter.ICON_ERROR**
+
+```python
+nc.create("Error", "This is error notification.\nDo not click me, you would find out!", icon=NotificationCenter.ICON_ERROR)
+```
+
+![Error notification][error_notification]
+
+**Custom icon**
+
+Or pass an absolute path to .ICO file as ``icon`` parameter and use whatever icon you like.
+
+**Notification center**
+
+All notifications are automatically added to Windows 10 notification center after timeout:
+![Windows 10 notification center example][notification_center]
+
+[info_notification]: https://github.com/malja/zroya/blob/master/doc/static/info_notification.png "Info notification"
+[warning_notification]: https://github.com/malja/zroya/blob/master/doc/static/warning_notification.png "Warning notification"
+[error_notification]: https://github.com/malja/zroya/blob/master/doc/static/error_notification.png "Error notification"
+[notification_center]: https://github.com/malja/zroya/blob/master/doc/static/notification_center.png "Windows 10 notification center"
