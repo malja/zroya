@@ -24,7 +24,6 @@ User guide
     installation
     basic_usage
     reference
-    todo
 
 Reference
 ---------
