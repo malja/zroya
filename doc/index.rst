@@ -23,6 +23,7 @@ User guide
 
     installation
     basic_usage
+    examples
     reference
 
 Reference

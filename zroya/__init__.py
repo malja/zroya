@@ -2,6 +2,8 @@ import threading
 import logging
 import os
 
+# Read the docs does not work with pypiwin32. Import it only
+# for local build.
 if os.environ.get('READTHEDOCS') != 'True':
     from win32api import GetModuleHandle
     from win32con import CW_USEDEFAULT
@@ -21,8 +23,8 @@ if os.environ.get('READTHEDOCS') != 'True':
     from win32gui import NIF_INFO
     from win32gui import NIF_MESSAGE
     from win32gui import NIF_TIP
-    from win32gui import NIIF_ERROR
     from win32gui import NIIF_INFO
+    from win32gui import NIIF_ERROR
     from win32gui import NIIF_NOSOUND
     from win32gui import NIIF_WARNING
     from win32gui import NIM_ADD
@@ -36,6 +38,9 @@ if os.environ.get('READTHEDOCS') != 'True':
     from win32gui import UpdateWindow
     from win32gui import WNDCLASS
 
+else:
+    # Import kind of mock for Read the Docs
+    from .read_the_docs import *
 
 class NotificationCenter(object):
     """
