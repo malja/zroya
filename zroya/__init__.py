@@ -82,14 +82,14 @@ class NotificationCenter(object):
         self._class = RegisterClass(self._window_class)
         self._handle = GetModuleHandle(None)
 
-        self._window = CreateWindow(self._class, "Notification", WS_OVERLAPPED | WS_SYSMENU,
-                                    0, 0, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, self._handle, None
-                                    )
+        self._window = CreateWindow(self._class, "Notification", 0,
+            0, 0, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, self._handle, None
+        )
 
         # Draw window
         UpdateWindow(self._window)
 
-        self.logger.info("NotificationCenter created.")
+        self.logger.debug("NotificationCenter created.")
 
     def quit(self):
         """
@@ -101,7 +101,7 @@ class NotificationCenter(object):
         DestroyWindow(self._window)
         UnregisterClass(self._window_class.lpszClassName, None)
         PostQuitMessage(0)
-        self.logger.info("NotificationCenter is going to quit.")
+        self.logger.debug("NotificationCenter is going to quit.")
 
     def update(self):
         """
@@ -135,7 +135,7 @@ class NotificationCenter(object):
         if self._current_id > 10 ** 6:
             # Count back from zero
             self._current_id = 0
-            self.logger.info("Maximum number of notification ID reached. Starting from zero again.")
+            self.logger.debug("Maximum number of notification ID reached. Starting from zero again.")
 
         self._current_id += 1
 
@@ -149,7 +149,7 @@ class NotificationCenter(object):
             "sound": sound,
             "logger": self.logger
         }).start()
-        self.logger.info("Notification ID {} created.".format(self._current_id))
+        self.logger.debug("Notification ID {} created.".format(self._current_id))
 
         # Create notification info.
         self._notifications[self._current_id] = {
@@ -181,7 +181,8 @@ class NotificationCenter(object):
         """
 
         # Flags for notification
-        flags = NIF_MESSAGE | NIF_TIP
+        flags = NIF_MESSAGE
+        #| NIF_TIP
 
         # Flags used for default icons (Error, Info, Warning) and no sound parameter.
         additional_flags = 0
@@ -201,7 +202,7 @@ class NotificationCenter(object):
                         IMAGE_ICON, 0, 0,
                         LR_LOADFROMFILE | LR_DEFAULTSIZE
                     )
-                    logger.info("Icon loaded for notification ID {}.".format(notification_id))
+                    logger.debug("Icon loaded for notification ID {}.".format(notification_id))
 
                     print("Icon loaded")
 
@@ -217,13 +218,13 @@ class NotificationCenter(object):
 
             # Set one of predefined icons
             elif type(icon_param) == int:
-                logger.info("Using default icon {} for notification ID {}.".format(icon_param, notification_id))
+                logger.debug("Using default icon {} for notification ID {}.".format(icon_param, notification_id))
                 additional_flags |= icon_param
 
                 print("Info icon by default")
 
         else:
-            logger.info("Using default icon {} for notification ID {}.".format(icon_param, notification_id))
+            logger.debug("Using default icon {} for notification ID {}.".format(icon_param, notification_id))
             additional_flags |= NotificationCenter.ICON_INFO
 
             print("Info icon by default")
@@ -233,13 +234,16 @@ class NotificationCenter(object):
 
             print("Nosound mode")
 
-            logger.info("Sound effect disabled for notification ID {}.".format(notification_id))
+            logger.debug("Sound effect disabled for notification ID {}.".format(notification_id))
             additional_flags |= NIIF_NOSOUND
 
-        # Create notification
+        print("Notification IDa: ", notification_id)
+
+        # Create tray icon notification
         nid = (window, notification_id, flags, NotificationCenter.NOTIFICATION_EVENT, icon, "Tooltip")
         Shell_NotifyIcon(NIM_ADD, nid)
 
+        # Create notification
         Shell_NotifyIcon(NIM_MODIFY, (
             window, notification_id, NIF_INFO,
             NotificationCenter.NOTIFICATION_EVENT,
@@ -251,7 +255,14 @@ class NotificationCenter(object):
             additional_flags
         ))
 
-        logger.info("Notification ID {} created.".format(notification_id))
+        """
+        # Remove application icon from tray
+        Shell_NotifyIcon(NIM_DELETE, (
+            window, notification_id
+        ))
+        """
+
+        logger.debug("Notification ID {} created.".format(notification_id))
 
     def _onNotificationEvent(self, notification_id, event_id):
         """
@@ -267,14 +278,17 @@ class NotificationCenter(object):
             # Get its data
             notification_data = self._notifications[notification_id]
 
+            print("Event ID", notification_data)
+            print("Event id", event_id)
+
             # Is there callback handler
-            if notification_data[event_id]:
+            if event_id in notification_data and notification_data[event_id]:
                 # Call it
                 notification_data[event_id](notification_id, notification_data)
-                self.logger.info(
+                self.logger.debug(
                     "Callback for notification ID {} with event {} called.".format(notification_id, event_id))
             else:
-                self.logger.info("No callback for notification ID {} with event {}".format(notification_id, event_id))
+                self.logger.debug("No callback for notification ID {} with event {}".format(notification_id, event_id))
         else:
             self.logger.warning("Event fired for non-existing notification ID {}!".format(notification_id))
 
