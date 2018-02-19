@@ -1,0 +1,17 @@
+0.1.0
+-----
+
+    - Basic functionality
+
+0.1.1
+-----
+
+    - Sound is now mutable
+    - Better documentation
+
+0.1.2
+
+    - Notifications may be hidden from source
+    - Timeouts - after certain time notification disappears
+    - on_timeout now triggers after defined timeout expires and notification is removed
+    - on_hide now triggers after notification is hidden from code
