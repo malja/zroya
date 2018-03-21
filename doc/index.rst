@@ -32,10 +32,10 @@ Reference
 .. autosummary::
     :nosignatures:
 
-    zroya.NotificationCenter
-    zroya.NotificationCenter.create
-    zroya.NotificationCenter.quit
-    zroya.NotificationCenter.update
+    zroya.TrayIcon
+    zroya.TrayIcon.create
+    zroya.TrayIcon.quit
+    zroya.TrayIcon.update
 
 
 Indices and tables

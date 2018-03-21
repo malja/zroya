@@ -55,7 +55,7 @@ class TrayIcon(object):
         # Draw window
         UpdateWindow(self._window)
 
-        self.logger.debug("NotificationCenter created.")
+        self.logger.debug("TrayIcon created.")
 
     def quit(self):
         """
@@ -67,7 +67,7 @@ class TrayIcon(object):
         DestroyWindow(self._window)
         UnregisterClass(self._window_class.lpszClassName, None)
         PostQuitMessage(0)
-        self.logger.debug("NotificationCenter is going to quit.")
+        self.logger.debug("TrayIcon is going to quit.")
 
     def update(self):
         """
@@ -85,7 +85,7 @@ class TrayIcon(object):
 
         :param str          title:      Notification title.
         :param str          message:    Short notification text.
-        :param str/int      icon:       Path to the icon file or one of NotificationCenter.ICON_*. Use None for info icon.
+        :param str/int      icon:       Path to the icon file or one of TrayIcon.ICON_*. Use None for info icon.
         :param bool         sound:      Should sound be played when notification appears?
         :param callable     on_click:   On click callback. Called when user clicks on notification.
         :param callable     on_show:    On show callback. Called when notification is shown.
@@ -158,7 +158,7 @@ class TrayIcon(object):
         :param title: Notification title.
         :param message: Notification text.
         :param timeout: Notification timeout.
-        :param icon_param: Notification icon path or one of NotificationCenter.ICON_*. Only .ICO and .BMP formats are
+        :param icon_param: Notification icon path or one of TrayIcon.ICON_*. Only .ICO and .BMP formats are
         supported.
         :returns: Nothing.
         """
@@ -232,7 +232,7 @@ class TrayIcon(object):
         Calls notification callback when needed.
 
         :param int  notification_id:    ID of notification which created event.
-        :param int  event_id:           Event ID (one of NotificationCenter.EVENT_*.
+        :param int  event_id:           Event ID (one of TrayIcon.EVENT_*.
         :return: Number one.
         """
 

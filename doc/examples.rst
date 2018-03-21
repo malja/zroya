@@ -90,7 +90,7 @@ Data parameter consist of following keys:
     data = {
         "title": "Notification title",
         "message": "Original notification text",
-        "icon": "Path to notification icon, or one of NotificationCenter.ICON_*",
+        "icon": "Path to notification icon, or one of TrayIcon.ICON_*",
         "sound": "True/False value. Should sound be played when notification appears?"
     }
 
