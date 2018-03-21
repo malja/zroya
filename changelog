@@ -10,8 +10,15 @@
     - Better documentation
 
 0.1.2
+-----
 
     - Notifications may be hidden from source
     - Timeouts - after certain time notification disappears
     - on_timeout now triggers after defined timeout expires and notification is removed
     - on_hide now triggers after notification is hidden from code
+
+zroya2 branch
+-------------
+
+    - New C based module for python with native Windows notification support
+    - Does not support events yet.
