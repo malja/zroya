@@ -24,7 +24,7 @@ Example
 This usage example creates one notification. Application end when user clicks on it::
 
     # Import NotificationCenter
-    from zroya import NotificationCenter
+    from zroya import TrayIcon
 
     quit = False
 
@@ -36,7 +36,7 @@ This usage example creates one notification. Application end when user clicks on
         quit = True
 
     # Create instance of NotificationCenter
-    nc = NotificationCenter()
+    nc = TrayIcon()
 
     # Create new notification
     nc.create("Test Notification", "Longer notification description. \n With multiline support!", on_click = click_callback)
@@ -45,3 +45,4 @@ This usage example creates one notification. Application end when user clicks on
     while nc.update():
         if quit:
             nc.quit()
+

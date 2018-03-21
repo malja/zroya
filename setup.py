@@ -96,7 +96,6 @@ setup(
         "Natural Language :: English",
         "Intended Audience :: Developers",
         "Environment :: Win32 (MS Windows)",
-        "Development Status :: 3 - Alpha",
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: Implementation :: CPython',

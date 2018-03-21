@@ -5,7 +5,11 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://gitHub.com/malja/zroya/graphs/commit-activity)
 
 # zroya
-Zroya is python wrapper around win32 API for creating Windows notification. See [Read The Docs documentation](http://zroya.readthedocs.io).
+Zroya is a python wrapper around win32 API for creating Windows notification. See [Read The Docs documentation](http://zroya.readthedocs.io).
+
+Because win32 api does not provide access to new UWP notification system, it uses old Windows 7 like tray icon. It is limited to one "bubble" notification per one icon in system tray.
+
+I am currently working on native UWP notification library (see zroya2 branch).
 
 ## Prerequisites
 
@@ -28,7 +32,7 @@ Zroya is available from pypi:
 ```python
 
 # Import NotificationCenter
-from zroya import NotificationCenter
+from zroya import TrayIcon
 
 quit = False
 
@@ -40,7 +44,7 @@ def click_callback(nid, data):
     quit = True
 
 # Create instance of NotificationCenter
-nc = NotificationCenter()
+nc = TrayIcon()
 
 # Create new notification
 nc.create("Test Notification", "Longer notification description. \n With multiline support!", on_click = click_callback)

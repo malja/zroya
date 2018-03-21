@@ -8,7 +8,7 @@ Features:
 
     - Creating Windows 10 notification.
     - No Sound support.
-    - Events (click, timeout, hidden).
+    - Events (click, hidden, shown).
 
 Requires:
 ---------
