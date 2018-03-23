@@ -106,7 +106,8 @@ PyObject *zroya_template_line(zroya_Template *self, PyObject *arg, int line) {
         // Clean up
         PyMem_Free(text);
 
-    } else {
+	// No parameter? Just return text
+    } else if (!param) {
 
         std::wstring text = self->_template->textField(
             static_cast<WinToastLib::WinToastTemplate::TextField>(line)
@@ -114,7 +115,10 @@ PyObject *zroya_template_line(zroya_Template *self, PyObject *arg, int line) {
 
         return Py_BuildValue("u", text.c_str());
 
-    }
+	} else {
+		PyErr_SetString(PyExc_ValueError, "text parameter is required to be a string. Or leave it empty.");
+		return nullptr;
+	}
 
     Py_XINCREF(Py_True);
     return Py_True;
