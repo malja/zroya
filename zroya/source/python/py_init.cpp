@@ -78,9 +78,19 @@ PyObject *zroya_show(PyObject *module, PyObject *args, PyObject *kwargs) {
 	return Py_BuildValue("L", notificationID);
 }
 
-PyObject *zroya_hide(PyObject *module, PyObject *arg) {
+PyObject *zroya_hide(PyObject *module, PyObject *arg, PyObject *kwarg) {
 
-	// Parse arguments
+    static char *keywords[] = { (char*)"nid" };
+
+    PyObject *notificationID = nullptr;
+
+    if (!PyArg_ParseTupleAndKeywords(arg, kwarg, "O", keywords, &notificationID )) {
+        return nullptr;
+    }
+
+
+    /*
+    // Parse arguments
     if (!PyTuple_Check(arg)) {
         PyErr_SetString(PyExc_TypeError, "function takes tuple as parameter.");
         return nullptr;
@@ -90,20 +100,32 @@ PyObject *zroya_hide(PyObject *module, PyObject *arg) {
     if (PyTuple_Size(arg) != 1) {
         PyErr_SetString(PyExc_ValueError, "function requires only one parameter.");
         return nullptr;
-    }
+    }*/
 
-    INT64 notificationID = -1;
+    INT64 nID = -1;
 	
+    /*
 	// Get number from PyObject representing tuple
     PyObject *tuple = PyTuple_GetItem(arg, 0);
 	notificationID = PyLong_AsLongLong(tuple);
+    */
 
-    if (notificationID < 0) {
-        PyErr_SetString(PyExc_ValueError, "notification ID may not be negative.");
+    // Check if parameter is integer
+    if (!PyLong_Check(notificationID)) {
+        PyErr_SetString(PyExc_ValueError, "nid parameter is required to be an integer.");
         return nullptr;
     }
 
-    if (WinToastLib::WinToast::instance()->hideToast(notificationID)) {
+    // Get notification ID as integer
+    nID = PyLong_AsLongLong(notificationID);
+
+    // Ignore unvalid values
+    if (nID < 0) {
+        PyErr_SetString(PyExc_ValueError, "nid may not be negative.");
+        return nullptr;
+    }
+
+    if (WinToastLib::WinToast::instance()->hideToast(nID)) {
         Py_INCREF(Py_True);
         return Py_True;
     } else {

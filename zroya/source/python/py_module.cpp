@@ -18,7 +18,7 @@ int zroya_clear(PyObject *self) {
 struct PyMethodDef zroya_module_functions[] = {
     { "init", (PyCFunction)zroya_init, METH_VARARGS | METH_KEYWORDS, zroya_init__doc__ },
     { "show", (PyCFunction)zroya_show, METH_VARARGS | METH_KEYWORDS, zroya_show__doc__ },
-    { "hide", (PyCFunction)zroya_hide, METH_VARARGS, zroya_hide__doc__ },
+    { "hide", (PyCFunction)zroya_hide, METH_VARARGS | METH_KEYWORDS, zroya_hide__doc__ },
     { nullptr, nullptr, 0, nullptr }
 };
 

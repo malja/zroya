@@ -47,13 +47,13 @@
         PyObject *zroya_show(PyObject *module, PyObject *args, PyObject *kwargs);
         
         PyDoc_STRVAR(zroya_hide__doc__,
-            "hide(notificationID)\n"
+            "hide(nid)\n"
             "--\n\n"
             "Hide notification by ID. \n"
-			":param integer notificationID: Notification ID obtained from zroya.show function. \n"
+			":param integer nid: Notification ID obtained from zroya.show function. \n"
 			":return: True if notification was hidden, false otherwise."
         );
-        PyObject *zroya_hide(PyObject *module, PyObject *arg);
+        PyObject *zroya_hide(PyObject *module, PyObject *arg, PyObject *kwarg);
 
 #ifdef __cplusplus
     }
