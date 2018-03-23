@@ -2,9 +2,9 @@ from setuptools import setup, Extension
 import shutil
 import os
 
-includes_list = ["../include", "../include/python" ]
+includes_list = ["./zroya/include", "./zroya/include/python" ]
 sources_list = []
-for root, dirs, files in os.walk(".."):
+for root, dirs, files in os.walk("./zroya"):
     for f in files:
         if os.path.splitext(f)[1] == ".cpp":
             sources_list.append(os.path.join(root, f))
