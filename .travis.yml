@@ -1,7 +1,0 @@
-language: python
-python:
-  - "3.6"
-install:
-  - python ./zroya/python/setup.py install
-script:
-  - pytest -m unittest discover -s ./zroya/python/tests
