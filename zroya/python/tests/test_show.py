@@ -4,12 +4,12 @@ import unittest
 def on_click(id):
     pass
 
-class ModuleShow(unittest.TestCase):
+class zroya_show(unittest.TestCase):
 
-    def test_module_show_NoParam(self):
+    def test_NoParam(self):
         """
         Show function requires some parameters.
-        Expecting show function to fail.
+        exception
         """
 
         failed = False
@@ -21,10 +21,10 @@ class ModuleShow(unittest.TestCase):
 
         self.assertTrue(failed)
 
-    def test_module_show_FewParams(self):
+    def test_FewParams(self):
         """
         Show function requires template parameter.
-        Expecting show function to fail.
+        exception
         """
 
         failed = False
@@ -36,10 +36,10 @@ class ModuleShow(unittest.TestCase):
 
         self.assertTrue(failed)
 
-    def test_module_show_BadType(self):
+    def test_BadType(self):
         """
         Show function requires template parameter to be of zroya.Template type
-        Expecting show function to fail.
+        exception
         """
 
         failed = False
@@ -51,23 +51,16 @@ class ModuleShow(unittest.TestCase):
 
         self.assertTrue(failed)
 
-    def test_module_show_ProperParams(self):
+    def test_ProperParams(self):
         """
         Proper call of show function
-        Expecting show function to fail.
+        integer
         """
-
-        failed = False
 
         t = zroya.Template(zroya.Template.TYPE_IMAGE_TEXT1 )
         t.firstLine("Test")
 
-        try:
-            zroya.show( t )
-        except Exception as e:
-            failed = True
-
-        self.assertFalse(failed)
+        self.assertIsInstance( zroya.show(t), int)
 
 if __name__ == "__main__":
     unittest.main()
