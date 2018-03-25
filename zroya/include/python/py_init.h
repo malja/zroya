@@ -34,7 +34,7 @@
         PyObject *zroya_init(PyObject *self, PyObject *args, PyObject *kwargs);
 
         PyDoc_STRVAR(zroya_show__doc__,
-            "show(template, [on_click, on_action, on_dismiss, on_fail])\n"
+            "show(template, on_click=None, on_action=None, on_dismiss=None, on_fail=None)\n"
             "--\n\n"
             "Show selected notification template. If any of on_* parameter is set, corresponding event is registered. \n"
 			":param zroya.Template template: Template instance. \n"
