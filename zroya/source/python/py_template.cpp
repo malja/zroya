@@ -75,10 +75,12 @@ zroya_Template_Property zroya_template_properties[] = {
 	{ nullptr, 0 }
 };
 
-PyObject *zroya_template_line(zroya_Template *self, PyObject *arg, int line) {
+PyObject *zroya_template_line(zroya_Template *self, PyObject *args, PyObject *kwargs, int line) {
 
 	// Number of lines for each WinToastLib::WinToastTemplate::WinToastTemplateType
     int number_of_lines[] = { 1, 2, 2, 3, 1, 2, 2, 3 };
+
+    char* keywords[] = { (char*)"text", nullptr };
 
 	// Fail for non supported template types
     if (line + 1 > number_of_lines[self->_type]) {
@@ -89,7 +91,7 @@ PyObject *zroya_template_line(zroya_Template *self, PyObject *arg, int line) {
     PyObject *param = nullptr;
 
     // Get parameter
-    if (!PyArg_UnpackTuple(arg, "text", 0, 1, &param)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O", keywords, &param)) {
         PyErr_SetString(PyExc_ValueError, "unable to parse argument.");
         return nullptr;
     }
@@ -124,16 +126,16 @@ PyObject *zroya_template_line(zroya_Template *self, PyObject *arg, int line) {
     return Py_True;
 }
 
-PyObject *zroya_template_firstLine(zroya_Template *self, PyObject *arg) {
-    return zroya_template_line(self, arg, 0);
+PyObject *zroya_template_firstLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
+    return zroya_template_line(self, args, kwargs, 0);
 }
 
-PyObject *zroya_template_secondLine(zroya_Template *self, PyObject *arg) {
-    return zroya_template_line(self, arg, 1);
+PyObject *zroya_template_secondLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
+    return zroya_template_line(self, args, kwargs, 1);
 }
 
-PyObject *zroya_template_thirdLine(zroya_Template *self, PyObject *arg) {
-    return zroya_template_line(self, arg, 2);
+PyObject *zroya_template_thirdLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
+    return zroya_template_line(self, args, kwargs, 2);
 }
 
 PyObject *zroya_template_image(zroya_Template *self, PyObject *args) {
@@ -295,7 +297,7 @@ int zroya_template_init(zroya_Template *self, PyObject *args, PyObject *kwargs) 
 
     int template_type;
 
-    /* TODO: Validace typu - kontrola na neplatné hodnoty */
+    /* TODO: Validace typu - kontrola na neplatnï¿½ hodnoty */
 	if (!PyArg_ParseTuple(args, "i", &template_type)) {
 		PyErr_SetString(PyExc_ValueError, "unable to parse arguments.");
 		return -1;
@@ -331,9 +333,9 @@ void zroya_template_dealloc(zroya_Template *self) {
 }
 
 PyMethodDef zroya_template_methods[] = {
-    { "firstLine", (PyCFunction)zroya_template_firstLine, METH_VARARGS, zroya_template_firstLine__doc__ },
-    { "secondLine", (PyCFunction)zroya_template_secondLine, METH_VARARGS, zroya_template_secondLine__doc__ },
-    { "thirdLine", (PyCFunction)zroya_template_thirdLine, METH_VARARGS, zroya_template_thirdLine__doc__ },
+    { "firstLine", (PyCFunction)zroya_template_firstLine, METH_VARARGS | METH_KEYWORDS, zroya_template_firstLine__doc__ },
+    { "secondLine", (PyCFunction)zroya_template_secondLine, METH_VARARGS | METH_KEYWORDS, zroya_template_secondLine__doc__ },
+    { "thirdLine", (PyCFunction)zroya_template_thirdLine, METH_VARARGS | METH_KEYWORDS, zroya_template_thirdLine__doc__ },
 
     { "image", (PyCFunction)zroya_template_image, METH_VARARGS, zroya_template_image__doc__ },
     { "audio", (PyCFunction)zroya_template_audio, METH_VARARGS | METH_KEYWORDS, zroya_template_audio__doc__ },
