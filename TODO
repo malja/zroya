@@ -1,0 +1,6 @@
+Call script generage_stubs.py automatically after build.
+Add more tests.
+Add docstring for zroya.Template.
+Find better way for passing template type, audio type etc. than zroya.Template attributes.
+Write and generate read the docs documentation
+Write and generate documentation for c/c++ code
