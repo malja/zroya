@@ -30,11 +30,11 @@ bool zroya::init(const std::string &app_name, const std::string &company_name, c
 * will be called when user does not call init explicitly.
 */
 bool zroya::init() {
-    return init(
+    return zroya::init(
         std::string("python"),
-        random_string(10),
-        random_string(10),
-        random_string(10),
-        random_string(10)
+        random_string(5),
+        random_string(5),
+        random_string(5),
+        random_string(5)
     );
 }

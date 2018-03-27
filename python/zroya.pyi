@@ -1,13 +1,78 @@
-class Template:
-	"""
-	TODO: Documentation
-	"""
+from enum import IntEnum, Enum
 
-	def audio(self, audio=None, mode=None):
+
+class AudioMode(IntEnum):
+
+    Default = 0
+    """
+    Use default audio mode. Selected audio will be played only once.
+    """
+    Silence = 1
+    """
+    No audio is played at all.
+    """
+    Loop = 2
+    """
+    Play audio in loop until it is moved to Action Center. This time may vary due to different user configuration.
+    """
+
+
+class Audio(Enum):
+    Default = "ms-winsoundevent:Notification.Default"
+    IM = "ms-winsoundevent:Notification.IM"
+    Mail = "ms-winsoundevent:Notification.Mail"
+    Reminder = "ms-winsoundevent:Notification.Reminder"
+    SMS = "ms-winsoundevent:Notification.SMS"
+    Alarm = "ms-winsoundevent:Notification.Looping.Alarm"
+    Alarm2 = "ms-winsoundevent:Notification.Looping.Alarm2"
+    Alarm3 = "ms-winsoundevent:Notification.Looping.Alarm3"
+    Alarm4 = "ms-winsoundevent:Notification.Looping.Alarm4"
+    Alarm5 = "ms-winsoundevent:Notification.Looping.Alarm5"
+    Alarm6 = "ms-winsoundevent:Notification.Looping.Alarm6"
+    Alarm7 = "ms-winsoundevent:Notification.Looping.Alarm7"
+    Alarm8 = "ms-winsoundevent:Notification.Looping.Alarm8"
+    Alarm9 = "ms-winsoundevent:Notification.Looping.Alarm9"
+    Alarm10 = "ms-winsoundevent:Notification.Looping.Alarm10"
+    Call = "ms-winsoundevent:Notification.Looping.Call"
+    Call2 = "ms-winsoundevent:Notification.Looping.Call2"
+    Call3 = "ms-winsoundevent:Notification.Looping.Call3"
+    Call4 = "ms-winsoundevent:Notification.Looping.Call4"
+    Call5 = "ms-winsoundevent:Notification.Looping.Call5"
+    Call6 = "ms-winsoundevent:Notification.Looping.Call6"
+    Call7 = "ms-winsoundevent:Notification.Looping.Call7"
+    Call8 = "ms-winsoundevent:Notification.Looping.Call8"
+    Call9 = "ms-winsoundevent:Notification.Looping.Call9"
+    Call10 = "ms-winsoundevent:Notification.Looping.Call10"
+
+
+class TemplateType(IntEnum):
+    ImageAndText1 = 0
+    """
+    
+    """
+    ImageAndText2 = 1
+    ImageAndText3 = 3
+    ImageAndText4 = 4
+    Text1 = 5
+    Text2 = 6
+    Text3 = 7
+    Text4 = 8
+
+class Template:
+
+    def __init__(self, template):
+        """
+        Create new instance.
+        :param TemplateType template: One of supported templates.
+        :return: Template
+        """
+        pass
+
+    def audio(self, audio=None, mode=None):
 		"""
 		Set audio to be played and playback type or return current audio. 
-		:param int audio: One of zroya.Template.AUDIO_* property. 
-		:param int mode: One of zroya.Template.AUDIO_TYPE_* property. 
+		:param zroya.Audio audio: One of python.Template.AUDIO_* property.
+		:param zroya.AudioMode mode: One of python.Template.AUDIO_TYPE_* property.
 		:return: With _audio_ parameter provided, it sets new audio. In addition, if _type_ parameter is set, playback type is changed. Otherwise default playback type is used. True/False is returned.
 		 Without _audio_ parameter set, current audio is returned.
 		"""
@@ -23,7 +88,7 @@ class Template:
 
 	def firstLine(self, text=None):
 		"""
-		Set or return first line of notification text. 
+		Set or return first line of notification text.
 		:param str text: Text to be set as the first line. 
 		:return: With _text_ parameter set, returns True/False. Without _text_, current first line is returned.
 		"""
@@ -58,7 +123,7 @@ class Template:
 def hide(nid):
 	"""
 	Hide notification by ID. 
-	:param integer nid: Notification ID obtained from zroya.show function. 
+	:param integer nid: Notification ID obtained from python.show function.
 	:return: True if notification was hidden, false otherwise.
 	"""
 	pass
@@ -79,7 +144,7 @@ def init(app_name, company_name, product_name, sub_product, version):
 def show(template, on_click=None, on_action=None, on_dismiss=None, on_fail=None):
 	"""
 	Show selected notification template. If any of on_* parameter is set, corresponding event is registered. 
-	:param zroya.Template template: Template instance. 
+	:param zroya.Template template: Template instance.
 	:param callable on_click: Callback for OnClick event. Occurs when user activates a toast notification through a click or touch. 
 	:param callable on_action: Callback for OnAction event. Occurs when user click toast notification action button. 
 	:param callable on_dismiss: Callback for OnDismiss event. Occurs when a toast notification leaves the screen, either by expiring or being explicitly dismissed by the user. 

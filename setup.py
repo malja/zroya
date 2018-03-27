@@ -3,15 +3,15 @@
 from setuptools import setup, Extension
 import os
 
-includes_list = ["./zroya/include", "./zroya/include/python" ]
+includes_list = ["./module"]
 sources_list = []
-for root, dirs, files in os.walk("./zroya"):
+for root, dirs, files in os.walk("./module"):
     for f in files:
         if os.path.splitext(f)[1] == ".cpp":
             sources_list.append(os.path.join(root, f))
 
 ext_modules = [
-    Extension("zroya",
+    Extension("_zroya",
               sources=sources_list,
               include_dirs=includes_list,
               extra_compile_args=[
@@ -28,9 +28,9 @@ setup(name='zroya',
     description='Python implementation of Windows notifications.',
     author='Jan Malcak',
     author_email='jan@malcakov.cz',
-    url='https://github.com/malja/zroya',
+    url='https://github.com/malja/python',
     data_files=[
-      (".", ["./zroya/python/zroya.pyi"])
+      (".", ["./python/zroya.pyi", "./python/template_enums.py", "./python/zroya.py"])
     ],
     ext_modules=ext_modules
 )

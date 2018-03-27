@@ -1,17 +1,17 @@
-import zroya
+import python
 import inspect
 
-# This script generates python stub file from documentation zroya C/C++ code.
-# Stub file is a hint for IDE. It contains a list of all functions and methods in zroya with docstrings.
+# This script generates python stub file from documentation python C/C++ code.
+# Stub file is a hint for IDE. It contains a list of all functions and methods in python with docstrings.
 
 # TODO: Documentation for class attributes
 # TODO: Find better way for output formatting than this
 # TODO: Call this automatically
 
-with open("zroya.pyi", "w", encoding="utf8") as output:
+with open("python.pyi", "w", encoding="utf8") as output:
 
-    # Get all classes/functions in zroya package
-    for name, obj in inspect.getmembers(zroya):
+    # Get all classes/functions in python package
+    for name, obj in inspect.getmembers(python):
 
         # Is it a package function
         if inspect.isbuiltin(obj):
@@ -30,7 +30,7 @@ with open("zroya.pyi", "w", encoding="utf8") as output:
 
             # Get all methods from class
             for cname, cobj in inspect.getmembers(obj):
-                # Is it a method? Ignoring those starting with undercore, because zroya does not set them.
+                # Is it a method? Ignoring those starting with undercore, because python does not set them.
                 if inspect.ismethoddescriptor(cobj) and cname[0] != "_":
                     # Get method signature. Replace leading and trailing bracket, because I have to add self parameter
                     signature = str(inspect.signature(cobj)).replace("(", "").replace(")", "")

@@ -392,6 +392,8 @@ std::wstring WinToast::configureAUMI(_In_ const std::wstring &companyName,
         }
     }
 
+    std::wcout << aumi.c_str() << std::endl;
+
     if (aumi.length() > SCHAR_MAX) {
         DEBUG_MSG("Error: max size allowed for AUMI: 128 characters.");
     }
@@ -550,6 +552,10 @@ HRESULT	WinToast::createShellLinkHelper() {
 }
 
 INT64 WinToast::showToast(_In_ const WinToastTemplate& toast, _In_  IWinToastHandler* handler) {
+
+    std::cout << "Handler test: " << std::endl;
+    handler->toastActivated(1);
+
     INT64 id = -1;
     if (!isInitialized()) {
         DEBUG_MSG("Error when launching the toast. WinToast is not initialized =(");
@@ -627,6 +633,7 @@ INT64 WinToast::showToast(_In_ const WinToastTemplate& toast, _In_  IWinToastHan
                                         id = guid.Data1;
                                         _buffer[id] = notification;
                                         DEBUG_MSG("xml: " << Util::AsString(xmlDocument));
+                                        std::wcout << Util::AsString(xmlDocument) << std::endl;
                                         hr = notifier->Show(notification.Get());
                                     }
                                 }

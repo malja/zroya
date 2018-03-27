@@ -36,7 +36,7 @@ struct PyModuleDef zroya_module_definition = {
 };
 
 /// Module entry point.
-PyMODINIT_FUNC PyInit_zroya() {
+PyMODINIT_FUNC PyInit__zroya() {
             
 	// Check if there is zroya module configuration
     if (PyType_Ready(&zroya_template_type) < 0) {

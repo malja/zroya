@@ -205,16 +205,34 @@ PyObject *zroya_template_image(zroya_Template *self, PyObject *args) {
 
 PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kwargs) {
 
-	int audio = -1;
-	int type = WinToastLib::WinToastTemplate::AudioOption::Default;
+	PyObject *audio_obj = nullptr;
+	PyObject *type_obj = nullptr;
 
-	char* keywords[] = { (char*)"audio", (char*)"type", nullptr };
+	char* keywords[] = { (char*)"audio", (char*)"mode", nullptr };
 
     // Get parameter (if any)
-    if (!PyArg_ParseTupleAndKeywords(arg, kwargs, "|ii", keywords, &audio, &type)) {
-        // Well, it is not very informative :/
-        PyErr_SetString(PyExc_ValueError, "unable to parse arguments.");
+    if (!PyArg_ParseTupleAndKeywords(arg, kwargs, "|OO", keywords, &audio_obj, &type_obj)) {
         return nullptr;
+    }
+
+    wchar_t *audio = nullptr;
+    if (audio_obj) {
+        PyObject *audio_value = PyObject_GetAttrString(audio_obj, "value");
+        if (PyUnicode_Check(audio_value)) {
+              audio = PyUnicode_AsWideCharString(audio_value, nullptr);
+        }
+        Py_XDECREF(audio_value);
+    }
+
+    int type = WinToastLib::WinToastTemplate::AudioOption::Default;
+    if (PyLong_Check(type_obj)) {
+        type = PyLong_AsLong(type_obj);
+    } else {
+        PyObject *tmp_type = PyObject_GetAttrString(type_obj, "value");
+        if (PyLong_Check(tmp_type)) {
+            type = PyLong_AsLong(tmp_type);
+        }
+        Py_XDECREF(tmp_type);
     }
 
 	// Make sure type parameter is in range
@@ -223,19 +241,13 @@ PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kw
 		return nullptr;
 	}
 
-	// https://docs.microsoft.com/cs-cz/uwp/schemas/tiles/toastschema/element-audio
-	if (audio >= sizeof(supported_audio_files)/sizeof(supported_audio_files[0] ) ) {
-		PyErr_SetString(PyExc_ValueError, "audio parameter is out of range");
-		return nullptr;
-	}
-
 	// Set audio type no mater what ;)
 	self->_template->setAudioOption((WinToastLib::WinToastTemplate::AudioOption)type);
 
 	// Set new audio?
-	if (audio >= 0 ) {
+	if (audio) {
 
-		self->_template->setAudioPath(supported_audio_files[audio]);
+		self->_template->setAudioPath(audio);
 
 	// Return audio?
 	} else {
@@ -295,21 +307,32 @@ PyObject *zroya_template_new(PyTypeObject *type, PyObject *args, PyObject *kwarg
 
 int zroya_template_init(zroya_Template *self, PyObject *args, PyObject *kwargs) {
 
-    int template_type;
+    PyObject *template_type;
 
     /* TODO: Validace typu - kontrola na neplatn� hodnoty */
-	if (!PyArg_ParseTuple(args, "i", &template_type)) {
+	if (!PyArg_ParseTuple(args, "O", &template_type)) {
 		PyErr_SetString(PyExc_ValueError, "unable to parse arguments.");
 		return -1;
 	}
 
-	if (template_type < 0 || template_type > 7 /* Index of last record in WinToastLib::WinToastTemplate::WinToastTemplateType */) {
+	int value = -1;
+	if (PyLong_Check(template_type)) {
+	    value = PyLong_AsLong(template_type);
+	} else {
+	    PyObject *tmp_value = PyObject_GetAttrString(template_type, "value");
+	    if (PyLong_Check(tmp_value)) {
+	        value = PyLong_AsLong(tmp_value);
+	    }
+	    Py_DECREF(tmp_value);
+    }
+
+	if (value < 0 || value > 7 /* Index of last record in WinToastLib::WinToastTemplate::WinToastTemplateType */) {
 		PyErr_SetString(PyExc_ValueError, "template type is not valid.");
 		return -1;
 	}
 
 	self->_type = static_cast<WinToastLib::WinToastTemplate::WinToastTemplateType>(
-		template_type
+		value
     );
 
     self->_template = new WinToastLib::WinToastTemplate(
