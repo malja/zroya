@@ -243,7 +243,7 @@ class TrayIcon(object):
         notification_data = self._bubble
 
         # Is there callback handler
-        if event_id in notification_data:
+        if event_id in notification_data and callable(notification_data[event_id]):
             # Call it
             notification_data[event_id](notification_data)
             self.logger.info(
