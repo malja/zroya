@@ -29,7 +29,7 @@ This usage example creates one notification. Application end when user clicks on
     quit = False
 
     # This function is called when user clicks on notification
-    def click_callback(nid, data):
+    def click_callback(data):
         global quit
 
         print("User clicked on your notification!")

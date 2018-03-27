@@ -9,7 +9,7 @@ Zroya is a python wrapper around win32 API for creating Windows notification. Se
 
 Because win32 api does not provide access to new UWP notification system, it uses old Windows 7 like tray icon. It is limited to one "bubble" notification per one icon in system tray.
 
-I am currently working on native UWP notification library (see zroya2 branch).
+**Note**: I am currently working on native UWP notification library (see zroya2 branch). Version 0.1.* will be soon discontinued.
 
 ## Prerequisites
 
@@ -37,7 +37,7 @@ from zroya import TrayIcon
 quit = False
 
 # This function is called when user clicks on notification
-def click_callback(nid, data):
+def click_callback(data):
     global quit
 
     print("User clicked on your notification!")
