@@ -13,10 +13,12 @@ class zroya_hide(unittest.TestCase):
         self.assertRaises(ValueError, lambda: zroya.hide(-1))
 
     def test_ProperParam(self):
+        t = zroya.Template(zroya.TemplateType.Text1)
         nid = zroya.show(t)
         self.assertTrue(zroya.hide(nid))
 
     def test_ProperParamKeywords(self):
+        t = zroya.Template(zroya.TemplateType.Text1)
         notID = zroya.show(t)
         self.assertTrue(zroya.hide(nid=notID))
 
