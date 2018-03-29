@@ -91,8 +91,7 @@ PyObject *zroya_template_line(zroya_Template *self, PyObject *args, PyObject *kw
     PyObject *param = nullptr;
 
     // Get parameter
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O", keywords, &param)) {
-        PyErr_SetString(PyExc_ValueError, "unable to parse argument.");
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|O", keywords, &param)) {
         return nullptr;
     }
 
@@ -138,9 +137,10 @@ PyObject *zroya_template_thirdLine(zroya_Template *self, PyObject *args, PyObjec
     return zroya_template_line(self, args, kwargs, 2);
 }
 
-PyObject *zroya_template_image(zroya_Template *self, PyObject *args) {
+PyObject *zroya_template_image(zroya_Template *self, PyObject *args, PyObject *kwargs) {
 
-    PyObject *param = nullptr;
+    PyObject *path_obj = nullptr;
+    char* keywords[] = { (char*)"path", nullptr };
 
 	// Fail for non supported toast types
 	if (self->_type > 3 /*WinToastLib::WinToastTemplate::WinToastTemplateType::ImageAndText04*/) {
@@ -148,23 +148,29 @@ PyObject *zroya_template_image(zroya_Template *self, PyObject *args) {
 		return Py_False;
 	}
 
-    // Get parameter (if any)
-    if (!PyArg_UnpackTuple(args, "image", 0, 1, &param)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|O", keywords, &path_obj)) {
+        return nullptr;
+    }
 
+    /*// Get parameter (if any)
+    if (!PyArg_UnpackTuple(args, "image", 0, 1, &param)) {
         // Throw exception
         PyErr_SetString(PyExc_FileNotFoundError, "unable to parse arguments.");
         return nullptr;
+    }*/
 
-    }
+    if (path_obj && PyUnicode_Check(path_obj)) {
 
+    /*
     // Was something found? And is it of required type?
     if (param && PyUnicode_Check(param)) {
+    */
 
         // Get path parameter
-        wchar_t *path = PyUnicode_AsWideCharString(param, nullptr);
+        wchar_t *path = PyUnicode_AsWideCharString(path_obj, nullptr);
 
         // Unable to get path
-        if (!path) {
+        if (!path_obj) {
 
             // Return False
             Py_XINCREF(Py_False);
@@ -173,7 +179,7 @@ PyObject *zroya_template_image(zroya_Template *self, PyObject *args) {
         }
 
         // Non-existing file
-        if (!file_exists(param)) {
+        if (!file_exists(path_obj)) {
 
             // Throw exception
             PyErr_SetString(PyExc_FileNotFoundError, "file with notification image does not exist");
@@ -188,6 +194,12 @@ PyObject *zroya_template_image(zroya_Template *self, PyObject *args) {
         // Free memory
         PyMem_Free(path);
 
+    // Something found, but it is not string
+    } else if (path_obj) {
+        PyErr_SetString(PyExc_ValueError, "path is not a string.");
+        return nullptr;
+
+    // Nothing found
     } else {
 
         std::wstring p = self->_template->imagePath();
@@ -217,27 +229,50 @@ PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kw
 
     wchar_t *audio = nullptr;
     if (audio_obj) {
-        PyObject *audio_value = PyObject_GetAttrString(audio_obj, "value");
-        if (PyUnicode_Check(audio_value)) {
-              audio = PyUnicode_AsWideCharString(audio_value, nullptr);
+        // Is it Enum?
+        if (PyObject_HasAttrString(audio_obj, "value")) {
+            PyObject *audio_value = PyObject_GetAttrString(audio_obj, "value");
+            if (PyUnicode_Check(audio_value)) {
+                  audio = PyUnicode_AsWideCharString(audio_value, nullptr);
+            }
+
+            Py_XDECREF(audio_value);
+        } else {
+            // Unsuported parameter type
+            PyErr_SetString(PyExc_ValueError, "audio parameter is not int or Enum");
+            return nullptr;
         }
-        Py_XDECREF(audio_value);
     }
 
-    int type = WinToastLib::WinToastTemplate::AudioOption::Default;
-    if (PyLong_Check(type_obj)) {
-        type = PyLong_AsLong(type_obj);
-    } else {
-        PyObject *tmp_type = PyObject_GetAttrString(type_obj, "value");
-        if (PyLong_Check(tmp_type)) {
-            type = PyLong_AsLong(tmp_type);
+    int type = (int)WinToastLib::WinToastTemplate::AudioOption::Default;
+
+    if (type_obj) {
+
+        if (PyLong_Check(type_obj)) {
+            type = PyLong_AsLong(type_obj);
+
+        } else {
+            // Is it Enum?
+            if (PyObject_HasAttrString(type_obj, "value")) {
+
+                PyObject *tmp_type = PyObject_GetAttrString(type_obj, "value");
+
+                if (PyLong_Check(tmp_type)) {
+                    type = PyLong_AsLong(tmp_type);
+                }
+                Py_XDECREF(tmp_type);
+
+            // Unsuported parameter type
+            } else {
+                PyErr_SetString(PyExc_ValueError, "mode parameter is not int or Enum");
+                return nullptr;
+            }
         }
-        Py_XDECREF(tmp_type);
     }
 
 	// Make sure type parameter is in range
 	if (type < 0 || type > WinToastLib::WinToastTemplate::AudioOption::Loop) {
-		PyErr_SetString(PyExc_ValueError, "type parameter is out of range");
+		PyErr_SetString(PyExc_ValueError, "mode parameter is out of range");
 		return nullptr;
 	}
 
@@ -246,17 +281,13 @@ PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kw
 
 	// Set new audio?
 	if (audio) {
-
 		self->_template->setAudioPath(audio);
 
-	// Return audio?
-	} else {
-
+    // No parameters, return path
+	} else if (!audio && !type_obj) {
         std::wstring p = self->_template->audioPath();
-
         // Return current path
         return Py_BuildValue("u", p.c_str());
-
     }
 
     // Return True
@@ -270,8 +301,6 @@ PyObject *zroya_template_expire(zroya_Template *self, PyObject *arg) {
 
     // Get parameter if any
     if (!PyArg_ParseTuple(arg, "|L", &expiration)) {
-        // Well, it is not very informative :/
-        PyErr_SetString(PyExc_ValueError, "unable to parse arguments.");
         return nullptr;
     }
 
@@ -360,7 +389,7 @@ PyMethodDef zroya_template_methods[] = {
     { "secondLine", (PyCFunction)zroya_template_secondLine, METH_VARARGS | METH_KEYWORDS, zroya_template_secondLine__doc__ },
     { "thirdLine", (PyCFunction)zroya_template_thirdLine, METH_VARARGS | METH_KEYWORDS, zroya_template_thirdLine__doc__ },
 
-    { "image", (PyCFunction)zroya_template_image, METH_VARARGS, zroya_template_image__doc__ },
+    { "image", (PyCFunction)zroya_template_image, METH_VARARGS | METH_KEYWORDS, zroya_template_image__doc__ },
     { "audio", (PyCFunction)zroya_template_audio, METH_VARARGS | METH_KEYWORDS, zroya_template_audio__doc__ },
     { "expire", (PyCFunction)zroya_template_expire, METH_VARARGS, zroya_template_expire__doc__ },
     { nullptr, nullptr, 0, nullptr }
@@ -388,7 +417,7 @@ PyTypeObject zroya_template_type = {
     0,                         /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT |
     Py_TPFLAGS_BASETYPE,   /* tp_flags */
-    "TODO: Documentation",           /* tp_doc */
+    "Notification template. You may show instance of template via zroya.show function.",           /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
     0,                         /* tp_richcompare */
