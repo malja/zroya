@@ -3,13 +3,17 @@
 from setuptools import setup, Extension
 import os
 
+# Include path for _zroya module
 includes_list = ["./module"]
+
+# List of all *.cpp files in ./module directory
 sources_list = []
 for root, dirs, files in os.walk("./module"):
     for f in files:
         if os.path.splitext(f)[1] == ".cpp":
             sources_list.append(os.path.join(root, f))
 
+# Python C/CPP Api extension configuration
 ext_modules = [
     Extension("_zroya",
               sources=sources_list,
@@ -19,9 +23,6 @@ ext_modules = [
               ]
     )
 ]
-
-for e in ext_modules:
-    e.cython_directives = {"embedsignature": True}
 
 setup(name='zroya',
     version='0.2.0',
