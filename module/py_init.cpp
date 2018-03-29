@@ -69,7 +69,6 @@ PyObject *zroya_show(PyObject *module, PyObject *args, PyObject *kwargs) {
 
 	// Make sure WinToastLib is initialized
     if (!WinToastLib::WinToast::instance()->isInitialized()) {
-        std::cout << "Not initialized" << std::endl;
         if (!zroya::init()) {
             PyErr_SetString(PyExc_SystemError, "initialization failed");
             return nullptr;
@@ -79,13 +78,7 @@ PyObject *zroya_show(PyObject *module, PyObject *args, PyObject *kwargs) {
 	// Try to show notification and save its ID
     INT64 notificationID = WinToastLib::WinToast::instance()->showToast(*(((zroya_Template*)toast)->_template), static_cast<zroya_State*>(PyModule_GetState(module))->_handler );
 
-	if (notificationID != 0) {
-	    Py_INCREF(Py_True);
-	    return Py_True;
-	} else {
-	    Py_INCREF(Py_False);
-	    return Py_False;
-	}
+	return PyLong_FromLongLong(notificationID);
 }
 
 PyObject *zroya_hide(PyObject *module, PyObject *arg, PyObject *kwarg) {
