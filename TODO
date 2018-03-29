@@ -1,6 +1,5 @@
 Call script generage_stubs.py automatically after build.
-Add more tests.
-Add docstring for zroya.Template.
+Add more tests - complete tests!
 Write and generate read the docs documentation
 Write and generate documentation for c/c++ code
 Make sure it is not required to call init function
