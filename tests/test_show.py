@@ -19,7 +19,7 @@ class zroya_show(unittest.TestCase):
         self.assertRaises(ValueError, lambda: zroya.show(None))
 
     def test_ProperParams(self):
-        t = zroya.Template(zroya.Template.ImageAndText1)
+        t = zroya.Template(zroya.TemplateType.ImageAndText1)
         self.assertIsInstance(zroya.show(t), int)
 
 if __name__ == "__main__":
