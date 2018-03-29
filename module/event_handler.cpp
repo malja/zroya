@@ -1,14 +1,14 @@
 #include "event_handler.h"
 
 void zroya::EventHandler::toastActivated(INT64 notificationID) const {
-    std::cout << "ID: " << notificationID << " activated 1" << std::endl;
+    std::cout << "Cpp: EventHandler: Activated: " << notificationID << std::endl;
 }
 void zroya::EventHandler::toastActivated(int actionIndex, INT64 notificationID) const {
-	std::cout << "ID: " << notificationID << " activated 2" << std::endl;
+	std::cout << "Cpp: EventHandler: Activated2: " << notificationID << std::endl;
 }
 void zroya::EventHandler::toastDismissed(WinToastLib::IWinToastHandler::WinToastDismissalReason state, INT64 notificationID) const {
-	std::cout << "ID: " << notificationID << " dismiss" << std::endl;
+	std::cout << "Cpp: EventHandler: Dismiss: " << notificationID << std::endl;
 }
 void zroya::EventHandler::toastFailed(INT64 notificationID) const {
-	std::cout << "ID: " << notificationID << " failed" << std::endl;
+	std::cout << "Cpp: EventHandler: Failed: " << notificationID << std::endl;
 }
