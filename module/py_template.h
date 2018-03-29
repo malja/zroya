@@ -71,7 +71,7 @@
             ":param str path: Path to image. \n"
             ":return: With _path_ parameter set, it returns True/False. Without _text_, current image path is returned."
         );
-        PyObject *zroya_template_image(zroya_Template *self, PyObject *args);
+        PyObject *zroya_template_image(zroya_Template *self, PyObject *args, PyObject *kwargs);
 
         PyDoc_STRVAR(zroya_template_audio__doc__,
             "audio(audio=None, mode=None)\n"
