@@ -22,3 +22,8 @@ zroya2 branch
 
     - New C based module for python with native Windows notification support
     - Does not support events yet.
+
+    04.04.2018
+        - Script generage_stubs.py is called automatically after build_ext command
+        - First version of Doxygen documentation
+        - Changes in WinToastLib namespaces
