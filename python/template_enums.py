@@ -5,22 +5,18 @@ class AudioMode(object):
     """
     Values for _mode_ parameter of zroya.Template.audio method.
     Usage: template.audio(mode=zroya.AudioMode.Silence)
+
+    Attributes:
+    -----------
+    Default - Use default audio mode. Selected audio will be played only once.
+    Silence - No audio is played at all.
+    Loop    - Play audio in loop until it is moved to Action Center. This time may vary due to different user
+              configuration.
     """
 
     Default = 0
-    """
-    Use default audio mode. Selected audio will be played only once.
-    """
-
     Silence = 1
-    """
-    No audio is played at all.
-    """
-
     Loop = 2
-    """
-    Play audio in loop until it is moved to Action Center. This time may vary due to different user configuration.
-    """
 
 
 class Audio(Enum):
@@ -60,44 +56,31 @@ class TemplateType(IntEnum):
     """
     All possible values for zroya.Template constructor.
     Usage: zroya.Template(zroya.TemplateType.ImageAndText2)
+
+    Attributes:
+    -----------
+    ImageAndText1 - A large image and a single string wrapped across three lines of text.
+    ImageAndText2 - A large image, one string of bold text on the first line, one string of regular text wrapped across
+                    the second and third lines.
+    ImageAndText3 - A large image, one string of bold text wrapped across the first two lines, one string of regular
+                    text on the third line.
+    ImageAndText4 - A large image, one string of bold text on the first line, one string of regular text on the second
+                    line, one string of regular text on the third line.
+    Text1         - Single string wrapped across three lines of text.
+    Text2         - One string of bold text on the first line, one string of regular text wrapped across the second and
+                    third lines.
+    Text3         - One string of bold text wrapped across the first two lines, one string of regular text on the third
+                    line.
+    Text4         - One string of bold text on the first line, one string of regular text on the second line, one
+                    string of regular text on the third line.
     """
 
     ImageAndText1 = 0
-    """
-    A large image and a single string wrapped across three lines of text.
-    """
-
     ImageAndText2 = 1
-    """
-    A large image, one string of bold text on the first line, one string of regular text wrapped across the second and third lines.
-    """
-
     ImageAndText3 = 2
-    """
-    A large image, one string of bold text wrapped across the first two lines, one string of regular text on the third line.
-    """
-
     ImageAndText4 = 3
-    """
-    A large image, one string of bold text on the first line, one string of regular text on the second line, one string of regular text on the third line.
-    """
 
     Text1 = 4
-    """
-    Single string wrapped across three lines of text.
-    """
-
     Text2 = 5
-    """
-    One string of bold text on the first line, one string of regular text wrapped across the second and third lines.
-    """
-
     Text3 = 6
-    """
-    One string of bold text wrapped across the first two lines, one string of regular text on the third line.
-    """
-
     Text4 = 7
-    """
-    One string of bold text on the first line, one string of regular text on the second line, one string of regular text on the third line.
-    """
