@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext
+from python.scripts.generate_stubs import GenerateStubFile
 import os
 
 # Include path for _zroya module
@@ -24,6 +26,33 @@ ext_modules = [
     )
 ]
 
+
+def findPydFile():
+    """
+    Return path to .pyd after successful build command.
+    :return: Path to .pyd file or None.
+    """
+
+    if not os.path.isdir("./build"):
+        raise NotADirectoryError
+
+    for path, dirs, files in os.walk("./build"):
+        for file_name in files:
+            file_name_parts = os.path.splitext(file_name)
+            if file_name_parts[1] == ".pyd":
+                return path
+    return None
+
+
+class PostInstall(build_ext):
+    def run(self):
+        build_ext.run(self)
+
+        print("running post_install")
+        # Generate .pyd file for this module
+        GenerateStubFile(findPydFile())
+
+
 setup(name='zroya',
     version='0.2.0',
     description='Python implementation of Windows notifications.',
@@ -33,5 +62,8 @@ setup(name='zroya',
     data_files=[
       (".", ["./python/zroya.pyi", "./python/template_enums.py", "./python/zroya.py"])
     ],
-    ext_modules=ext_modules
+    ext_modules=ext_modules,
+    cmdclass={
+        "build_ext": PostInstall
+    }
 )
