@@ -44,11 +44,11 @@ def findPydFile():
     return None
 
 
-class PostInstall(build_ext):
+class PostBuild(build_ext):
     def run(self):
         build_ext.run(self)
 
-        print("running post_install")
+        print("running post_build")
         # Generate .pyd file for this module
         GenerateStubFile(findPydFile())
 
@@ -64,6 +64,6 @@ setup(name='zroya',
     ],
     ext_modules=ext_modules,
     cmdclass={
-        "build_ext": PostInstall
+        "build_ext": PostBuild
     }
 )
