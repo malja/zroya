@@ -75,8 +75,19 @@ PyObject *zroya_show(PyObject *module, PyObject *args, PyObject *kwargs) {
         }
     }
 
+	zroya_State *state = static_cast<zroya_State*>(PyModule_GetState(module));
+	
 	// Try to show notification and save its ID
     INT64 notificationID = WinToastLib::WinToast::instance()->showToast(*(((zroya_Template*)toast)->_template), static_cast<zroya_State*>(PyModule_GetState(module))->_handler );
+	
+	if (notificationID > 0) {
+		Py_XINCREF(on_click);
+		Py_XINCREF(on_action);
+		Py_XINCREF(on_dismiss);
+		Py_XINCREF(on_fail);
+
+		state->_handler->addCallbacks(notificationID, on_click, on_action, on_dismiss, on_fail);
+	}
 
 	return PyLong_FromLongLong(notificationID);
 }
