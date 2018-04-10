@@ -1,7 +1,7 @@
 from enum import IntEnum, Enum
 
 
-class AudioMode(object):
+class AudioMode(IntEnum):
     """
     Values for _mode_ parameter of zroya.Template.audio method.
     Usage: template.audio(mode=zroya.AudioMode.Silence)
