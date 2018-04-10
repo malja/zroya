@@ -6,7 +6,6 @@ bool zroya::init(const std::string &app_name, const std::string &company_name, c
 
     // Set application name
     WinToastLib::WinToast::instance()->setAppName(
-        //convert(app_name)
         convert(app_name)
     );
 
