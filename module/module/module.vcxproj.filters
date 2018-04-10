@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Zdrojové soubory">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Hlavičkové soubory">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Soubory zdrojů">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Zdrojové soubory\python">
+      <UniqueIdentifier>{d272300f-f419-40cd-8f71-f1119be73907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hlavičkové soubory\python">
+      <UniqueIdentifier>{ffb50eb8-b1cc-4703-aeaf-7ebdce10240b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hlavičkové soubory\wintoast">
+      <UniqueIdentifier>{aada2f26-b8b7-46bf-8a62-6798194d9d2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Zdrojové soubory\wintoast">
+      <UniqueIdentifier>{2e5f86c2-90ab-416e-8103-62b3c3011206}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\event_handler.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\init.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\utils.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\py_init.h">
+      <Filter>Hlavičkové soubory\python</Filter>
+    </ClInclude>
+    <ClInclude Include="..\py_module.h">
+      <Filter>Hlavičkové soubory\python</Filter>
+    </ClInclude>
+    <ClInclude Include="..\py_template.h">
+      <Filter>Hlavičkové soubory\python</Filter>
+    </ClInclude>
+    <ClInclude Include="..\py_utils.h">
+      <Filter>Hlavičkové soubory\python</Filter>
+    </ClInclude>
+    <ClInclude Include="..\wintoastlib.h">
+      <Filter>Hlavičkové soubory\wintoast</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\event_handler.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\init.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\utils.cpp">
+      <Filter>Zdrojové soubory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\py_init.cpp">
+      <Filter>Zdrojové soubory\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\py_module.cpp">
+      <Filter>Zdrojové soubory\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\py_template.cpp">
+      <Filter>Zdrojové soubory\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\py_utils.cpp">
+      <Filter>Zdrojové soubory\python</Filter>
+    </ClCompile>
+    <ClCompile Include="..\wintoastlib.cpp">
+      <Filter>Zdrojové soubory\wintoast</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
