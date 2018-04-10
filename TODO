@@ -1,4 +1,15 @@
-Add more tests - complete tests!
-Write and generate read the docs documentation
-Write and generate documentation for c/c++ code
-Make sure it is not required to call init function
+Required before release:
+========================
+
+    - Add Actions support
+    - Add Attribution text support
+    - Write documentation for C and Python part of the project
+    - Add more tests
+    - Add set*,add*,get* methods for each action instead of current multipurpose methods
+
+Future goals:
+==============
+
+    - Make sure it is not required to call init function
+    - Add support for future WinToast features
+    - Commit changes in WinToast library back to its github project
