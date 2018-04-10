@@ -60,7 +60,7 @@ setup(name='zroya',
     author_email='jan@malcakov.cz',
     url='https://github.com/malja/python',
     data_files=[
-      (".", ["./python/zroya.pyi", "./python/template_enums.py", "./python/zroya.py"])
+      (".", ["./python/zroya.pyi", "./python/template_enums.py", "./python/zroya.py", "./python/dismiss_reason.py"])
     ],
     ext_modules=ext_modules,
     cmdclass={
