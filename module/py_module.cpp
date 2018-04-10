@@ -66,6 +66,10 @@ PyMODINIT_FUNC PyInit__zroya() {
     zroya_State *state = (zroya_State*)PyModule_GetState(module);
     state->_win_toast = WinToastLib::WinToast::instance();
 	state->_handler = new zroya::EventHandler;
+
+	if (!PyEval_ThreadsInitialized()) {
+		PyEval_InitThreads();
+	}
             
     return module;
 }
