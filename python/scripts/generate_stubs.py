@@ -15,16 +15,18 @@ def GenerateStubFile(path_to_pyd):
     # Import zroya module
     import _zroya
     from .. import template_enums
+    from .. import dismiss_reason
 
     modules = [
         _zroya,
-        template_enums
+        template_enums,
+        dismiss_reason
     ]
 
-    for module in modules:
+    # Generate .pyi file for zroya module
+    with open("./python/zroya.pyi", "w", encoding="utf8") as output:
 
-        # Generate .pyi file for zroya module
-        with open("./python/zroya.pyi", "w", encoding="utf8") as output:
+        for module in modules:
 
             # Get all classes/functions in python package
             for name, obj in inspect.getmembers(module):
@@ -43,6 +45,7 @@ def GenerateStubFile(path_to_pyd):
 
                 # Is it a class
                 if inspect.isclass(obj):
+
                     # Print class <class_name>:
                     output.write("class {}:\n".format(name))
                     # Print class docstring
@@ -50,17 +53,20 @@ def GenerateStubFile(path_to_pyd):
 
                     # Get all attributes of class
                     for member_name, member_value in inspect.getmembers(obj):
+
                         # Ignore python members
                         if member_name[0] != "_":
                             # Is it python enum?
                             if hasattr(member_value, "value"):
-                                # Is value string
-                                if isinstance( member_value.value, str):
-                                    # Put " and " around value
-                                    output.write("\t{} = \"{}\"\n\n".format(member_name, member_value.value))
-                                else:
-                                    # Print number
-                                    output.write("\t{} = {}\n\n".format(member_name, member_value.value))
+                                member_value = member_value.value
+
+                            # Is value string
+                            if isinstance( member_value, str):
+                                # Put " and " around value
+                                output.write("\t{} = \"{}\"\n\n".format(member_name, member_value))
+                            elif isinstance( member_value, int):
+                                # Print number
+                                output.write("\t{} = {}\n\n".format(member_name, member_value))
 
                     # Get all methods from class
                     for cname, cobj in inspect.getmembers(obj):
