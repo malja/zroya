@@ -27,3 +27,8 @@ zroya2 branch
         - Script generage_stubs.py is called automatically after build_ext command
         - First version of Doxygen documentation
         - Changes in WinToastLib namespaces
+
+    11.04.2018
+        - New Python class DismissReason
+        - Working callbacks
+        - Visual Studio project for C/C++ code
