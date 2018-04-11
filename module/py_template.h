@@ -70,8 +70,7 @@
 			"getSecondLine()\n"
 			"--\n\n"
 			"Get second line of notification text. \n"
-			":return: Empty string when second line is not set or it is not supported for current template type. \n"
-			"Second line text in other cases."
+			":return: Empty string when second line is not set or it is not supported for current template type. \nSecond line text in other cases."
 		);
 		PyObject *zroya_template_getSecondLine(zroya_Template *self);
 
@@ -89,8 +88,7 @@
 			"getThirdLine()\n"
 			"--\n\n"
 			"Get third line of notification text. \n"
-			":return: Empty string for unsuported line for current template type or when third line is not set yet. \n"
-			"In other cases, third line text is returned."
+			":return: Empty string for unsuported line for current template type or when third line is not set yet. \nIn other cases, third line text is returned."
 		);
 		PyObject *zroya_template_getThirdLine(zroya_Template *self);
 
@@ -112,16 +110,32 @@
 		);
 		PyObject *zroya_template_getImage(zroya_Template *self);
 
-        PyDoc_STRVAR(zroya_template_audio__doc__,
-            "audio(audio=None, mode=None)\n"
-            "--\n\n"
-            "Set audio to be played and playback type or return current audio. \n"
-            ":param int audio: One of zroya.Template.AUDIO_* property. \n"
-			":param int mode: One of zroya.Template.AUDIO_TYPE_* property. \n"
-            ":return: With _audio_ parameter provided, it sets new audio. In addition, if _type_ parameter is set, playback type is changed. Otherwise default playback type is used. True/False is returned.\n Without _audio_ parameter set, current audio is returned."
-        );
-        PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kwarg);
+		PyDoc_STRVAR(zroya_template_setAudio__doc__,
+			"setAudio(audio, mode)\n"
+			"--\n\n"
+			"Set audio and playback mode for notification. \n"
+			":param int audio: One of zroya.Audio. \n"
+			":param int mode: One of zroya.AudioMode. Or leave empty for zroya.AudioMode.Default. \n"
+			":return: True if audio was set, false otherwise."
+		);
+        PyObject *zroya_template_setAudio(zroya_Template *self, PyObject *arg, PyObject *kwarg);
 
+		PyDoc_STRVAR(zroya_template_getAudio__doc__,
+			"getAudio()\n"
+			"--\n\n"
+			"Get notification audio. \n"
+			":return: zroya.Audio."
+		);
+		PyObject *zroya_template_getAudio(zroya_Template *self);
+
+		PyDoc_STRVAR(zroya_template_getAudioMode__doc__,
+			"getAudioMode()\n"
+			"--\n\n"
+			"Get notification audio mode. \n"
+			":return: zroya.AudioMode."
+		);
+		PyObject *zroya_template_getAudioMode(zroya_Template *self);
+		
         PyDoc_STRVAR(zroya_template_expire__doc__,
             "expire(ms=0)\n"
             "--\n\n"

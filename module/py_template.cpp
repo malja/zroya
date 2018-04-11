@@ -32,6 +32,10 @@ const wchar_t* supported_audio_files[] = {
 	L"ms-winsoundevent:Notification.Looping.Call10"
 };
 
+const char* zroya_template__doc__ =
+	"Template class is a template for any notification you create. \n"
+	"\tYou may show any number of notifications based on this template with zroya.show() method.";
+
 PyObject *zroya_template_setLine(zroya_Template *self, PyObject *args, PyObject *kwargs, int line) {
 
 	// Number of lines for each WinToastLib::WinToastTemplate::WinToastTemplateType
@@ -166,7 +170,7 @@ PyObject *zroya_template_getImage(zroya_Template *self) {
 	return Py_BuildValue("u", p.c_str());
 }
 
-PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kwargs) {
+PyObject *zroya_template_setAudio(zroya_Template *self, PyObject *arg, PyObject *kwargs) {
 
 	PyObject *audio_obj = nullptr;
 	PyObject *type_obj = nullptr;
@@ -174,7 +178,7 @@ PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kw
 	char* keywords[] = { (char*)"audio", (char*)"mode", nullptr };
 
     // Get parameter (if any)
-    if (!PyArg_ParseTupleAndKeywords(arg, kwargs, "|OO", keywords, &audio_obj, &type_obj)) {
+    if (!PyArg_ParseTupleAndKeywords(arg, kwargs, "O|O", keywords, &audio_obj, &type_obj)) {
         return nullptr;
     }
 
@@ -234,16 +238,56 @@ PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kw
 	if (audio) {
 		self->_template->setAudioPath(audio);
 
-    // No parameters, return path
-	} else if (!audio && !type_obj) {
-        std::wstring p = self->_template->audioPath();
-        // Return current path
-        return Py_BuildValue("u", p.c_str());
-    }
+	}
 
     // Return True
     Py_XINCREF(Py_True);
     return Py_True;
+}
+
+PyObject *zroya_template_getAudio(zroya_Template *self) {
+
+	PyObject *zroya_module = PyImport_ImportModule("zroya");
+	if (!zroya_module) {
+		PyErr_SetString(PyExc_ImportError, "Unable to import zroya module");
+		return nullptr;
+	}
+
+	PyObject *zroya_Audio = PyObject_GetAttrString(zroya_module, "Audio");
+	if (!zroya_Audio) {
+		PyErr_SetString(PyExc_NameError, "zroya.Audio does not exist");
+		return nullptr;
+	}
+
+	std::wstring path = self->_template->audioPath();
+	if (path.length() == 0) {
+		path = L"ms-winsoundevent:Notification.Default";
+	}
+
+	PyObject *arg = PyUnicode_FromWideChar(path.c_str(), -1);
+	PyObject* zroya_Audio_instance = PyObject_CallFunction(zroya_Audio, "O", arg);
+
+	Py_XDECREF(arg);
+	return zroya_Audio_instance;
+}
+
+PyObject *zroya_template_getAudioMode(zroya_Template *self) {
+
+	PyObject *zroya_module = PyImport_ImportModule("zroya");
+	if (!zroya_module) {
+		PyErr_SetString(PyExc_ImportError, "Unable to import zroya module");
+		return nullptr;
+	}
+
+	PyObject *zroya_AudioMode = PyObject_GetAttrString(zroya_module, "AudioMode");
+	if (!zroya_AudioMode) {
+		PyErr_SetString(PyExc_NameError, "zroya.AudioMode does not exist");
+		return nullptr;
+	}
+
+	PyObject* zroya_AudioMode_instance = PyObject_CallFunction(zroya_AudioMode, "i", (int)self->_template->audioOption() );
+	return Py_BuildValue("O", zroya_AudioMode_instance);
+
 }
 
 PyObject *zroya_template_expire(zroya_Template *self, PyObject *arg) {
@@ -339,7 +383,6 @@ PyMethodDef zroya_template_methods[] = {
     { "setFirstLine", (PyCFunction)zroya_template_setFirstLine, METH_VARARGS | METH_KEYWORDS, zroya_template_setFirstLine__doc__ },
 	{ "getFirstLine", (PyCFunction)zroya_template_getFirstLine, METH_VARARGS, zroya_template_getFirstLine__doc__ },
 
-
     { "setSecondLine", (PyCFunction)zroya_template_setSecondLine, METH_VARARGS | METH_KEYWORDS, zroya_template_setSecondLine__doc__ },
 	{ "getSecondLine", (PyCFunction)zroya_template_getSecondLine, METH_VARARGS, zroya_template_getSecondLine__doc__ },
 
@@ -349,7 +392,10 @@ PyMethodDef zroya_template_methods[] = {
     { "setImage", (PyCFunction)zroya_template_setImage, METH_VARARGS | METH_KEYWORDS, zroya_template_setImage__doc__ },
 	{ "getImage", (PyCFunction)zroya_template_getImage, METH_VARARGS, zroya_template_getImage__doc__ },
 
-    { "audio", (PyCFunction)zroya_template_audio, METH_VARARGS | METH_KEYWORDS, zroya_template_audio__doc__ },
+	{ "setAudio", (PyCFunction)zroya_template_setAudio, METH_VARARGS | METH_KEYWORDS, zroya_template_setAudio__doc__ },
+	{ "getAudio", (PyCFunction)zroya_template_getAudio, METH_VARARGS, zroya_template_getAudio__doc__ },
+	{ "getAudioMode", (PyCFunction)zroya_template_getAudioMode, METH_VARARGS, zroya_template_getAudioMode__doc__ },
+
     { "expire", (PyCFunction)zroya_template_expire, METH_VARARGS, zroya_template_expire__doc__ },
     { nullptr, nullptr, 0, nullptr }
 };
@@ -376,7 +422,7 @@ PyTypeObject zroya_template_type = {
     0,                         /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT |
     Py_TPFLAGS_BASETYPE,   /* tp_flags */
-    "Notification template. You may show instance of template via zroya.show function.",           /* tp_doc */
+	zroya_template__doc__,           /* tp_doc */
     0,                         /* tp_traverse */
     0,                         /* tp_clear */
     0,                         /* tp_richcompare */
