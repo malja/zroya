@@ -20,67 +20,66 @@ class zroya_Template(unittest.TestCase):
 
     ### FIRST LINE
 
-    def test_firstLine_EmptyParams(self):
+    def test_setFirstLine_EmptyParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertIsInstance(template.firstLine(), str)
+        self.assertRaises(TypeError, lambda: template.setFirstLine())
 
-    def test_firstLine_InvalidParams(self):
+    def test_setFirstLine_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertRaises(ValueError, lambda: template.firstLine(-1))
+        self.assertRaises(ValueError, lambda: template.setFirstLine(-1))
 
-    def test_firstLine_ProperParams(self):
+    def test_setFirstLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertTrue(template.firstLine("Test"))
+        self.assertTrue(template.setFirstLine("Test"))
 
-    def test_firstLine_ProperParams2(self):
+    def test_setFirstLine_ProperParams2(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        template.firstLine("Test")
-        self.assertEqual(template.firstLine(), "Test")
+        template.setFirstLine("Test")
+        self.assertEqual(template.getFirstLine(), "Test")
 
     ### SECOND LINE
     
-    def test_secondLine_EmptyParams(self):
+    def test_setSecondLine_EmptyParams(self):
         template = zroya.Template(zroya.TemplateType.Text2)
-        self.assertIsInstance(template.secondLine(), str)
+        self.assertRaises(TypeError, lambda: template.setSecondLine())
         
-    def test_secondLine_InvalidParams(self):
+    def test_setSecondLine_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.Text2)
-        self.assertRaises(ValueError, lambda: template.secondLine(-1))
+        self.assertRaises(ValueError, lambda: template.setSecondLine(-1))
         
-    def test_secondLine_ProperParams(self):
+    def test_setSecondLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text2)
-        template.firstLine("Test")
-        self.assertTrue(template.secondLine("Test Line 2"))
+        template.setFirstLine("Test")
+        self.assertTrue(template.setSecondLine("Test Line 2"))
 
-    def test_secondLine_ProperParams2(self):
+    def test_setSecondLine_ProperParams2(self):
         template = zroya.Template(zroya.TemplateType.Text2)
-        template.firstLine("Test")
-        template.secondLine("Test Line 2")
-        self.assertEqual(template.secondLine(), "Test Line 2")
+        template.setFirstLine("Test")
+        template.setSecondLine("Test Line 2")
+        self.assertEqual(template.getSecondLine(), "Test Line 2")
 
-    def test_secondLine_UnsuportedTemplateType(self):
+    def test_setSecondLine_UnsuportedTemplateType(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        template.firstLine("Test")
-        self.assertFalse(template.secondLine("Test Line 2"))
+        self.assertFalse(template.setSecondLine("Test Line 2"))
 
     ### THIRD LINE
-    def test_thirdLine_EmptyParams(self):
+    def test_setThirdLine_EmptyParams(self):
         template = zroya.Template(zroya.TemplateType.Text4)
-        self.assertIsInstance(template.thirdLine(), str)
+        self.assertRaises(TypeError, lambda: template.setThirdLine())
 
-    def test_thirdLine_InvalidParams(self):
+    def test_setThirdLine_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.Text4)
-        self.assertRaises(ValueError, lambda: template.thirdLine(-1))
+        self.assertRaises(ValueError, lambda: template.setThirdLine(-1))
 
     def test_thirdLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text4)
-        template.firstLine("Test")
-        template.secondLine("Test2")
-        self.assertTrue(template.thirdLine("Test Line 3"))
+        template.setFirstLine("Test")
+        template.setSecondLine("Test2")
+        self.assertTrue(template.setThirdLine("Test Line 3"))
 
     def test_thirdLine_UnsuportedTemplateType(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertFalse(template.thirdLine("Test Line 2"))
+        self.assertFalse(template.setThirdLine("Test Line 2"))
 
     ### Expire
 
