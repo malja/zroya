@@ -32,3 +32,4 @@ zroya2 branch
         - New Python class DismissReason
         - Working callbacks
         - Visual Studio project for C/C++ code
+        - Use get/set methods instead of multipurpose methods in zroya.Template

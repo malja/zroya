@@ -5,7 +5,6 @@ Required before release:
     - Add Attribution text support
     - Write documentation for C and Python part of the project
     - Add more tests
-    - Add set*,add*,get* methods for each action instead of current multipurpose methods
     - Add Template __init__ method to zroya.pyi
 
 Future goals:
