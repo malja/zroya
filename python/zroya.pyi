@@ -4,14 +4,6 @@ class Template:
 	You may show any number of notifications based on this template with zroya.show() method.
 	"""
 
-	def expire(self, ms=0):
-		"""
-		Set or return expiration time in milliseconds. 
-		:param int ms: Number of milliseconds for expiration time. Zero means no expiration. 
-		:return: If you set _ms_ parameter to any positive integer, expiration time is set. Without any parameter, current expiration time is returned.
-		"""
-		pass
-
 	def getAudio(self):
 		"""
 		Get notification audio. 
@@ -23,6 +15,13 @@ class Template:
 		"""
 		Get notification audio mode. 
 		:return: zroya.AudioMode.
+		"""
+		pass
+
+	def getExpiration(self):
+		"""
+		Return expiration time in milliseconds. 
+		:return: Number of milliseconds or zero for no expiration time.
 		"""
 		pass
 
@@ -62,6 +61,14 @@ class Template:
 		:param int audio: One of zroya.Audio. 
 		:param int mode: One of zroya.AudioMode. Or leave empty for zroya.AudioMode.Default. 
 		:return: True if audio was set, false otherwise.
+		"""
+		pass
+
+	def setExpiration(self, ms):
+		"""
+		Set expiration time in milliseconds. 
+		:param int ms: Number of milliseconds for expiration time. Zero means no expiration. 
+		:return: Return True for positive value of _ms_.
 		"""
 		pass
 
