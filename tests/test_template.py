@@ -102,31 +102,26 @@ class zroya_Template(unittest.TestCase):
 
     ### AUDIO
 
-    def test_audio_InvalidParams(self):
+    def test_setAudio_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertRaises(ValueError, lambda: template.audio(-1))
+        self.assertRaises(ValueError, lambda: template.setAudio(-1))
 
-    def test_audio_EmptyParams(self):
+    def test_setAudio_EmptyParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        # TODO: Upravit
-        print(template.audio())
+        self.assertRaises(TypeError, lambda: template.setAudio())
 
-    def test_audio_ProperParams(self):
+    def test_setAudio_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertTrue(template.audio(zroya.Audio.Mail))
+        self.assertTrue(template.setAudio(zroya.Audio.Mail))
 
-    def test_audio_ProperParams2(self):
+    def test_setAudio_ProperParams2(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertTrue(template.audio(audio=zroya.Audio.Mail, mode=zroya.AudioMode.Loop))
+        self.assertTrue(template.setAudio(audio=zroya.Audio.Mail, mode=zroya.AudioMode.Loop))
 
-    def test_audio_ProperParams3(self):
+    def test_setAudio_ProperParams3(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertTrue(template.audio(mode=zroya.AudioMode.Loop))
-
-    def test_audio_ProperParams4(self):
-        template = zroya.Template(zroya.TemplateType.Text1)
-        template.audio(zroya.Audio.IM, zroya.AudioMode.Silence)
-        self.assertEqual(template.audio(), "ms-winsoundevent:Notification.IM")
+        template.setAudio(zroya.Audio.IM, zroya.AudioMode.Silence)
+        self.assertEqual(template.getAudio(), zroya.Audio.IM)
 
     ### IMAGE
 
