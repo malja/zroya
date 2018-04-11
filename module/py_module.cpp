@@ -55,12 +55,7 @@ PyMODINIT_FUNC PyInit__zroya() {
     }
 
 	PyObject *template_dict = zroya_template_type.tp_dict;
-
-	// Add class properties to Template class
-	for (int i = 0; zroya_template_properties[i].name != nullptr; i++) {
-		PyDict_SetItemString(template_dict, zroya_template_properties[i].name, Py_BuildValue("i", zroya_template_properties[i].value));
-	}
-	
+		
     // WinToast singleton should be accessible from anywhere, but keeping instance 
     // should prevent from unwanted destroying.
     zroya_State *state = (zroya_State*)PyModule_GetState(module);
