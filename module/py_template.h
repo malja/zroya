@@ -33,36 +33,63 @@
 
         /// Wrapper for setting line text. It checks if line number is supported for selected template
 		/// type.
-        PyObject *zroya_template_line(zroya_Template *self, PyObject *args, PyObject *kwargs, int line = 0);
+        PyObject *zroya_template_setLine(zroya_Template *self, PyObject *args, PyObject *kwargs, int line = 0);
 
-        PyDoc_STRVAR(zroya_template_firstLine__doc__,
-            "firstLine(text=None)\n"
+		/// Return text for specified line.
+		PyObject *zroya_template_getLine(zroya_Template *self, int line = 0);
+
+        PyDoc_STRVAR(zroya_template_setFirstLine__doc__,
+            "setFirstLine(text)\n"
             "--\n\n"
-            "Set or return first line of notification text. \n"
+            "Set first line of notification text. \n"
             ":param str text: Text to be set as the first line. \n"
-            ":return: With _text_ parameter set, returns True/False. Without _text_, current first line is returned."
+            ":return: True if first line was set, False on error."
         );
-        PyObject *zroya_template_firstLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
+        PyObject *zroya_template_setFirstLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
 
-        PyDoc_STRVAR(zroya_template_secondLine__doc__,
-            "secondLine(text=None)\n"
+		PyDoc_STRVAR(zroya_template_getFirstLine__doc__,
+			"getFirstLine()\n"
+			"--\n\n"
+			"Get first line of notification text. \n"
+			":return: First line, or empty string when there is not text to be returned."
+		);
+		PyObject *zroya_template_getFirstLine(zroya_Template *self);
+
+        PyDoc_STRVAR(zroya_template_setSecondLine__doc__,
+            "setSecondLine(text)\n"
             "--\n\n"
-            "Set or return second line of notification text. \n"
+            "Set second line of notification text. \n"
             ":param str text: Text to be set as the second line. \n"
-			":throw: ValueError if second line is not supported by selected notification type. \n"
-            ":return: With _text_ parameter set, returns True/False. Without _text_, current second line is returned."
+            ":return: True if second line is supported for current template type and text was set. False otherwise."
         );
-        PyObject *zroya_template_secondLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
+        PyObject *zroya_template_setSecondLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
 
-        PyDoc_STRVAR(zroya_template_thirdLine__doc__,
-            "thirdLine(text=None)\n"
+		PyDoc_STRVAR(zroya_template_getSecondLine__doc__,
+			"getSecondLine()\n"
+			"--\n\n"
+			"Get second line of notification text. \n"
+			":return: Empty string when second line is not set or it is not supported for current template type. \n"
+			"Second line text in other cases."
+		);
+		PyObject *zroya_template_getSecondLine(zroya_Template *self);
+
+        PyDoc_STRVAR(zroya_template_setThirdLine__doc__,
+            "setThirdLine(text)\n"
             "--\n\n"
-            "Set or return third line of notification text. \n"
+            "Set third line of notification text. \n"
             ":param str text: Text to be set as the third line. \n"
-			":throw: ValueError if third line is not supported by selected notification type. \n"
-            ":return: With _text_ parameter set, returns True/False. Without _text_, current third line is returned."
+			":return: True if third line is supported for current type and the text was set. False otherwise."
         );
-        PyObject *zroya_template_thirdLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
+        PyObject *zroya_template_setThirdLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
+
+		PyDoc_STRVAR(zroya_template_getThirdLine__doc__,
+			"getThirdLine()\n"
+			"--\n\n"
+			"Get third line of notification text. \n"
+			":return: Empty string for unsuported line for current template type or when third line is not set yet. \n"
+			"In other cases, third line text is returned."
+		);
+		PyObject *zroya_template_getThirdLine(zroya_Template *self);
 
         PyDoc_STRVAR(zroya_template_image__doc__,
             "image(path=None)\n"

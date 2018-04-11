@@ -32,50 +32,7 @@ const wchar_t* supported_audio_files[] = {
 	L"ms-winsoundevent:Notification.Looping.Call10"
 };
 
-/// List of all Template class properties
-zroya_Template_Property zroya_template_properties[] = {
-	{ "AUDIO_TYPE_DEFAULT", (int)WinToastLib::WinToastTemplate::AudioOption::Default },
-	{ "AUDIO_TYPE_SILENCE", (int)WinToastLib::WinToastTemplate::AudioOption::Silent },
-	{ "AUDIO_TYPE_LOOP", (int)WinToastLib::WinToastTemplate::AudioOption::Loop },
-			
-	{ "AUDIO_DEFAULT", 0 },
-	{ "AUDIO_IM", 1 },
-	{ "AUDIO_MAIL", 2 },
-	{ "AUDIO_REMINDER", 3 },
-	{ "AUDIO_SMS", 4 },
-	{ "AUDIO_ALARM", 5 },
-	{ "AUDIO_ALARM2", 6 },
-	{ "AUDIO_ALARM3", 7 },
-	{ "AUDIO_ALARM4", 8 },
-	{ "AUDIO_ALARM5", 9 },
-	{ "AUDIO_ALARM6", 10 },
-	{ "AUDIO_ALARM7", 11 },
-	{ "AUDIO_ALARM8", 12 },
-	{ "AUDIO_ALARM9", 13 },
-	{ "AUDIO_ALARM10", 14 },
-	{ "AUDIO_CALL", 15 },
-	{ "AUDIO_CALL2", 16 },
-	{ "AUDIO_CALL3", 17 },
-	{ "AUDIO_CALL4", 18 },
-	{ "AUDIO_CALL5", 19 },
-	{ "AUDIO_CALL6", 20 },
-	{ "AUDIO_CALL7", 21 },
-	{ "AUDIO_CALL8", 22 },
-	{ "AUDIO_CALL9", 23 },
-	{ "AUDIO_CALL10", 24 },
-			
-	{ "TYPE_IMAGE_TEXT1", (int)WinToastLib::WinToastTemplate::WinToastTemplateType::ImageAndText01 },
-	{ "TYPE_IMAGE_TEXT2", (int)WinToastLib::WinToastTemplate::WinToastTemplateType::ImageAndText02 },
-	{ "TYPE_IMAGE_TEXT3", (int)WinToastLib::WinToastTemplate::WinToastTemplateType::ImageAndText03 },
-	{ "TYPE_IMAGE_TEXT4", (int)WinToastLib::WinToastTemplate::WinToastTemplateType::ImageAndText04 },
-	{ "TYPE_TEXT1", (int)WinToastLib::WinToastTemplate::WinToastTemplateType::Text01 },
-	{ "TYPE_TEXT2", (int)WinToastLib::WinToastTemplate::WinToastTemplateType::Text02 },
-	{ "TYPE_TEXT3", (int)WinToastLib::WinToastTemplate::WinToastTemplateType::Text03 },
-	{ "TYPE_TEXT4", (int)WinToastLib::WinToastTemplate::WinToastTemplateType::Text04 },
-	{ nullptr, 0 }
-};
-
-PyObject *zroya_template_line(zroya_Template *self, PyObject *args, PyObject *kwargs, int line) {
+PyObject *zroya_template_setLine(zroya_Template *self, PyObject *args, PyObject *kwargs, int line) {
 
 	// Number of lines for each WinToastLib::WinToastTemplate::WinToastTemplateType
     int number_of_lines[] = { 1, 2, 2, 3, 1, 2, 2, 3 };
@@ -91,50 +48,70 @@ PyObject *zroya_template_line(zroya_Template *self, PyObject *args, PyObject *kw
     PyObject *param = nullptr;
 
     // Get parameter
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|O", keywords, &param)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O", keywords, &param)) {
         return nullptr;
     }
 
-    // Was something found? And is it of required type?
-    if (param && PyUnicode_Check(param)) {
-
-        wchar_t *text = PyUnicode_AsWideCharString(param, nullptr);
-        // Set line-th line next
-        self->_template->setTextField(
-            std::wstring(text), static_cast<WinToastLib::WinToastTemplate::TextField>(line)
-        );
-
-        // Clean up
-        PyMem_Free(text);
-
-	// No parameter? Just return text
-    } else if (!param) {
-
-        std::wstring text = self->_template->textField(
-            static_cast<WinToastLib::WinToastTemplate::TextField>(line)
-        );
-
-        return Py_BuildValue("u", text.c_str());
-
-	} else {
-		PyErr_SetString(PyExc_ValueError, "text parameter is required to be a string. Or leave it empty.");
+    // Is parameter an Unicode string?
+	if (!PyUnicode_Check(param)) {
+		PyErr_SetString(PyExc_ValueError, "text parameter is required to be a string.");
 		return nullptr;
 	}
 
-    Py_XINCREF(Py_True);
+    wchar_t *text = PyUnicode_AsWideCharString(param, nullptr);
+    
+	// Set line-th line text
+    self->_template->setTextField(
+        std::wstring(text), static_cast<WinToastLib::WinToastTemplate::TextField>(line)
+    );
+
+    // Clean up
+    PyMem_Free(text);
+
+	Py_XINCREF(Py_True);
     return Py_True;
 }
 
-PyObject *zroya_template_firstLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
-    return zroya_template_line(self, args, kwargs, 0);
+PyObject *zroya_template_getLine(zroya_Template *self, int line) {
+	// Number of lines for each WinToastLib::WinToastTemplate::WinToastTemplateType
+	int number_of_lines[] = { 1, 2, 2, 3, 1, 2, 2, 3 };
+
+	// Fail for non supported template types
+	if (line + 1 > number_of_lines[self->_type]) {
+		return PyUnicode_FromString("");
+	}
+
+	// Get line-th line text
+	std::wstring text = self->_template->textField(
+		static_cast<WinToastLib::WinToastTemplate::TextField>(line)
+	);
+
+	// Return it
+	return Py_BuildValue("u", text.c_str());
 }
 
-PyObject *zroya_template_secondLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
-    return zroya_template_line(self, args, kwargs, 1);
+PyObject *zroya_template_setFirstLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
+    return zroya_template_setLine(self, args, kwargs, 0);
 }
 
-PyObject *zroya_template_thirdLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
-    return zroya_template_line(self, args, kwargs, 2);
+PyObject *zroya_template_getFirstLine(zroya_Template *self) {
+	return zroya_template_getLine(self, 0);
+}
+
+PyObject *zroya_template_setSecondLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
+    return zroya_template_setLine(self, args, kwargs, 1);
+}
+
+PyObject *zroya_template_getSecondLine(zroya_Template *self) {
+	return zroya_template_getLine(self, 1);
+}
+
+PyObject *zroya_template_setThirdLine(zroya_Template *self, PyObject *args, PyObject *kwargs) {
+    return zroya_template_setLine(self, args, kwargs, 2);
+}
+
+PyObject *zroya_template_getThirdLine(zroya_Template *self) {
+	return zroya_template_getLine(self, 2);
 }
 
 PyObject *zroya_template_image(zroya_Template *self, PyObject *args, PyObject *kwargs) {
@@ -385,9 +362,15 @@ void zroya_template_dealloc(zroya_Template *self) {
 }
 
 PyMethodDef zroya_template_methods[] = {
-    { "firstLine", (PyCFunction)zroya_template_firstLine, METH_VARARGS | METH_KEYWORDS, zroya_template_firstLine__doc__ },
-    { "secondLine", (PyCFunction)zroya_template_secondLine, METH_VARARGS | METH_KEYWORDS, zroya_template_secondLine__doc__ },
-    { "thirdLine", (PyCFunction)zroya_template_thirdLine, METH_VARARGS | METH_KEYWORDS, zroya_template_thirdLine__doc__ },
+    { "setFirstLine", (PyCFunction)zroya_template_setFirstLine, METH_VARARGS | METH_KEYWORDS, zroya_template_setFirstLine__doc__ },
+	{ "getFirstLine", (PyCFunction)zroya_template_getFirstLine, METH_VARARGS, zroya_template_getFirstLine__doc__ },
+
+
+    { "setSecondLine", (PyCFunction)zroya_template_setSecondLine, METH_VARARGS | METH_KEYWORDS, zroya_template_setSecondLine__doc__ },
+	{ "getSecondLine", (PyCFunction)zroya_template_getSecondLine, METH_VARARGS, zroya_template_getSecondLine__doc__ },
+
+    { "setThirdLine", (PyCFunction)zroya_template_setThirdLine, METH_VARARGS | METH_KEYWORDS, zroya_template_setThirdLine__doc__ },
+	{ "getThirdLine", (PyCFunction)zroya_template_getThirdLine, METH_VARARGS, zroya_template_getThirdLine__doc__ },
 
     { "image", (PyCFunction)zroya_template_image, METH_VARARGS | METH_KEYWORDS, zroya_template_image__doc__ },
     { "audio", (PyCFunction)zroya_template_audio, METH_VARARGS | METH_KEYWORDS, zroya_template_audio__doc__ },
