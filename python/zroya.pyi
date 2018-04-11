@@ -1,17 +1,8 @@
 class Template:
 	"""
-	Notification template. You may show instance of template via zroya.show function.
+	Template class is a template for any notification you create. 
+	You may show any number of notifications based on this template with zroya.show() method.
 	"""
-
-	def audio(self, audio=None, mode=None):
-		"""
-		Set audio to be played and playback type or return current audio. 
-		:param int audio: One of zroya.Template.AUDIO_* property. 
-		:param int mode: One of zroya.Template.AUDIO_TYPE_* property. 
-		:return: With _audio_ parameter provided, it sets new audio. In addition, if _type_ parameter is set, playback type is changed. Otherwise default playback type is used. True/False is returned.
-		 Without _audio_ parameter set, current audio is returned.
-		"""
-		pass
 
 	def expire(self, ms=0):
 		"""
@@ -21,14 +12,35 @@ class Template:
 		"""
 		pass
 
-	def getFirstLine(self, ):
+	def getAudio(self):
+		"""
+		Get notification audio. 
+		:return: zroya.Audio.
+		"""
+		pass
+
+	def getAudioMode(self):
+		"""
+		Get notification audio mode. 
+		:return: zroya.AudioMode.
+		"""
+		pass
+
+	def getFirstLine(self):
 		"""
 		Get first line of notification text. 
 		:return: First line, or empty string when there is not text to be returned.
 		"""
 		pass
 
-	def getSecondLine(self, ):
+	def getImage(self):
+		"""
+		Get notification image path. 
+		:return: Empty string or path to current template image.
+		"""
+		pass
+
+	def getSecondLine(self):
 		"""
 		Get second line of notification text. 
 		:return: Empty string when second line is not set or it is not supported for current template type. 
@@ -36,7 +48,7 @@ class Template:
 		"""
 		pass
 
-	def getThirdLine(self, ):
+	def getThirdLine(self):
 		"""
 		Get third line of notification text. 
 		:return: Empty string for unsuported line for current template type or when third line is not set yet. 
@@ -44,11 +56,12 @@ class Template:
 		"""
 		pass
 
-	def image(self, path=None):
+	def setAudio(self, audio, mode):
 		"""
-		Set or return notification image path. 
-		:param str path: Path to image. 
-		:return: With _path_ parameter set, it returns True/False. Without _text_, current image path is returned.
+		Set audio and playback mode for notification. 
+		:param int audio: One of zroya.Audio. 
+		:param int mode: One of zroya.AudioMode. Or leave empty for zroya.AudioMode.Default. 
+		:return: True if audio was set, false otherwise.
 		"""
 		pass
 
@@ -56,7 +69,17 @@ class Template:
 		"""
 		Set first line of notification text. 
 		:param str text: Text to be set as the first line. 
+		:raises: ValueError when text is not a string. 
 		:return: True if first line was set, False on error.
+		"""
+		pass
+
+	def setImage(self, path):
+		"""
+		Set notification image path. 
+		:param str path: Path to image. 
+		:raises: FileNotFoundError when path is not a valid file. 
+		:return: True is image was set or False for unsupported template type.
 		"""
 		pass
 
@@ -64,6 +87,7 @@ class Template:
 		"""
 		Set second line of notification text. 
 		:param str text: Text to be set as the second line. 
+		:raises: ValueError when text is not a string. 
 		:return: True if second line is supported for current template type and text was set. False otherwise.
 		"""
 		pass
@@ -72,6 +96,7 @@ class Template:
 		"""
 		Set third line of notification text. 
 		:param str text: Text to be set as the third line. 
+		:raises: ValueError when text is not a string. 
 		:return: True if third line is supported for current type and the text was set. False otherwise.
 		"""
 		pass
