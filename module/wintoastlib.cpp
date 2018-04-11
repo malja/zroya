@@ -885,6 +885,7 @@ HRESULT WinToast::addActionHelper(_In_ IXmlDocument *xml, _In_ const std::wstrin
 WinToastTemplate::WinToastTemplate(_In_ WinToastTemplateType type) : _type(type) {
     static const std::size_t TextFieldsCount[] = { 1, 2, 2, 3, 1, 2, 2, 3 };
     _textFields = std::vector<std::wstring>(TextFieldsCount[_type], L"");
+	_imagePath = L"";
 }
 
 WinToastTemplate::~WinToastTemplate() {

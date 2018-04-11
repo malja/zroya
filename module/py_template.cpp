@@ -114,82 +114,56 @@ PyObject *zroya_template_getThirdLine(zroya_Template *self) {
 	return zroya_template_getLine(self, 2);
 }
 
-PyObject *zroya_template_image(zroya_Template *self, PyObject *args, PyObject *kwargs) {
+PyObject *zroya_template_setImage(zroya_Template *self, PyObject *args, PyObject *kwargs) {
 
     PyObject *path_obj = nullptr;
     char* keywords[] = { (char*)"path", nullptr };
 
 	// Fail for non supported toast types
-	if (self->_type > 3 /*WinToastLib::WinToastTemplate::WinToastTemplateType::ImageAndText04*/) {
+	// Make sure it corresponds with value in WinToastLib::WinToastTemplate::WinToastTemplateType::ImageAndText04
+	if (self->_type > 3) {
 		Py_XINCREF(Py_False);
 		return Py_False;
 	}
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|O", keywords, &path_obj)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O", keywords, &path_obj)) {
         return nullptr;
     }
 
-    /*// Get parameter (if any)
-    if (!PyArg_UnpackTuple(args, "image", 0, 1, &param)) {
-        // Throw exception
-        PyErr_SetString(PyExc_FileNotFoundError, "unable to parse arguments.");
-        return nullptr;
-    }*/
+	if (!PyUnicode_Check(path_obj)) {
+		PyErr_SetString(PyExc_ValueError, "path is not a string.");
+		return nullptr;
+	}
 
-    if (path_obj && PyUnicode_Check(path_obj)) {
+	// Non-existing file
+	if (!file_exists(path_obj)) {
+		// Throw exception
+		PyErr_SetString(PyExc_FileNotFoundError, "file with notification image does not exist");
+		return nullptr;
+	}
 
-    /*
-    // Was something found? And is it of required type?
-    if (param && PyUnicode_Check(param)) {
-    */
+    // Get path parameter
+    wchar_t *path = PyUnicode_AsWideCharString(path_obj, nullptr);
 
-        // Get path parameter
-        wchar_t *path = PyUnicode_AsWideCharString(path_obj, nullptr);
+    // Set path parameter
+	std::wstring p = std::wstring(path);
+    self->_template->setImagePath(p);
 
-        // Unable to get path
-        if (!path_obj) {
-
-            // Return False
-            Py_XINCREF(Py_False);
-            return Py_False;
-
-        }
-
-        // Non-existing file
-        if (!file_exists(path_obj)) {
-
-            // Throw exception
-            PyErr_SetString(PyExc_FileNotFoundError, "file with notification image does not exist");
-            return nullptr;
-
-        }
-
-        // Set path parameter
-		std::wstring p = std::wstring(path);
-        self->_template->setImagePath(p);
-
-        // Free memory
-        PyMem_Free(path);
-
-    // Something found, but it is not string
-    } else if (path_obj) {
-        PyErr_SetString(PyExc_ValueError, "path is not a string.");
-        return nullptr;
-
-    // Nothing found
-    } else {
-
-        std::wstring p = self->_template->imagePath();
-
-        // Return current path
-        return Py_BuildValue("u", p.c_str());
-
-    }
+    // Free memory
+    PyMem_Free(path);
 
     // Return True
     Py_XINCREF(Py_True);
     return Py_True;
 
+}
+
+PyObject *zroya_template_getImage(zroya_Template *self) {
+	
+	std::wstring p = self->_template->imagePath();
+
+	// Return current path
+	return Py_BuildValue("u", p.c_str());
 }
 
 PyObject *zroya_template_audio(zroya_Template *self, PyObject *arg, PyObject *kwargs) {
@@ -372,7 +346,9 @@ PyMethodDef zroya_template_methods[] = {
     { "setThirdLine", (PyCFunction)zroya_template_setThirdLine, METH_VARARGS | METH_KEYWORDS, zroya_template_setThirdLine__doc__ },
 	{ "getThirdLine", (PyCFunction)zroya_template_getThirdLine, METH_VARARGS, zroya_template_getThirdLine__doc__ },
 
-    { "image", (PyCFunction)zroya_template_image, METH_VARARGS | METH_KEYWORDS, zroya_template_image__doc__ },
+    { "setImage", (PyCFunction)zroya_template_setImage, METH_VARARGS | METH_KEYWORDS, zroya_template_setImage__doc__ },
+	{ "getImage", (PyCFunction)zroya_template_getImage, METH_VARARGS, zroya_template_getImage__doc__ },
+
     { "audio", (PyCFunction)zroya_template_audio, METH_VARARGS | METH_KEYWORDS, zroya_template_audio__doc__ },
     { "expire", (PyCFunction)zroya_template_expire, METH_VARARGS, zroya_template_expire__doc__ },
     { nullptr, nullptr, 0, nullptr }

@@ -130,24 +130,23 @@ class zroya_Template(unittest.TestCase):
 
     ### IMAGE
 
-    def test_image_InvalidParams(self):
+    def test_setImage_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
-        self.assertRaises(ValueError, lambda: template.image(-1))
+        self.assertRaises(ValueError, lambda: template.setImage(-1))
 
-    def test_image_EmptyParams(self):
+    def test_setImage_EmptyParams(self):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
-        # TODO: Upravit
-        print(template.image())
+        self.assertRaises(TypeError, lambda: template.setImage())
 
-    def test_image_FileDoesNotExist(self):
+    def test_setImage_FileDoesNotExist(self):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
-        self.assertRaises(FileNotFoundError, lambda: template.image("./non_existing_file.png"))
+        self.assertRaises(FileNotFoundError, lambda: template.setImage("./non_existing_file.png"))
 
-    def test_image_ProperParams(self):
+    def test_setImage_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
-        self.assertTrue(template.image("./files/image.png"))
+        self.assertTrue(template.setImage("./files/image.png"))
 
-    def test_audio_ProperParams2(self):
+    def test_setImage_ProperParams2(self):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
-        template.image("./files/image.png")
-        self.assertEqual(template.image(), "./files/image.png")
+        template.setImage("./files/image.png")
+        self.assertEqual(template.getImage(), "./files/image.png")

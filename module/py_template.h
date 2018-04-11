@@ -43,6 +43,7 @@
             "--\n\n"
             "Set first line of notification text. \n"
             ":param str text: Text to be set as the first line. \n"
+			":raises: ValueError when text is not a string. \n"
             ":return: True if first line was set, False on error."
         );
         PyObject *zroya_template_setFirstLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
@@ -60,6 +61,7 @@
             "--\n\n"
             "Set second line of notification text. \n"
             ":param str text: Text to be set as the second line. \n"
+			":raises: ValueError when text is not a string. \n"
             ":return: True if second line is supported for current template type and text was set. False otherwise."
         );
         PyObject *zroya_template_setSecondLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
@@ -78,6 +80,7 @@
             "--\n\n"
             "Set third line of notification text. \n"
             ":param str text: Text to be set as the third line. \n"
+			":raises: ValueError when text is not a string. \n"
 			":return: True if third line is supported for current type and the text was set. False otherwise."
         );
         PyObject *zroya_template_setThirdLine(zroya_Template *self, PyObject *args, PyObject *kwargs);
@@ -91,14 +94,23 @@
 		);
 		PyObject *zroya_template_getThirdLine(zroya_Template *self);
 
-        PyDoc_STRVAR(zroya_template_image__doc__,
-            "image(path=None)\n"
+        PyDoc_STRVAR(zroya_template_setImage__doc__,
+            "setImage(path)\n"
             "--\n\n"
-            "Set or return notification image path. \n"
+            "Set notification image path. \n"
             ":param str path: Path to image. \n"
-            ":return: With _path_ parameter set, it returns True/False. Without _text_, current image path is returned."
+			":raises: FileNotFoundError when path is not a valid file. \n"
+            ":return: True is image was set or False for unsupported template type."
         );
-        PyObject *zroya_template_image(zroya_Template *self, PyObject *args, PyObject *kwargs);
+        PyObject *zroya_template_setImage(zroya_Template *self, PyObject *args, PyObject *kwargs);
+
+		PyDoc_STRVAR(zroya_template_getImage__doc__,
+			"getImage()\n"
+			"--\n\n"
+			"Get notification image path. \n"
+			":return: Empty string or path to current template image."
+		);
+		PyObject *zroya_template_getImage(zroya_Template *self);
 
         PyDoc_STRVAR(zroya_template_audio__doc__,
             "audio(audio=None, mode=None)\n"
