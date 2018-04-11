@@ -32,7 +32,7 @@ class zroya_Template(unittest.TestCase):
         template = zroya.Template(zroya.TemplateType.Text1)
         self.assertTrue(template.setFirstLine("Test"))
 
-    def test_setFirstLine_ProperParams2(self):
+    def test_getFirstLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
         template.setFirstLine("Test")
         self.assertEqual(template.getFirstLine(), "Test")
@@ -52,7 +52,7 @@ class zroya_Template(unittest.TestCase):
         template.setFirstLine("Test")
         self.assertTrue(template.setSecondLine("Test Line 2"))
 
-    def test_setSecondLine_ProperParams2(self):
+    def test_getSecondLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text2)
         template.setFirstLine("Test")
         template.setSecondLine("Test Line 2")
@@ -71,11 +71,16 @@ class zroya_Template(unittest.TestCase):
         template = zroya.Template(zroya.TemplateType.Text4)
         self.assertRaises(ValueError, lambda: template.setThirdLine(-1))
 
-    def test_thirdLine_ProperParams(self):
+    def test_setThirdLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text4)
         template.setFirstLine("Test")
         template.setSecondLine("Test2")
         self.assertTrue(template.setThirdLine("Test Line 3"))
+
+    def test_getThirdLine_ProperParams(self):
+        template = zroya.Template(zroya.TemplateType.Text4)
+        template.setThirdLine("Test Line 3")
+        self.assertEqual(template.getThirdLine(), "Test Line 3")
 
     def test_thirdLine_UnsuportedTemplateType(self):
         template = zroya.Template(zroya.TemplateType.Text1)
@@ -83,22 +88,22 @@ class zroya_Template(unittest.TestCase):
 
     ### Expire
 
-    def test_expire_InvalidParams(self):
+    def test_setExpiration_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertRaises(TypeError, lambda: template.expire("Test"))
+        self.assertRaises(TypeError, lambda: template.setExpiration("Test"))
 
-    def test_expire_EmptyParams(self):
+    def test_setExpiration_EmptyParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertEqual(template.expire(), 0)
+        self.assertRaises(TypeError, lambda: template.setExpiration())
 
-    def test_expire_ProperParams(self):
+    def test_setExpire_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertTrue(template.expire(10))
+        self.assertTrue(template.setExpiration(10))
 
-    def test_expire_ProperParams2(self):
+    def test_getExpiration_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        template.expire(10)
-        self.assertEqual(template.expire(), 10)
+        template.setExpiration(10)
+        self.assertEqual(template.getExpiration(), 10)
 
     ### AUDIO
 
@@ -118,7 +123,7 @@ class zroya_Template(unittest.TestCase):
         template = zroya.Template(zroya.TemplateType.Text1)
         self.assertTrue(template.setAudio(audio=zroya.Audio.Mail, mode=zroya.AudioMode.Loop))
 
-    def test_setAudio_ProperParams3(self):
+    def test_getAudio_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
         template.setAudio(zroya.Audio.IM, zroya.AudioMode.Silence)
         self.assertEqual(template.getAudio(), zroya.Audio.IM)
@@ -141,7 +146,7 @@ class zroya_Template(unittest.TestCase):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
         self.assertTrue(template.setImage("./files/image.png"))
 
-    def test_setImage_ProperParams2(self):
+    def test_getImage_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
         template.setImage("./files/image.png")
         self.assertEqual(template.getImage(), "./files/image.png")
