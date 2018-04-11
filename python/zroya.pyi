@@ -3,78 +3,6 @@ class Template:
 	Notification template. You may show instance of template via zroya.show function.
 	"""
 
-	AUDIO_ALARM = 5
-
-	AUDIO_ALARM10 = 14
-
-	AUDIO_ALARM2 = 6
-
-	AUDIO_ALARM3 = 7
-
-	AUDIO_ALARM4 = 8
-
-	AUDIO_ALARM5 = 9
-
-	AUDIO_ALARM6 = 10
-
-	AUDIO_ALARM7 = 11
-
-	AUDIO_ALARM8 = 12
-
-	AUDIO_ALARM9 = 13
-
-	AUDIO_CALL = 15
-
-	AUDIO_CALL10 = 24
-
-	AUDIO_CALL2 = 16
-
-	AUDIO_CALL3 = 17
-
-	AUDIO_CALL4 = 18
-
-	AUDIO_CALL5 = 19
-
-	AUDIO_CALL6 = 20
-
-	AUDIO_CALL7 = 21
-
-	AUDIO_CALL8 = 22
-
-	AUDIO_CALL9 = 23
-
-	AUDIO_DEFAULT = 0
-
-	AUDIO_IM = 1
-
-	AUDIO_MAIL = 2
-
-	AUDIO_REMINDER = 3
-
-	AUDIO_SMS = 4
-
-	AUDIO_TYPE_DEFAULT = 0
-
-	AUDIO_TYPE_LOOP = 2
-
-	AUDIO_TYPE_SILENCE = 1
-
-	TYPE_IMAGE_TEXT1 = 0
-
-	TYPE_IMAGE_TEXT2 = 1
-
-	TYPE_IMAGE_TEXT3 = 2
-
-	TYPE_IMAGE_TEXT4 = 3
-
-	TYPE_TEXT1 = 4
-
-	TYPE_TEXT2 = 5
-
-	TYPE_TEXT3 = 6
-
-	TYPE_TEXT4 = 7
-
 	def audio(self, audio=None, mode=None):
 		"""
 		Set audio to be played and playback type or return current audio. 
@@ -93,11 +21,26 @@ class Template:
 		"""
 		pass
 
-	def firstLine(self, text=None):
+	def getFirstLine(self, ):
 		"""
-		Set or return first line of notification text. 
-		:param str text: Text to be set as the first line. 
-		:return: With _text_ parameter set, returns True/False. Without _text_, current first line is returned.
+		Get first line of notification text. 
+		:return: First line, or empty string when there is not text to be returned.
+		"""
+		pass
+
+	def getSecondLine(self, ):
+		"""
+		Get second line of notification text. 
+		:return: Empty string when second line is not set or it is not supported for current template type. 
+		Second line text in other cases.
+		"""
+		pass
+
+	def getThirdLine(self, ):
+		"""
+		Get third line of notification text. 
+		:return: Empty string for unsuported line for current template type or when third line is not set yet. 
+		In other cases, third line text is returned.
 		"""
 		pass
 
@@ -109,21 +52,27 @@ class Template:
 		"""
 		pass
 
-	def secondLine(self, text=None):
+	def setFirstLine(self, text):
 		"""
-		Set or return second line of notification text. 
-		:param str text: Text to be set as the second line. 
-		:throw: ValueError if second line is not supported by selected notification type. 
-		:return: With _text_ parameter set, returns True/False. Without _text_, current second line is returned.
+		Set first line of notification text. 
+		:param str text: Text to be set as the first line. 
+		:return: True if first line was set, False on error.
 		"""
 		pass
 
-	def thirdLine(self, text=None):
+	def setSecondLine(self, text):
 		"""
-		Set or return third line of notification text. 
+		Set second line of notification text. 
+		:param str text: Text to be set as the second line. 
+		:return: True if second line is supported for current template type and text was set. False otherwise.
+		"""
+		pass
+
+	def setThirdLine(self, text):
+		"""
+		Set third line of notification text. 
 		:param str text: Text to be set as the third line. 
-		:throw: ValueError if third line is not supported by selected notification type. 
-		:return: With _text_ parameter set, returns True/False. Without _text_, current third line is returned.
+		:return: True if third line is supported for current type and the text was set. False otherwise.
 		"""
 		pass
 
@@ -283,6 +232,11 @@ class TemplateType:
 class DismissReason:
 	"""
 	
+    This class represents a notification dismiss reason. It is passed to callback registered in on_dismiss parameter
+    of zroya.show function.
+
+    You can print it to get a reason description or compare it with any of following attributes.
+
     Attributes:
     -----------
 
