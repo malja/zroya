@@ -73,8 +73,14 @@ def GenerateStubFile(path_to_pyd):
                         # Is it a method? Ignoring those starting with undercore, because python does not set them.
                         if inspect.ismethoddescriptor(cobj) and cname[0] != "_":
                             # Get method signature. Replace leading and trailing bracket, because I have to add self parameter
+
                             signature = str(inspect.signature(cobj)).replace("(", "").replace(")", "")
                             # Print: def <function_name>(self, <function_parameters>):
-                            output.write("\tdef {}(self, {}):\n".format(cname, signature))
+
+                            if len(signature) == 0:
+                                output.write("\tdef {}(self):\n".format(cname))
+                            else:
+                                output.write("\tdef {}(self, {}):\n".format(cname, signature))
+
                             # Print methods docstring
                             output.write("\t\t\"\"\"\n\t\t{}\n\t\t\"\"\"\n\t\tpass\n\n".format(inspect.getdoc(cobj).replace("\n", "\n\t\t")))
