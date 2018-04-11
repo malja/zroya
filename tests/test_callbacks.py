@@ -11,7 +11,7 @@ def ondismiss(data, reason):
 zroya.init("python", "a", "b", "c", "d")
 
 t = zroya.Template(zroya.TemplateType.Text1)
-t.firstLine("Ahoj")
+t.setFirstLine("Ahoj")
 
 
 d = zroya.show(t, on_click=onclick, on_dismiss=ondismiss)
