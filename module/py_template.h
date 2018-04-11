@@ -136,14 +136,22 @@
 		);
 		PyObject *zroya_template_getAudioMode(zroya_Template *self);
 		
-        PyDoc_STRVAR(zroya_template_expire__doc__,
-            "expire(ms=0)\n"
+        PyDoc_STRVAR(zroya_template_setExpiration__doc__,
+            "setExpiration(ms)\n"
             "--\n\n"
-            "Set or return expiration time in milliseconds. \n"
+            "Set expiration time in milliseconds. \n"
             ":param int ms: Number of milliseconds for expiration time. Zero means no expiration. \n"
-            ":return: If you set _ms_ parameter to any positive integer, expiration time is set. Without any parameter, current expiration time is returned."
+            ":return: Return True for positive value of _ms_."
         );
-        PyObject *zroya_template_expire(zroya_Template *self, PyObject *arg);
+        PyObject *zroya_template_setExpiration(zroya_Template *self, PyObject *arg, PyObject *kwargs);
+
+		PyDoc_STRVAR(zroya_template_getExpiration__doc__,
+			"getExpiration()\n"
+			"--\n\n"
+			"Return expiration time in milliseconds. \n"
+			":return: Number of milliseconds or zero for no expiration time."
+		);
+		PyObject *zroya_template_getExpiration(zroya_Template *self);
 
         /// Create new empty zroya.Template object without inner values set up.
         PyObject *zroya_template_new(PyTypeObject *type, PyObject *args, PyObject *kwargs);

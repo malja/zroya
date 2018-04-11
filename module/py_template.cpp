@@ -290,29 +290,35 @@ PyObject *zroya_template_getAudioMode(zroya_Template *self) {
 
 }
 
-PyObject *zroya_template_expire(zroya_Template *self, PyObject *arg) {
+PyObject *zroya_template_setExpiration(zroya_Template *self, PyObject *arg, PyObject *kwargs) {
 
     long long expiration = -1;
+	char* keywords[] = { (char*)"ms", nullptr };
 
-    // Get parameter if any
-    if (!PyArg_ParseTuple(arg, "|L", &expiration)) {
-        return nullptr;
-    }
+	// Get parameter
+	if (!PyArg_ParseTupleAndKeywords(arg, kwargs, "L", keywords, &expiration)) {
+		return nullptr;
+	}
 
     // Is expiration set and valid?
-    if (expiration > 0) {
-        // Set expiration
-        self->_template->setExpiration(expiration);
-            
-	} else {
+	if (expiration < 0) {
+		PyErr_SetString(PyExc_ValueError, "Expiration time may not be negative");
+		return nullptr;
+	}
 
-		// Get expiration
-        expiration = self->_template->expiration();
-		return Py_BuildValue("L", expiration);
+	// Set expiration
+	self->_template->setExpiration(expiration);
 
-    }
+	Py_XINCREF(Py_True);
+	return Py_True;
+}
 
-    return Py_BuildValue("L", expiration);
+PyObject *zroya_template_getExpiration(zroya_Template *self) {
+
+	// Get expiration
+	INT64 expiration = self->_template->expiration();
+	return Py_BuildValue("L", expiration);
+
 }
 
 PyObject *zroya_template_new(PyTypeObject *type, PyObject *args, PyObject *kwargs) {
@@ -396,7 +402,8 @@ PyMethodDef zroya_template_methods[] = {
 	{ "getAudio", (PyCFunction)zroya_template_getAudio, METH_VARARGS, zroya_template_getAudio__doc__ },
 	{ "getAudioMode", (PyCFunction)zroya_template_getAudioMode, METH_VARARGS, zroya_template_getAudioMode__doc__ },
 
-    { "expire", (PyCFunction)zroya_template_expire, METH_VARARGS, zroya_template_expire__doc__ },
+    { "setExpiration", (PyCFunction)zroya_template_setExpiration, METH_VARARGS | METH_KEYWORDS, zroya_template_setExpiration__doc__ },
+	{ "getExpiration", (PyCFunction)zroya_template_getExpiration, METH_VARARGS, zroya_template_getExpiration__doc__ },
     { nullptr, nullptr, 0, nullptr }
 };
 
