@@ -162,6 +162,23 @@
 		);
 		PyObject *zroya_template_addAction(zroya_Template *self, PyObject *arg, PyObject *kwarg);
 
+		PyDoc_STRVAR(zroya_template_setAttribution__doc__,
+			"setAttribution(label)\n"
+			"--\n\n"
+			"Add attribution text to notification. \n"
+			":param str label: Attribution text. \n"
+			":return: True on success."
+		);
+		PyObject *zroya_template_setAttribution(zroya_Template *self, PyObject *arg, PyObject *kwarg);
+
+		PyDoc_STRVAR(zroya_template_getAttribution__doc__,
+			"getAttribution()\n"
+			"--\n\n"
+			"Return attribution text from notification. \n"
+			":return: Attribution text."
+		);
+		PyObject *zroya_template_getAttribution(zroya_Template *self, PyObject *arg);
+
         /// Create new empty zroya.Template object without inner values set up.
         PyObject *zroya_template_new(PyTypeObject *type, PyObject *args, PyObject *kwargs);
 

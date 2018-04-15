@@ -12,6 +12,13 @@ class Template:
 		"""
 		pass
 
+	def getAttribution(self):
+		"""
+		Return attribution text from notification. 
+		:return: Attribution text.
+		"""
+		pass
+
 	def getAudio(self):
 		"""
 		Get notification audio. 
@@ -60,6 +67,14 @@ class Template:
 		Get third line of notification text. 
 		:return: Empty string for unsuported line for current template type or when third line is not set yet. 
 		In other cases, third line text is returned.
+		"""
+		pass
+
+	def setAttribution(self, label):
+		"""
+		Add attribution text to notification. 
+		:param str label: Attribution text. 
+		:return: True on success.
 		"""
 		pass
 

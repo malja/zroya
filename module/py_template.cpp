@@ -349,11 +349,58 @@ PyObject *zroya_template_addAction(zroya_Template *self, PyObject *arg, PyObject
 	// Add action
 	self->_template->addAction(label);
 
+	PyMem_Free(label);
+
 	// Get its index
 	int index = self->_template->actionsCount()-1;
 
 	// Return index
 	return Py_BuildValue("i", index);
+}
+
+PyObject *zroya_template_setAttribution(zroya_Template *self, PyObject *arg, PyObject *kwarg) {
+
+	// List of supported keywords
+	char *keywords[] = { (char*)"label", nullptr };
+
+	PyObject *label_obj = nullptr;
+
+	// Parse arguments
+	if (!PyArg_ParseTupleAndKeywords(arg, kwarg, "O", keywords, &label_obj)) {
+		return nullptr;
+	}
+
+	// Check if label is an unicode string
+	if (!PyUnicode_Check(label_obj)) {
+		PyErr_SetString(PyExc_TypeError, "label is required to be a string.");
+		return nullptr;
+	}
+
+	// Convert Unicode string to wide char
+	wchar_t *label = PyUnicode_AsWideCharString(label_obj, nullptr);
+	if (!label) {
+		PyErr_SetString(PyExc_RuntimeError, "unable to convert Python Unicode string to C wide char array.");
+		return nullptr;
+	}
+
+	// Set attribution text
+	self->_template->setAttributionText(label);
+
+	PyMem_Free(label);
+
+	// Return true
+	Py_XINCREF(Py_True);
+	return Py_True;
+}
+
+PyObject *zroya_template_getAttribution(zroya_Template *self, PyObject *arg) {
+
+	// Get attribution text
+	std::wstring label = self->_template->attributionText();
+
+	// Return it
+	return Py_BuildValue("u", label.c_str());
+
 }
 
 PyObject *zroya_template_new(PyTypeObject *type, PyObject *args, PyObject *kwargs) {
@@ -441,6 +488,9 @@ PyMethodDef zroya_template_methods[] = {
 	{ "getExpiration", (PyCFunction)zroya_template_getExpiration, METH_VARARGS, zroya_template_getExpiration__doc__ },
 
 	{ "addAction", (PyCFunction)zroya_template_addAction, METH_VARARGS | METH_KEYWORDS, zroya_template_addAction__doc__ },
+
+	{ "setAttribution", (PyCFunction)zroya_template_setAttribution, METH_VARARGS | METH_KEYWORDS, zroya_template_setAttribution__doc__ },
+	{ "getAttribution", (PyCFunction)zroya_template_getAttribution, METH_VARARGS | METH_KEYWORDS, zroya_template_getAttribution__doc__ },
     { nullptr, nullptr, 0, nullptr }
 };
 
