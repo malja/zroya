@@ -4,6 +4,14 @@ class Template:
 	You may show any number of notifications based on this template with zroya.show() method.
 	"""
 
+	def addAction(self, label):
+		"""
+		Add button action to notification. 
+		:param str label: Action text. 
+		:return: Index of action.
+		"""
+		pass
+
 	def getAudio(self):
 		"""
 		Get notification audio. 

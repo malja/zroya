@@ -153,6 +153,15 @@
 		);
 		PyObject *zroya_template_getExpiration(zroya_Template *self);
 
+		PyDoc_STRVAR(zroya_template_addAction__doc__,
+			"addAction(label)\n"
+			"--\n\n"
+			"Add button action to notification. \n"
+			":param str label: Action text. \n"
+			":return: Index of action."
+		);
+		PyObject *zroya_template_addAction(zroya_Template *self, PyObject *arg, PyObject *kwarg);
+
         /// Create new empty zroya.Template object without inner values set up.
         PyObject *zroya_template_new(PyTypeObject *type, PyObject *args, PyObject *kwargs);
 
