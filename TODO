@@ -1,8 +1,6 @@
 Required before release:
 ========================
 
-    - Add Actions support
-    - Add Attribution text support
     - Write documentation for C and Python part of the project
     - Add more tests
     - Add Template __init__ method to zroya.pyi
@@ -13,3 +11,4 @@ Future goals:
     - Make sure it is not required to call init function
     - Add support for future WinToast features
     - Commit changes in WinToast library back to its github project
+    - Add removeAction, getAction methods to WinToastLib
