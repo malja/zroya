@@ -2,13 +2,13 @@ import zroya
 import time
 
 def onclick(data):
-    print("Onclick event python handler {}".format(data))
+    print("Onclick event zroya handler {}".format(data))
 
 def ondismiss(data, reason):
-    print("Dismiss event python handler {}, reason {}".format(data, reason))
+    print("Dismiss event zroya handler {}, reason {}".format(data, reason))
     print(reason == zroya.DismissReason.User)
 
-zroya.init("python", "a", "b", "c", "d")
+zroya.init("zroya", "a", "b", "c", "d")
 
 t = zroya.Template(zroya.TemplateType.Text1)
 t.setFirstLine("Ahoj")

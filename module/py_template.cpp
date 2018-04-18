@@ -33,8 +33,8 @@ const wchar_t* supported_audio_files[] = {
 };
 
 const char* zroya_template__doc__ =
-	"Template class is a template for any notification you create. \n"
-	"\tYou may show any number of notifications based on this template with zroya.show() method.";
+	"Template for any notification you create. You may show any number of notifications based on this template \n"
+	"with :py:func:`zroya.show()` method.";
 
 PyObject *zroya_template_setLine(zroya_Template *self, PyObject *args, PyObject *kwargs, int line) {
 
@@ -58,7 +58,7 @@ PyObject *zroya_template_setLine(zroya_Template *self, PyObject *args, PyObject 
 
     // Is parameter an Unicode string?
 	if (!PyUnicode_Check(param)) {
-		PyErr_SetString(PyExc_ValueError, "text parameter is required to be a string.");
+		PyErr_SetString(PyExc_TypeError, "text parameter is required to be a string.");
 		return nullptr;
 	}
 

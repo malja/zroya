@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <script type="text/javascript">
+            function getSearchParameters() {
+                var prmstr = window.location.search.substr(1);
+                return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+            }
+
+            function transformToAssocArray( prmstr ) {
+                var params = {};
+                var prmarr = prmstr.split("&");
+                for ( var i = 0; i < prmarr.length; i++) {
+                    var tmparr = prmarr[i].split("=");
+                    params[tmparr[0]] = tmparr[1];
+                }
+                return params;
+            }
+
+        </script>
+    </head>
+    <body>
+         <script type="text/javascript">
+             window.onload = function() {
+                 var params = getSearchParameters();
+
+                 var source_tag = document.createElement("source");
+                 source_tag.setAttribute("src", "audio/" + params.file + ".wav" );
+                 source_tag.setAttribute("type", "audio/wav");
+
+                 document.getElementById("audio").appendChild(source_tag);
+
+                 if ( "loop" in params ) {
+                     document.getElementById("audio").setAttribute("loop", "true");
+                 }
+
+             }
+         </script>
+         <audio controls id="audio">
+         </audio>
+    </body>
+</html>

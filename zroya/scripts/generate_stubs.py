@@ -1,8 +1,8 @@
 import inspect
 import sys
 
-# This script generates python stub file from documentation python C/C++ code.
-# Stub file is a hint for IDE. It contains a list of all functions and methods in python with docstrings.
+# This script generates zroya stub file from documentation zroya C/C++ code.
+# Stub file is a hint for IDE. It contains a list of all functions and methods in zroya with docstrings.
 
 # TODO: Find better way for output formatting than this
 
@@ -24,11 +24,11 @@ def GenerateStubFile(path_to_pyd):
     ]
 
     # Generate .pyi file for zroya module
-    with open("./python/zroya.pyi", "w", encoding="utf8") as output:
+    with open("./zroya/zroya.pyi", "w", encoding="utf8") as output:
 
         for module in modules:
 
-            # Get all classes/functions in python package
+            # Get all classes/functions in zroya package
             for name, obj in inspect.getmembers(module):
 
                 # TODO: Do not expose Enum class at all
@@ -49,14 +49,14 @@ def GenerateStubFile(path_to_pyd):
                     # Print class <class_name>:
                     output.write("class {}:\n".format(name))
                     # Print class docstring
-                    output.write("\t\"\"\"\n\t{}\n\t\"\"\"\n\n".format(obj.__doc__))
+                    output.write("\t\"\"\"{}\"\"\"\n\n".format(obj.__doc__))
 
                     # Get all attributes of class
                     for member_name, member_value in inspect.getmembers(obj):
 
-                        # Ignore python members
+                        # Ignore zroya members
                         if member_name[0] != "_":
-                            # Is it python enum?
+                            # Is it zroya enum?
                             if hasattr(member_value, "value"):
                                 member_value = member_value.value
 
@@ -70,7 +70,7 @@ def GenerateStubFile(path_to_pyd):
 
                     # Get all methods from class
                     for cname, cobj in inspect.getmembers(obj):
-                        # Is it a method? Ignoring those starting with undercore, because python does not set them.
+                        # Is it a method? Ignoring those starting with undercore, because zroya does not set them.
                         if inspect.ismethoddescriptor(cobj) and cname[0] != "_":
                             # Get method signature. Replace leading and trailing bracket, because I have to add self parameter
 

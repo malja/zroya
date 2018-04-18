@@ -2,7 +2,7 @@
 
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
-from python.scripts.generate_stubs import GenerateStubFile
+from zroya.scripts.generate_stubs import GenerateStubFile
 import os
 
 # Include path for _zroya module
@@ -58,9 +58,9 @@ setup(name='zroya',
     description='Python implementation of Windows notifications.',
     author='Jan Malcak',
     author_email='jan@malcakov.cz',
-    url='https://github.com/malja/python',
+    url='https://github.com/malja/zroya',
     data_files=[
-      (".", ["./python/zroya.pyi", "./python/template_enums.py", "./python/zroya.py", "./python/dismiss_reason.py"])
+      (".", ["./zroya/zroya.pyi", "./zroya/template_enums.py", "./zroya/zroya.py", "./zroya/dismiss_reason.py"])
     ],
     ext_modules=ext_modules,
     cmdclass={
