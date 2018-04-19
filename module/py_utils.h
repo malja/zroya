@@ -13,6 +13,10 @@
 		/// Call python os.path.isfile to ensure file 'file_name' exists.
         bool file_exists(PyObject *file_name);
 
+		/// Call Python function os.path.abspath to get absolute path from 'relpath'.
+		/// Returns Py_False on error.
+		PyObject *abspath(PyObject *relpath);
+
 #ifdef __cplusplus
     }
 #endif
