@@ -139,15 +139,23 @@ PyObject *zroya_template_setImage(zroya_Template *self, PyObject *args, PyObject
 		return nullptr;
 	}
 
+	PyObject *absolute_path_obj = abspath(path_obj);
+
+	if (absolute_path_obj == Py_False) {
+		// Throw exception
+		PyErr_SetString(PyExc_ValueError, "path is not valid.");
+		return nullptr;
+	}
+
 	// Non-existing file
-	if (!file_exists(path_obj)) {
+	if (!file_exists(absolute_path_obj)) {
 		// Throw exception
 		PyErr_SetString(PyExc_FileNotFoundError, "file with notification image does not exist");
 		return nullptr;
 	}
 
     // Get path parameter
-    wchar_t *path = PyUnicode_AsWideCharString(path_obj, nullptr);
+    wchar_t *path = PyUnicode_AsWideCharString(absolute_path_obj, nullptr);
 
     // Set path parameter
 	std::wstring p = std::wstring(path);
@@ -155,6 +163,7 @@ PyObject *zroya_template_setImage(zroya_Template *self, PyObject *args, PyObject
 
     // Free memory
     PyMem_Free(path);
+	Py_XDECREF(absolute_path_obj);
 
     // Return True
     Py_XINCREF(Py_True);
