@@ -33,3 +33,7 @@ zroya2 branch
         - Working callbacks
         - Visual Studio project for C/C++ code
         - Use get/set methods instead of multipurpose methods in zroya.Template
+
+    19. 04. 2018
+        - Everything seems to work properly
+        - New documentation for python code available from https://malja.github.io/zroya

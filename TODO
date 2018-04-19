@@ -1,7 +1,7 @@
 Required before release:
 ========================
 
-    - Write documentation for C and Python part of the project
+    - Write documentation for C part of the project
     - Add more tests
     - Add Template __init__ method to zroya.pyi
 
