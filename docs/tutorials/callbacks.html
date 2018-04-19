@@ -1,0 +1,209 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Callbacks &#8212; Zroya 0.2.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/styles.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Documentation" href="../documentation.html" />
+    <link rel="prev" title="Further on templates" href="template.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="callbacks">
+<h1>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">¶</a></h1>
+<p>In the previous part of the tutorial, action buttons were added. But they did nothing. In this tutorial,
+I’ll teach you how to make them alive.</p>
+<p>But first I have to introduce you into zroya’s callback system. Zroya registers four different events:</p>
+<ul class="simple">
+<li><strong>onClick</strong> - Fired every time user clicks on notification.</li>
+<li><strong>onAction</strong> - Activated when action button is clicked.</li>
+<li><strong>onDismiss</strong> - When the notification is dismissed by user or automatically.</li>
+<li><strong>onFail</strong> - Something went wrong.</li>
+</ul>
+<p>If you want to be informed, when any of them happens, register event handler with <strong>on_</strong> parameters of
+<a class="reference internal" href="../documentation.html#zroya.show" title="zroya.show"><code class="xref py py-func docutils literal notranslate"><span class="pre">zroya.show()</span></code></a>. Event handler is nothing more than a regular function taking one, or two parameters. Number of
+parameters depends on the event you register for.</p>
+<div class="section" id="on-click">
+<h2>On Click<a class="headerlink" href="#on-click" title="Permalink to this headline">¶</a></h2>
+<p>On click handler takes one parameter and it is notification ID. This is the number you get as a return value from
+<a class="reference internal" href="../documentation.html#zroya.show" title="zroya.show"><code class="xref py py-func docutils literal notranslate"><span class="pre">zroya.show()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onClickHandler</span><span class="p">(</span><span class="n">notification_id</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="on-action">
+<h2>On Action<a class="headerlink" href="#on-action" title="Permalink to this headline">¶</a></h2>
+<p>On Action handler takes two parameters, notification ID and action ID. Action ID is number returned by
+<a class="reference internal" href="../documentation.html#zroya.Template.addAction" title="zroya.Template.addAction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.addAction()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onActionHandler</span><span class="p">(</span><span class="n">notification_id</span><span class="p">,</span> <span class="n">action_id</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="on-dismiss">
+<h2>On Dismiss<a class="headerlink" href="#on-dismiss" title="Permalink to this headline">¶</a></h2>
+<p>On Dismiss handler is function with two parameters. First one is notification ID. The second one is
+<a class="reference internal" href="../documentation.html#zroya.DismissReason" title="zroya.DismissReason"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.DismissReason</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onDismissHandler</span><span class="p">(</span><span class="n">notification_id</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="on-fail">
+<h2>On Fail<a class="headerlink" href="#on-fail" title="Permalink to this headline">¶</a></h2>
+<p>Last, on fail handler is function with one parameter, the same as on click callback. The parameter is notification ID
+returned from <a class="reference internal" href="../documentation.html#zroya.show" title="zroya.show"><code class="xref py py-func docutils literal notranslate"><span class="pre">zroya.show()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">onFailHandler</span><span class="p">(</span><span class="n">notification_id</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-handlers">
+<h2>Adding handlers<a class="headerlink" href="#adding-handlers" title="Permalink to this headline">¶</a></h2>
+<p>Let’s go back a bit. In <a class="reference internal" href="template.html"><span class="doc">Further on templates</span></a>, we created a notification for simple bot asking user “How are you?”. Now
+we add response to each of the action button.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zroya</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># Initialization is required. But in real usage, check the return code, please.</span>
+<span class="n">zroya</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">)</span>
+
+<span class="c1"># Template for question</span>
+<span class="n">ask_template</span> <span class="o">=</span> <span class="n">zroya</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">TemplateType</span><span class="o">.</span><span class="n">ImageAndText4</span><span class="p">)</span>
+<span class="n">ask_template</span><span class="o">.</span><span class="n">setFirstLine</span><span class="p">(</span><span class="s2">&quot;Hi, I am NotifyBot.&quot;</span><span class="p">)</span>
+<span class="n">ask_template</span><span class="o">.</span><span class="n">setSecondLine</span><span class="p">(</span><span class="s2">&quot;It is nice to meet you.&quot;</span><span class="p">)</span>
+<span class="n">ask_template</span><span class="o">.</span><span class="n">setThirdLine</span><span class="p">(</span><span class="s2">&quot;How are you?&quot;</span><span class="p">)</span>
+<span class="n">ask_template</span><span class="o">.</span><span class="n">setImage</span><span class="p">(</span><span class="s2">&quot;./files/image.png&quot;</span><span class="p">)</span>
+<span class="n">ask_template</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;I&#39;m OK, I guess&quot;</span><span class="p">)</span>
+<span class="n">ask_template</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Fine&quot;</span><span class="p">)</span>
+
+<span class="c1"># Response for Fine</span>
+<span class="n">fine_template</span> <span class="o">=</span> <span class="n">zroya</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">TemplateType</span><span class="o">.</span><span class="n">Text1</span><span class="p">)</span>
+<span class="n">fine_template</span><span class="o">.</span><span class="n">setFirstLine</span><span class="p">(</span><span class="s2">&quot;Glad to hear that!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Response for OK</span>
+<span class="n">ok_template</span> <span class="o">=</span> <span class="n">zroya</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">TemplateType</span><span class="o">.</span><span class="n">Text1</span><span class="p">)</span>
+<span class="n">ok_template</span><span class="o">.</span><span class="n">setFirstLine</span><span class="p">(</span><span class="s2">&quot;I&#39;m sorry to hear that!&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># prepare handler</span>
+<span class="k">def</span> <span class="nf">onAction</span><span class="p">(</span><span class="n">nid</span><span class="p">,</span> <span class="n">action_id</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">fine_template</span><span class="p">,</span> <span class="n">ok_template</span>
+
+    <span class="k">if</span> <span class="n">action_id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">zroya</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ok_template</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">zroya</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">fine_template</span><span class="p">)</span>
+
+<span class="c1"># Show question</span>
+<span class="n">zroya</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">ask_template</span><span class="p">,</span> <span class="n">on_action</span><span class="o">=</span><span class="n">onAction</span><span class="p">)</span>
+
+<span class="c1"># Keep application running, unless onAction handler is never executed.</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Adding images to answers with emoticons, changing sounds etc. would take this to whole new level. You can always play
+with it as you wish.</p>
+<p>I owe you one more answer. How did I know that “I’m OK”, gets action ID 0 and “Fine” is ID 1? See
+<a class="reference internal" href="../documentation.html#zroya.Template.addAction" title="zroya.Template.addAction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.addAction()</span></code></a> ;) Now enjoy the result:</p>
+<div class="figure" id="id1">
+<img alt="Process of asking &quot;How are you&quot; followed with the response on me clicking on &quot;I'm fine&quot;." src="../_images/tutorials_callbacks_final.gif" />
+<p class="caption"><span class="caption-text">Pretty impressive, isn’t it?</span></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Instalation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="template.html">Further on templates</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Callbacks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#on-click">On Click</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#on-action">On Action</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#on-dismiss">On Dismiss</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#on-fail">On Fail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-handlers">Adding handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation.html">Documentation</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="template.html" title="previous chapter">Further on templates</a></li>
+      <li>Next: <a href="../documentation.html" title="next chapter">Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/callbacks.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jan Malčák.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorials/callbacks.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,651 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Documentation &#8212; Zroya 0.2.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/css/styles.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Callbacks" href="tutorials/callbacks.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-zroya">
+<span id="functions"></span><h2>Functions<a class="headerlink" href="#module-zroya" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="zroya.init">
+<code class="descclassname">zroya.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize Zroya module.</p>
+<p><strong>Note</strong>: You should call this function before any other manipulation with this module. 
+If you do not call this function explicitely, randomly generated strings will be used as default parameters.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd><p class="first">app_name (str): Application name.</p>
+<p>company_name (str): Part of unique ID created for this application.</p>
+<p>product_name (str): Part of unique ID created for this application.</p>
+<p>sub_product (str): Part of unique ID created for this application.</p>
+<p class="last">str version (str): Part of unique ID created for this application.</p>
+</dd>
+<dt>Returns: </dt>
+<dd>bool: True if initialization is completed, False otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="zroya.show">
+<code class="descclassname">zroya.</code><code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create instance of notification template and show it. If any of on_* parameter is set, corresponding event is registered. See <a class="reference internal" href="tutorials/callbacks.html"><span class="doc">Callbacks</span></a>.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd><p class="first">template (<a class="reference internal" href="#zroya.Template" title="zroya.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.Template</span></code></a>): Template instance.</p>
+<p>on_click (callable): Callback for onClick event. Occurs when user activates a toast notification through a click or touch.</p>
+<p>on_action (callable): Callback for onAction event. Occurs when user click on action button.</p>
+<p>on_dismiss (callable): Callback for onDismiss event. Occurs when the notification leaves the screen, either by expiring or being explicitly dismissed by the user.</p>
+<p class="last">on_fail (callable): Callback for onFail event. Occurs when an error is caused when Windows attempts to raise a toast notification.</p>
+</dd>
+<dt>Returns: </dt>
+<dd>bool: Notification ID if notification was shown. False otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="zroya.hide">
+<code class="descclassname">zroya.</code><code class="descname">hide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.hide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide notification by ID. This will trigger onDismiss event.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>nid (int): Notification ID obtained from <a class="reference internal" href="#zroya.show" title="zroya.show"><code class="xref py py-func docutils literal notranslate"><span class="pre">zroya.show()</span></code></a> function.</dd>
+<dt>Returns: </dt>
+<dd>bool: True if notification was hidden, false otherwise.</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="template">
+<h2>Template<a class="headerlink" href="#template" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zroya.Template">
+<em class="property">class </em><code class="descclassname">zroya.</code><code class="descname">Template</code><a class="headerlink" href="#zroya.Template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Template for any notification you create. You may show any number of notifications based on this template 
+with <a class="reference internal" href="#zroya.show" title="zroya.show"><code class="xref py py-func docutils literal notranslate"><span class="pre">zroya.show()</span></code></a> method.</p>
+<dl class="method">
+<dt id="zroya.Template.addAction">
+<code class="descname">addAction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.addAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add button to notification. User may click it and onAction event is fired up.
+Each notification got its own ID counting up from zero. This ID is handed back to event handler.</p>
+<p><strong>Note</strong>: Action is one of “modern” features. Windows 8.1 or newer is required.</p>
+<div class="figure" id="id1">
+<img alt="Image showing action buttons highlighted in notification. " src="_images/example_full_features_action.png" />
+<p class="caption"><span class="caption-text">Action buttons are highlighted.</span></p>
+</div>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>label (str): Button’s text.</dd>
+<dt>Returns: </dt>
+<dd>int: Index of action.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.getAttribution">
+<code class="descname">getAttribution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getAttribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get attribution text from notification.</p>
+<p><strong>Note:</strong> Attribution text is one of “modern” features. Windows 8.1 or newer is required.</p>
+<div class="figure" id="id2">
+<img alt="Image showing highlighted attribution text in notification. " src="_images/example_full_features_attribution.png" />
+<p class="caption"><span class="caption-text">Attribution text is highlighted.</span></p>
+</div>
+<dl class="docutils">
+<dt>Returns: </dt>
+<dd>str: Attribution text.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.getAudio">
+<code class="descname">getAudio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getAudio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get notification audio. Audio is a sound played to get user’s attention.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><a class="reference internal" href="#zroya.Audio" title="zroya.Audio"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.Audio</span></code></a>: Current audio.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.getAudioMode">
+<code class="descname">getAudioMode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getAudioMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get notification audio mode. It sets how or even if the sound is played.</p>
+<dl class="docutils">
+<dt>Returns: </dt>
+<dd><a class="reference internal" href="#zroya.AudioMode" title="zroya.AudioMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.AudioMode</span></code></a>: Current audio mode.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.getExpiration">
+<code class="descname">getExpiration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getExpiration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get expiration time in milliseconds. Expiration time is time before the notification is removed from Action Center. This fires up the onDismiss event with dismiss reason set to <a class="reference internal" href="#zroya.DismissReason.Expired" title="zroya.DismissReason.Expired"><code class="xref py py-attr docutils literal notranslate"><span class="pre">zroya.DismissReason.Expired</span></code></a>.</p>
+<p>Returns:</p>
+<blockquote>
+<div>int: Number of milliseconds or zero for no expiration time.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.getFirstLine">
+<code class="descname">getFirstLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getFirstLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get first line of notification text.</p>
+<dl class="docutils">
+<dt>Returns: </dt>
+<dd>str: First line, or empty string when there is not text to be returned.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.getImage">
+<code class="descname">getImage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get path to image from notification.</p>
+<dl class="docutils">
+<dt>Returns: </dt>
+<dd>str: Empty string or path to current template image.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.getSecondLine">
+<code class="descname">getSecondLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getSecondLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get second line of notification text.</p>
+<p><strong>Note</strong>: Third line is not supported by each notification type. See <a class="reference internal" href="#zroya.TemplateType" title="zroya.TemplateType"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.TemplateType</span></code></a>.</p>
+<dl class="docutils">
+<dt>Returns: </dt>
+<dd>str: Empty string when second line is not set or it is not supported by current template type. Second line text in other cases.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.getThirdLine">
+<code class="descname">getThirdLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getThirdLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get third line text.</p>
+<p><strong>Note</strong>: Third line is not supported by each notification type. See <a class="reference internal" href="#zroya.TemplateType" title="zroya.TemplateType"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.TemplateType</span></code></a>.</p>
+<dl class="docutils">
+<dt>Returns: </dt>
+<dd>str: Empty string if third line is not supported or empty. In other cases, third line.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.setAttribution">
+<code class="descname">setAttribution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.setAttribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set notification’s attribution text.</p>
+<p><strong>Note:</strong> Attribution text is one of “modern” features. Windows 8.1 or newer is required.</p>
+<div class="figure" id="id3">
+<img alt="Image showing attribution text highlighted in notification. " src="_images/example_full_features_attribution.png" />
+<p class="caption"><span class="caption-text">Attribution text is highlighted.</span></p>
+</div>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>label (str): Attribution text.</dd>
+<dt>Returns: </dt>
+<dd>bool: True on success, False otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.setAudio">
+<code class="descname">setAudio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.setAudio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set audio and playback mode for notification. Audio is a one of predefined system sounds. 
+Audio mode sets how, or even if the sound is played.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>audio (int): One of sounds defined in <a class="reference internal" href="#zroya.Audio" title="zroya.Audio"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.Audio</span></code></a> 
+mode (int): One of modes available from <a class="reference internal" href="#zroya.AudioMode" title="zroya.AudioMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.AudioMode</span></code></a>. Or leave it empty for <a class="reference internal" href="#zroya.AudioMode.Default" title="zroya.AudioMode.Default"><code class="xref py py-attr docutils literal notranslate"><span class="pre">zroya.AudioMode.Default</span></code></a>.</dd>
+<dt>Returns: </dt>
+<dd>bool:True if audio was set, false otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.setExpiration">
+<code class="descname">setExpiration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.setExpiration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set expiration time in milliseconds. Expiration time is time before the notification is removed from Action Center. This fires up the onDismiss event with dismiss reason set to <a class="reference internal" href="#zroya.DismissReason.Expired" title="zroya.DismissReason.Expired"><code class="xref py py-attr docutils literal notranslate"><span class="pre">zroya.DismissReason.Expired</span></code></a>.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>ms (int): Number of milliseconds for expiration time. Zero means no expiration.</dd>
+<dt>Returns: </dt>
+<dd>bool: True for positive value of <em>ms</em>.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.setFirstLine">
+<code class="descname">setFirstLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.setFirstLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set first line of notification text.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>text (str): Text to be set as the first line.</dd>
+<dt>Raises: </dt>
+<dd>TypeError: When text is not a string.</dd>
+<dt>Returns: </dt>
+<dd>bool: True if first line was set, False on error.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.setImage">
+<code class="descname">setImage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.setImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set path to image used in notification.</p>
+<p><strong>Note</strong>: Image is not supported by each notification type. See <a class="reference internal" href="#zroya.TemplateType" title="zroya.TemplateType"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.TemplateType</span></code></a>.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>path (str): Path to image.</dd>
+<dt>Raises: </dt>
+<dd>FileNotFoundError: Image does not exist.</dd>
+<dt>Returns: </dt>
+<dd>bool: True is image was set or False for unsupported template type.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.setSecondLine">
+<code class="descname">setSecondLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.setSecondLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set second line of notification text.</p>
+<p><strong>Note</strong>: Third line is not supported by each notification type. See <a class="reference internal" href="#zroya.TemplateType" title="zroya.TemplateType"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.TemplateType</span></code></a>.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>text (str): Text to be set as the second line.</dd>
+<dt>Raises: </dt>
+<dd>TypeError: When text is not a string.</dd>
+<dt>Returns: </dt>
+<dd>bool: True if second line is supported by current template type and text was set. False otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.setThirdLine">
+<code class="descname">setThirdLine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.setThirdLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set third line of notification text.</p>
+<p><strong>Note</strong>: Third line is not supported by each notification type. See <a class="reference internal" href="#zroya.TemplateType" title="zroya.TemplateType"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.TemplateType</span></code></a>.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>text (str): Text to be set as the third line.</dd>
+<dt>Raises: </dt>
+<dd>TypeError: When text is not a string.</dd>
+<dt>Returns: </dt>
+<dd>bool: True if third line is supported for current type and the text was set. False otherwise.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="templatetype">
+<h3>TemplateType<a class="headerlink" href="#templatetype" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="zroya.TemplateType">
+<em class="property">class </em><code class="descclassname">zroya.</code><code class="descname">TemplateType</code><a class="headerlink" href="#zroya.TemplateType" title="Permalink to this definition">¶</a></dt>
+<dd><p>All possible values for <a class="reference internal" href="#zroya.Template" title="zroya.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.Template</span></code></a> constructor.</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">zroya</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">TemplateType</span><span class="o">.</span><span class="n">ImageAndText2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="zroya.TemplateType.ImageAndText1">
+<code class="descname">ImageAndText1</code><em class="property"> = 0</em><a class="headerlink" href="#zroya.TemplateType.ImageAndText1" title="Permalink to this definition">¶</a></dt>
+<dd><p>A large image and a single string wrapped across three lines of text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateType.ImageAndText2">
+<code class="descname">ImageAndText2</code><em class="property"> = 1</em><a class="headerlink" href="#zroya.TemplateType.ImageAndText2" title="Permalink to this definition">¶</a></dt>
+<dd><p>A large image, one string of bold text on the first line, one string of regular text wrapped across the
+second and third lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateType.ImageAndText3">
+<code class="descname">ImageAndText3</code><em class="property"> = 2</em><a class="headerlink" href="#zroya.TemplateType.ImageAndText3" title="Permalink to this definition">¶</a></dt>
+<dd><p>A large image, one string of bold text wrapped across the first two lines, one string of regular text on
+the third line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateType.ImageAndText4">
+<code class="descname">ImageAndText4</code><em class="property"> = 3</em><a class="headerlink" href="#zroya.TemplateType.ImageAndText4" title="Permalink to this definition">¶</a></dt>
+<dd><p>A large image, one string of bold text on the first line, one string of regular text on the second line,
+one string of regular text on the third line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateType.Text1">
+<code class="descname">Text1</code><em class="property"> = 4</em><a class="headerlink" href="#zroya.TemplateType.Text1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single string wrapped across three lines of text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateType.Text2">
+<code class="descname">Text2</code><em class="property"> = 5</em><a class="headerlink" href="#zroya.TemplateType.Text2" title="Permalink to this definition">¶</a></dt>
+<dd><p>One string of bold text on the first line, one string of regular text wrapped across the second and third
+lines.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateType.Text3">
+<code class="descname">Text3</code><em class="property"> = 6</em><a class="headerlink" href="#zroya.TemplateType.Text3" title="Permalink to this definition">¶</a></dt>
+<dd><p>One string of bold text wrapped across the first two lines, one string of regular text on the third line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateType.Text4">
+<code class="descname">Text4</code><em class="property"> = 7</em><a class="headerlink" href="#zroya.TemplateType.Text4" title="Permalink to this definition">¶</a></dt>
+<dd><p>One string of bold text on the first line, one string of regular text on the second line, one string of
+regular text on the third line.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="audio">
+<h2>Audio<a class="headerlink" href="#audio" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zroya.Audio">
+<em class="property">class </em><code class="descclassname">zroya.</code><code class="descname">Audio</code><a class="headerlink" href="#zroya.Audio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Audio enumeration contains values for  accepted values for <cite>audio</cite> parameter of <a class="reference internal" href="#zroya.Template.setAudio" title="zroya.Template.setAudio"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.setAudio()</span></code></a>
+method.</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># t is an instance of zroya.Template</span>
+<span class="n">t</span><span class="o">.</span><span class="n">setAudio</span><span class="p">(</span> <span class="n">audio</span><span class="o">=</span><span class="n">zroya</span><span class="o">.</span><span class="n">Audio</span><span class="o">.</span><span class="n">IM</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm">
+<code class="descname">Alarm</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm'</em><a class="headerlink" href="#zroya.Audio.Alarm" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm01&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm10">
+<code class="descname">Alarm10</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm10'</em><a class="headerlink" href="#zroya.Audio.Alarm10" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm10&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm2">
+<code class="descname">Alarm2</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm2'</em><a class="headerlink" href="#zroya.Audio.Alarm2" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm02&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm3">
+<code class="descname">Alarm3</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm3'</em><a class="headerlink" href="#zroya.Audio.Alarm3" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm03&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm4">
+<code class="descname">Alarm4</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm4'</em><a class="headerlink" href="#zroya.Audio.Alarm4" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm04&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm5">
+<code class="descname">Alarm5</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm5'</em><a class="headerlink" href="#zroya.Audio.Alarm5" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm05&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm6">
+<code class="descname">Alarm6</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm6'</em><a class="headerlink" href="#zroya.Audio.Alarm6" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm06&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm7">
+<code class="descname">Alarm7</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm7'</em><a class="headerlink" href="#zroya.Audio.Alarm7" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm07&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm8">
+<code class="descname">Alarm8</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm8'</em><a class="headerlink" href="#zroya.Audio.Alarm8" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm08&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Alarm9">
+<code class="descname">Alarm9</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Alarm9'</em><a class="headerlink" href="#zroya.Audio.Alarm9" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Alarm09&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call">
+<code class="descname">Call</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call'</em><a class="headerlink" href="#zroya.Audio.Call" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring01&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call10">
+<code class="descname">Call10</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call10'</em><a class="headerlink" href="#zroya.Audio.Call10" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring10&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call2">
+<code class="descname">Call2</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call2'</em><a class="headerlink" href="#zroya.Audio.Call2" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring02&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call3">
+<code class="descname">Call3</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call3'</em><a class="headerlink" href="#zroya.Audio.Call3" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring03&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call4">
+<code class="descname">Call4</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call4'</em><a class="headerlink" href="#zroya.Audio.Call4" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring04&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call5">
+<code class="descname">Call5</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call5'</em><a class="headerlink" href="#zroya.Audio.Call5" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring05&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call6">
+<code class="descname">Call6</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call6'</em><a class="headerlink" href="#zroya.Audio.Call6" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring06&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call7">
+<code class="descname">Call7</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call7'</em><a class="headerlink" href="#zroya.Audio.Call7" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring07&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call8">
+<code class="descname">Call8</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call8'</em><a class="headerlink" href="#zroya.Audio.Call8" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring08&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Call9">
+<code class="descname">Call9</code><em class="property"> = 'ms-winsoundevent:Notification.Looping.Call9'</em><a class="headerlink" href="#zroya.Audio.Call9" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Ring09&loop"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Default">
+<code class="descname">Default</code><em class="property"> = 'ms-winsoundevent:Notification.Default'</em><a class="headerlink" href="#zroya.Audio.Default" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Default"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.IM">
+<code class="descname">IM</code><em class="property"> = 'ms-winsoundevent:Notification.IM'</em><a class="headerlink" href="#zroya.Audio.IM" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=IM"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Mail">
+<code class="descname">Mail</code><em class="property"> = 'ms-winsoundevent:Notification.Mail'</em><a class="headerlink" href="#zroya.Audio.Mail" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Email"></iframe></dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.Audio.Reminder">
+<code class="descname">Reminder</code><em class="property"> = 'ms-winsoundevent:Notification.Reminder'</em><a class="headerlink" href="#zroya.Audio.Reminder" title="Permalink to this definition">¶</a></dt>
+<dd><iframe src="_static/audio.html?file=Reminder"></iframe></dd></dl>
+
+</dd></dl>
+
+<div class="section" id="audiomode">
+<h3>AudioMode<a class="headerlink" href="#audiomode" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="zroya.AudioMode">
+<em class="property">class </em><code class="descclassname">zroya.</code><code class="descname">AudioMode</code><a class="headerlink" href="#zroya.AudioMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>AudioMode is enumeration holds all valid parameters accepted by <a class="reference internal" href="#zroya.Template.setAudio" title="zroya.Template.setAudio"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.setAudio()</span></code></a> method’s <cite>mode</cite>
+parameter.</p>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first last highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># t is an instance of zroya.Template</span>
+<span class="n">t</span><span class="o">.</span><span class="n">setAudio</span><span class="p">(</span> <span class="n">mode</span><span class="o">=</span><span class="n">zroya</span><span class="o">.</span><span class="n">AudioMode</span><span class="o">.</span><span class="n">Silence</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="zroya.AudioMode.Default">
+<code class="descname">Default</code><em class="property"> = 0</em><a class="headerlink" href="#zroya.AudioMode.Default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selected audio will be played only once.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.AudioMode.Loop">
+<code class="descname">Loop</code><em class="property"> = 2</em><a class="headerlink" href="#zroya.AudioMode.Loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Play audio in loop until it is moved to Action Center. This time may vary due to different user
+configuration.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.AudioMode.Silence">
+<code class="descname">Silence</code><em class="property"> = 1</em><a class="headerlink" href="#zroya.AudioMode.Silence" title="Permalink to this definition">¶</a></dt>
+<dd><p>No audio is played at all.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="dismissreason">
+<h2>DismissReason<a class="headerlink" href="#dismissreason" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zroya.DismissReason">
+<em class="property">class </em><code class="descclassname">zroya.</code><code class="descname">DismissReason</code><span class="sig-paren">(</span><em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#zroya.DismissReason" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class represents a notification dismiss reason. It is passed to callback registered in on_dismiss parameter
+of <a class="reference internal" href="#zroya.show" title="zroya.show"><code class="xref py py-func docutils literal notranslate"><span class="pre">zroya.show()</span></code></a> function.</p>
+<p>You can print it to get a reason description or compare it with any of following attributes.</p>
+<dl class="attribute">
+<dt id="zroya.DismissReason.App">
+<code class="descname">App</code><em class="property"> = 1</em><a class="headerlink" href="#zroya.DismissReason.App" title="Permalink to this definition">¶</a></dt>
+<dd><p>The application hid the toast using <a class="reference internal" href="#zroya.hide" title="zroya.hide"><code class="xref py py-func docutils literal notranslate"><span class="pre">zroya.hide()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.DismissReason.Expired">
+<code class="descname">Expired</code><em class="property"> = 2</em><a class="headerlink" href="#zroya.DismissReason.Expired" title="Permalink to this definition">¶</a></dt>
+<dd><p>The toast has expired.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.DismissReason.User">
+<code class="descname">User</code><em class="property"> = 0</em><a class="headerlink" href="#zroya.DismissReason.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>The user dismissed the toast.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tutorials/installation.html">Instalation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/template.html">Further on templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/callbacks.html">Callbacks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-zroya">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#template">Template</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#templatetype">TemplateType</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#audio">Audio</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#audiomode">AudioMode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dismissreason">DismissReason</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tutorials/callbacks.html" title="previous chapter">Callbacks</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/documentation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jan Malčák.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/documentation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

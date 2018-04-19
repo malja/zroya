@@ -1,0 +1,209 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Further on templates &#8212; Zroya 0.2.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/styles.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Callbacks" href="callbacks.html" />
+    <link rel="prev" title="First steps" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="further-on-templates">
+<h1>Further on templates<a class="headerlink" href="#further-on-templates" title="Permalink to this headline">¶</a></h1>
+<p>In previous tutorial, we managed to create a notification from template. In this part, we will make the most from
+templates.</p>
+<div class="section" id="multiple-lines">
+<h2>Multiple lines<a class="headerlink" href="#multiple-lines" title="Permalink to this headline">¶</a></h2>
+<p>As I said in previous tutorial, not each <a class="reference internal" href="../documentation.html#zroya.TemplateType" title="zroya.TemplateType"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.TemplateType</span></code></a> supports multiple lines of text. So make
+sure you pick the right one - for example <a class="reference internal" href="../documentation.html#zroya.TemplateType.ImageAndText4" title="zroya.TemplateType.ImageAndText4"><code class="xref py py-attr docutils literal notranslate"><span class="pre">zroya.TemplateType.ImageAndText4</span></code></a>. You may set up to three lines of
+text to it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># zroya is imported and initialized</span>
+<span class="n">template</span> <span class="o">=</span> <span class="n">zroya</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">TemplateType</span><span class="o">.</span><span class="n">ImageAndText4</span><span class="p">)</span>
+<span class="n">template</span><span class="o">.</span><span class="n">setFirstLine</span><span class="p">(</span><span class="s2">&quot;Hi, I am NotifyBot.&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="o">.</span><span class="n">setSecondLine</span><span class="p">(</span><span class="s2">&quot;It is nice to meet you.&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="o">.</span><span class="n">setThirdLine</span><span class="p">(</span><span class="s2">&quot;How are you?&quot;</span><span class="p">)</span>
+
+<span class="n">zroya</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">template</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At the moment, zroya supports up to three lines - each one is set by it’s own function -
+<a class="reference internal" href="../documentation.html#zroya.Template.setFirstLine" title="zroya.Template.setFirstLine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.setFirstLine()</span></code></a>, <a class="reference internal" href="../documentation.html#zroya.Template.setSecondLine" title="zroya.Template.setSecondLine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.setSecondLine()</span></code></a> and
+<a class="reference internal" href="../documentation.html#zroya.Template.setThirdLine" title="zroya.Template.setThirdLine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.setThirdLine()</span></code></a>.</p>
+<div class="figure" id="id1">
+<img alt="Image with a notification which contains three lines of text. First line is bold." src="../_images/tutorials_template_three_lines.png" />
+<p class="caption"><span class="caption-text">Notification with three lines of text</span></p>
+</div>
+</div>
+<div class="section" id="getting-the-text-back">
+<h2>Getting the text back<a class="headerlink" href="#getting-the-text-back" title="Permalink to this headline">¶</a></h2>
+<p>Except functions for setting text, there are functions for getting it back from template. They are named
+<a class="reference internal" href="../documentation.html#zroya.Template.getFirstLine" title="zroya.Template.getFirstLine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.getFirstLine()</span></code></a>, <a class="reference internal" href="../documentation.html#zroya.Template.getSecondLine" title="zroya.Template.getSecondLine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.getSecondLine()</span></code></a> and
+<a class="reference internal" href="../documentation.html#zroya.Template.getThirdLine" title="zroya.Template.getThirdLine"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.getThirdLine()</span></code></a> respectively.</p>
+<p>We will use template from previous example to get second line back:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">getSecondLine</span><span class="p">())</span>
+<span class="c1">#&gt; &quot;It is nice to meet you.&quot;</span>
+</pre></div>
+</div>
+<p>If there is no such text, empty string is returned.</p>
+</div>
+<div class="section" id="change-sound">
+<h2>Change sound<a class="headerlink" href="#change-sound" title="Permalink to this headline">¶</a></h2>
+<p>It is all nice and so, but the sound Windows does when notification is created is sooo boring, right? Let’s change it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span><span class="o">.</span><span class="n">setAudio</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">Audio</span><span class="o">.</span><span class="n">Call4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sadly, there is no way to play fart sounds you recorded yesterday every time notification is created. But you can
+choose from plenty of sounds defined in <a class="reference internal" href="../documentation.html#zroya.Audio" title="zroya.Audio"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.Audio</span></code></a> class. The bright side of the thing is, they are
+available at any Windows station.</p>
+<p>If this is not enough, you can annoy user even more with looping the sound until moved to Action Center,
+or until user dismiss it in rage.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span><span class="o">.</span><span class="n">setAudio</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">Audio</span><span class="o">.</span><span class="n">Call4</span><span class="p">,</span> <span class="n">zroya</span><span class="o">.</span><span class="n">AudioMode</span><span class="o">.</span><span class="n">Looping</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But I wouldn’t recommend it. On the other hand, muting notifications may be usable a bit more:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span><span class="o">.</span><span class="n">setAudio</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">zroya</span><span class="o">.</span><span class="n">AudioMode</span><span class="o">.</span><span class="n">Silence</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="expiration-time">
+<h2>Expiration time<a class="headerlink" href="#expiration-time" title="Permalink to this headline">¶</a></h2>
+<p>Notifications will stay in Action Center until you shut the application off or you manually remove them from there.
+But some notifications should have shorter lifespan - for example weather reports. There is no use of the old ones.
+Beside hiding them from code, <a class="reference internal" href="../documentation.html#zroya.Template.setExpiration" title="zroya.Template.setExpiration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.setExpiration()</span></code></a> comes to aid.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span><span class="o">.</span><span class="n">setExpiration</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It takes a number of milliseconds after which the notification is automatically removed from Action Center.</p>
+</div>
+<div class="section" id="images">
+<h2>Images<a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h2>
+<p>UI is key to user’s heart. Let’s make bot more friendly. Add image with <a class="reference internal" href="../documentation.html#zroya.Template.setImage" title="zroya.Template.setImage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.setImage()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span><span class="o">.</span><span class="n">setImage</span><span class="p">(</span><span class="s2">&quot;./image.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure" id="id2">
+<img alt="Notification with friendly image of bot." src="../_images/tutorials_template_image.png" />
+<p class="caption"><span class="caption-text">Isn’t he cute :*</span></p>
+</div>
+<p>At this point, we make use of that <a class="reference internal" href="../documentation.html#zroya.TemplateType.ImageAndText4" title="zroya.TemplateType.ImageAndText4"><code class="xref py py-attr docutils literal notranslate"><span class="pre">zroya.TemplateType.ImageAndText4</span></code></a> template type. For example
+with <a class="reference internal" href="../documentation.html#zroya.TemplateType.Text4" title="zroya.TemplateType.Text4"><code class="xref py py-attr docutils literal notranslate"><span class="pre">zroya.TemplateType.Text4</span></code></a>, this function would return False every time, because it does not support
+this type.</p>
+</div>
+<div class="section" id="actions">
+<h2>Actions<a class="headerlink" href="#actions" title="Permalink to this headline">¶</a></h2>
+<p>One pretty cool feature is adding actions. Those are buttons which can have attached some action to them. When user
+click them, event is fired. See <a class="reference internal" href="callbacks.html"><span class="doc">Callbacks</span></a>.</p>
+<p>In this example, we add two buttons to respond question notification is asking. What a wonderful time, answering
+your own questions :).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">template</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;I&#39;m OK, I guess&quot;</span><span class="p">)</span>
+<span class="n">template</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="s2">&quot;Fine&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure" id="id3">
+<img alt="Notification with buttons for answering the question" src="../_images/tutorials_template_actions.png" />
+<p class="caption"><span class="caption-text">Answer the question, please.</span></p>
+</div>
+<p>As you probably noticed, they don’t do much now. Just dismiss it. We will do something about it in the next tutorial.</p>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<p><strong>Actions fail to be added</strong>: Actions are one of Windows 8.1+ features. If you have older system, they won’t work.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Instalation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">First steps</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Further on templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#multiple-lines">Multiple lines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-the-text-back">Getting the text back</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#change-sound">Change sound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expiration-time">Expiration time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#images">Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#actions">Actions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="callbacks.html">Callbacks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation.html">Documentation</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">First steps</a></li>
+      <li>Next: <a href="callbacks.html" title="next chapter">Callbacks</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/template.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jan Malčák.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorials/template.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
