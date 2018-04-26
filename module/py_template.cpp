@@ -33,7 +33,7 @@ const wchar_t* supported_audio_files[] = {
 };
 
 const char* zroya_template__doc__ =
-	"Template for any notification you create. You may show any number of notifications based on this template \n"
+	"Template for any notification you create. You may show any number of notifications based on this template "
 	"with :py:func:`zroya.show()` method.";
 
 PyObject *zroya_template_setLine(zroya_Template *self, PyObject *args, PyObject *kwargs, int line) {
