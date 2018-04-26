@@ -1,6 +1,5 @@
 class Template:
-	"""Template for any notification you create. You may show any number of notifications based on this template 
-with :py:func:`zroya.show()` method."""
+	"""Template for any notification you create. You may show any number of notifications based on this template with :py:func:`zroya.show()` method."""
 
 	def addAction(self, label):
 		"""
