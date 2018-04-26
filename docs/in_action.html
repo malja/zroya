@@ -6,7 +6,7 @@
   <head>
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>See it in action &#8212; Zroya 0.2.0 documentation</title>
+    <title>In Action &#8212; Zroya 0.2 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/styles.css" type="text/css" />
@@ -30,9 +30,56 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="see-it-in-action">
-<h1>See it in action<a class="headerlink" href="#see-it-in-action" title="Permalink to this headline">¶</a></h1>
-<p>TODO</p>
+  <div class="section" id="in-action">
+<h1>In Action<a class="headerlink" href="#in-action" title="Permalink to this headline">¶</a></h1>
+<p>This page contains code snippets with summary of zroya’s abilities. See <a class="reference internal" href="tutorials/index.html"><span class="doc">First steps</span></a> for more detailed
+introduction.</p>
+<div class="section" id="simple-notification">
+<h2>Simple Notification<a class="headerlink" href="#simple-notification" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zroya</span>
+
+<span class="n">zroya</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">zroya</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">TemplateType</span><span class="o">.</span><span class="n">Text1</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">setFirstLine</span><span class="p">(</span><span class="s2">&quot;Just one bold line&quot;</span><span class="p">)</span>
+<span class="n">zroya</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="Notification with one bold line" src="_images/in_action_one_line.png" />
+</div>
+</div>
+<div class="section" id="multiline-notification-with-image">
+<h2>Multiline Notification With Image<a class="headerlink" href="#multiline-notification-with-image" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zroya</span>
+
+<span class="n">zroya</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">zroya</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">TemplateType</span><span class="o">.</span><span class="n">ImageAndText4</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">setFirstLine</span><span class="p">(</span><span class="s2">&quot;First bold line&quot;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">setSecondLine</span><span class="p">(</span><span class="s2">&quot;Second line is in regular font&quot;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">setImage</span><span class="p">(</span><span class="s2">&quot;./files/image.png&quot;</span><span class="p">)</span>
+<span class="n">zroya</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="Notification with one bold, one regular line and an image." src="_images/in_action_multiline_image.png" />
+</div>
+</div>
+<div class="section" id="attaching-callbacks">
+<h2>Attaching callbacks<a class="headerlink" href="#attaching-callbacks" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zroya</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">onClickHandler</span><span class="p">(</span><span class="n">notification_id</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Clicked!&quot;</span><span class="p">)</span>
+
+<span class="n">zroya</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">zroya</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="n">zroya</span><span class="o">.</span><span class="n">TemplateType</span><span class="o">.</span><span class="n">Text1</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">setFirstLine</span><span class="p">(</span><span class="s2">&quot;Click on me, please!&quot;</span><span class="p">)</span>
+<span class="n">zroya</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">on_click</span><span class="o">=</span><span class="n">onClickHandler</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -47,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/template.html">Further on templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials/callbacks.html">Callbacks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">API Documentation</a></li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>
