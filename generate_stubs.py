@@ -7,15 +7,16 @@ import sys
 # TODO: Find better way for output formatting than this
 
 
-def GenerateStubFile(path_to_pyd):
+def GenerateStubFile(path_to_pyd, path_to_python_files):
 
     # Add Path to .pyd file with zroya to import path
     sys.path.append(path_to_pyd)
+    sys.path.append(path_to_python_files)
 
     # Import zroya module
     import _zroya
-    from .. import template_enums
-    from .. import dismiss_reason
+    import template_enums
+    import dismiss_reason
 
     modules = [
         _zroya,
