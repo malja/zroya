@@ -1,9 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, Extension
+from shutil import rmtree
+from setuptools import setup, Extension, Command
+from setuptools.command.test import test
 from setuptools.command.build_ext import build_ext
-from zroya.scripts.generate_stubs import GenerateStubFile
+from generate_stubs import GenerateStubFile
 import os
+import sys
+
+sys.path.append(os.path.abspath("./zroya/"))
+
+import version
+
+here = os.path.abspath(os.path.dirname(__file__))
 
 # Include path for _zroya module
 includes_list = ["./module"]
@@ -27,7 +36,24 @@ ext_modules = [
 ]
 
 
-def findPydFile():
+def discover_and_run_tests():
+    import unittest
+
+    # use the default shared TestLoader instance
+    test_loader = unittest.defaultTestLoader
+
+    # use the basic test runner that outputs to sys.stderr
+    test_runner = unittest.TextTestRunner()
+
+    # automatically discover all tests
+    # NOTE: only works for python 2.7 and later
+    test_suite = test_loader.discover( os.path.join(here, "tests"))
+
+    # run the test suite
+    test_runner.run(test_suite)
+
+
+def find_pyd_file():
     """
     Return path to .pyd after successful build command.
     :return: Path to .pyd file or None.
@@ -44,26 +70,97 @@ def findPydFile():
     return None
 
 
-class PostBuild(build_ext):
+class StubsCommand(build_ext):
+    """ Generate python stubs with documentation from C code. """
+
     def run(self):
         build_ext.run(self)
 
-        print("running post_build")
+        print("running stubs")
         # Generate .pyd file for this module
-        GenerateStubFile(findPydFile())
+        GenerateStubFile(find_pyd_file(), os.path.abspath("./zroya/"))
+
+
+class DocumentationCommand(Command):
+    """ Generate documentation """
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.system("{} {}".format(os.path.join(os.path.abspath("./docs_source/sphinx/"), "make.bat"), "html"))
+        sys.exit()
+
+
+class UploadCommand(Command):
+    """Support setup.py upload."""
+
+    description = 'Build and publish the package.'
+    user_options = []
+
+    @staticmethod
+    def status(s):
+        """Prints things in bold."""
+        print('\033[1m{0}\033[0m'.format(s))
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        try:
+            self.status('Removing previous builds…')
+            rmtree(os.path.join(here, 'dist'))
+        except OSError:
+            pass
+
+        self.status('Building Source and Wheel (universal) distribution…')
+        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+
+        self.status('Uploading the package to PyPi via Twine…')
+        os.system('twine upload dist/*')
+
+        sys.exit()
+
+
+class DiscoverTest(test):
+    """
+    Discover and run tests.
+    See: https://stackoverflow.com/questions/17001010/how-to-run-unittest-discover-from-python-setup-py-test
+    """
+
+    def finalize_options(self):
+        test.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        discover_and_run_tests()
 
 
 setup(name='zroya',
-    version='0.2.0',
+    version=version.__release__,
     description='Python implementation of Windows notifications.',
     author='Jan Malcak',
-    author_email='jan@malcakov.cz',
-    url='https://github.com/malja/zroya',
+    author_email='looorin@gmail.com',
+    license='MIT',
+    url='https://malja.github.io/zroya',
     data_files=[
       (".", ["./zroya/zroya.pyi", "./zroya/template_enums.py", "./zroya/zroya.py", "./zroya/dismiss_reason.py"])
     ],
     ext_modules=ext_modules,
+    test_suite="tests",
     cmdclass={
-        "build_ext": PostBuild
+        "stubs": StubsCommand,
+        'upload': UploadCommand,
+        "docs": DocumentationCommand,
+        "test": DiscoverTest,
     }
 )
