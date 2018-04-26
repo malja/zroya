@@ -37,3 +37,14 @@ zroya2 branch
     19. 04. 2018
         - Everything seems to work properly
         - New documentation for python code available from https://malja.github.io/zroya
+
+    26. 04. 2018
+        - Added In Action page to documentation
+        - Added Committing to zroya page to documentation
+        - Added version and release variables to zroya.py, which are used in sphinx config and setup.py
+        - New upload, docs, test, stubs commands in setup.py
+        - Some changes in stub generating.
+        - Changed tests for zroya.Template.set*Line to handle TypeError instead ValueError
+        - Changed tests for zroya.Template.get/setImage to work with absolute paths
+        - Removed sphinx makefile, since make.bat is much better option which doesn't require make to be installed
+        - Removed C documentation. It is not ready for production yet.
