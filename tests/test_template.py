@@ -1,4 +1,5 @@
 import unittest
+import os
 import zroya
 
 class zroya_Template(unittest.TestCase):
@@ -26,7 +27,7 @@ class zroya_Template(unittest.TestCase):
 
     def test_setFirstLine_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
-        self.assertRaises(ValueError, lambda: template.setFirstLine(-1))
+        self.assertRaises(TypeError, lambda: template.setFirstLine(-1))
 
     def test_setFirstLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text1)
@@ -45,7 +46,7 @@ class zroya_Template(unittest.TestCase):
         
     def test_setSecondLine_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.Text2)
-        self.assertRaises(ValueError, lambda: template.setSecondLine(-1))
+        self.assertRaises(TypeError, lambda: template.setSecondLine(-1))
         
     def test_setSecondLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text2)
@@ -69,7 +70,7 @@ class zroya_Template(unittest.TestCase):
 
     def test_setThirdLine_InvalidParams(self):
         template = zroya.Template(zroya.TemplateType.Text4)
-        self.assertRaises(ValueError, lambda: template.setThirdLine(-1))
+        self.assertRaises(TypeError, lambda: template.setThirdLine(-1))
 
     def test_setThirdLine_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.Text4)
@@ -144,9 +145,10 @@ class zroya_Template(unittest.TestCase):
 
     def test_setImage_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
-        self.assertTrue(template.setImage("./files/image.png"))
+        self.assertTrue(template.setImage("./tests/files/image.png"))
 
     def test_getImage_ProperParams(self):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
-        template.setImage("./files/image.png")
-        self.assertEqual(template.getImage(), "./files/image.png")
+        path = os.path.abspath("./tests/files/image.png")
+        template.setImage(path)
+        self.assertEqual(template.getImage(), path)
