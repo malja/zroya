@@ -4,7 +4,7 @@ from shutil import rmtree
 from setuptools import setup, Extension, Command
 from setuptools.command.test import test
 from setuptools.command.build_ext import build_ext
-from generate_stubs import GenerateStubFile
+import generate_stubs
 import os
 import sys
 
@@ -68,19 +68,20 @@ def find_pyd_file():
 
 
 class StubsCommand(build_ext):
-    """ Generate python stubs with documentation from C code. """
+
+    description = "Generate python stubs with documentation from C code."
 
     def run(self):
         build_ext.run(self)
 
         print("running stubs")
         # Generate .pyd file for this module
-        GenerateStubFile(find_pyd_file(), os.path.abspath("./zroya/"))
+        generate_stubs.GenerateStubFile(find_pyd_file(), os.path.abspath("./zroya/"))
 
 
 class DocumentationCommand(Command):
-    """ Generate documentation """
 
+    description = "Generate documentation from /docs_source directory."
     user_options = []
 
     def initialize_options(self):
@@ -95,10 +96,16 @@ class DocumentationCommand(Command):
 
 
 class UploadCommand(Command):
-    """Support setup.py upload."""
 
     description = 'Build and publish the package.'
-    user_options = []
+    user_options = [
+        (
+            "pypi=",
+            "p",
+            "Set PyPi repository in which should be distribution uploaded. Valid values are 'test' for TestPyPi or \
+            'standard' for regular PyPi."
+        )
+    ]
 
     @staticmethod
     def status(s):
@@ -106,10 +113,10 @@ class UploadCommand(Command):
         print('\033[1m{0}\033[0m'.format(s))
 
     def initialize_options(self):
-        pass
+        self.pypi = "standard"
 
     def finalize_options(self):
-        pass
+        assert(self.pypi == "standard" or self.pypi == "test")
 
     def run(self):
         try:
@@ -122,7 +129,11 @@ class UploadCommand(Command):
         os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
 
         self.status('Uploading the package to PyPi via Twine…')
-        os.system('twine upload dist/*')
+
+        if self.pypi == "standard":
+            os.system('twine upload --repository pypi dist/*')
+        else:
+            os.system('twine upload --repository testpypi dist/*')
 
         sys.exit()
 
@@ -132,6 +143,8 @@ class DiscoverTest(test):
     Discover and run tests.
     See: https://stackoverflow.com/questions/17001010/how-to-run-unittest-discover-from-python-setup-py-test
     """
+
+    description = "Run tests in /tests folder with unittest."
 
     def finalize_options(self):
         test.finalize_options(self)
@@ -143,7 +156,7 @@ class DiscoverTest(test):
 
 
 setup(name='zroya',
-    version=version.__release__,
+    version=version.__version__,
     description='Python library for creating native Windows notifications.',
     long_description=open("README.md").read(),
 
