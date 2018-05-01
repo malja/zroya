@@ -1,0 +1,3 @@
+include generate_stubs.py
+include README.md
+include ./module/*.h
