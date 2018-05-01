@@ -27,11 +27,8 @@ for root, dirs, files in os.walk("./module"):
 # Python C/CPP Api extension configuration
 ext_modules = [
     Extension("_zroya",
-              sources=sources_list,
-              include_dirs=includes_list,
-              extra_compile_args=[
-                  "/utf-8"
-              ]
+        sources=sources_list,
+        include_dirs=includes_list
     )
 ]
 
@@ -147,16 +144,30 @@ class DiscoverTest(test):
 
 setup(name='zroya',
     version=version.__release__,
-    description='Python implementation of Windows notifications.',
-    author='Jan Malcak',
+    description='Python library for creating native Windows notifications.',
+    long_description=open("README.md").read(),
+
+    author='Jan Malčák',
     author_email='looorin@gmail.com',
+
     license='MIT',
     url='https://malja.github.io/zroya',
-    data_files=[
-      (".", ["./zroya/zroya.pyi", "./zroya/template_enums.py", "./zroya/zroya.py", "./zroya/dismiss_reason.py"])
+
+    keywords=["notifications", "windows", "toast"],
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Environment :: Win32 (MS Windows)",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: Microsoft :: Windows",
+        "Programming Language :: C",
+        "Programming Language :: C++",
+        "Programming Language :: Python :: 3",
+        "Topic :: Software Development :: User Interfaces"
     ],
+
     ext_modules=ext_modules,
     test_suite="tests",
+    packages=["zroya"],
     cmdclass={
         "stubs": StubsCommand,
         'upload': UploadCommand,
