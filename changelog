@@ -17,8 +17,8 @@
     - on_timeout now triggers after defined timeout expires and notification is removed
     - on_hide now triggers after notification is hidden from code
 
-zroya2 branch
--------------
+0.2.0
+-----
 
     - New C based module for python with native Windows notification support
     - Does not support events yet.
@@ -48,3 +48,15 @@ zroya2 branch
         - Changed tests for zroya.Template.get/setImage to work with absolute paths
         - Removed sphinx makefile, since make.bat is much better option which doesn't require make to be installed
         - Removed C documentation. It is not ready for production yet.
+
+0.2.1
+-----
+
+    - Tried to fix https://github.com/malja/zroya/issues/11
+        - Removed /utf-8 parameter from setup.py
+
+0.2.2
+-----
+
+    - Tried to fix https://github.com/malja/zroya/issues/11
+        - Changed setup.py to include all files under /zroya directory
