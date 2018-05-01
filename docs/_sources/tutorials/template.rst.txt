@@ -55,12 +55,11 @@ It is all nice and so, but the sound Windows does when notification is created i
 
     template.setAudio(zroya.Audio.Call4)
 
-Sadly, there is no way to play fart sounds you recorded yesterday every time notification is created. But you can
-choose from plenty of sounds defined in :py:class:`zroya.Audio` class. The bright side of the thing is, they are
-available at any Windows station.
+Sadly, there is no way to play just any sound you want. You can choose from plenty of sounds defined in
+:py:class:`zroya.Audio` class. On the other hand, they are available at any Windows station.
 
-If this is not enough, you can annoy user even more with looping the sound until moved to Action Center,
-or until user dismiss it in rage.
+If this is not enough, you can play selected sound in loop until the notification is moved to Action Center,
+or until user dismiss it.
 
 .. code-block:: python
 
