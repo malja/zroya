@@ -4,9 +4,12 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://gitHub.com/malja/zroya/graphs/commit-activity)
 
 # zroya2
-This branch is dedicated to developing new zroya version. V2 is a C/C++ module built around C++ [WinToast](https://github.com/mohabouje/WinToast). This way, native Windows notifications are supported and no taskbar icon is required for Toast notification.
+Zroya is a Python package for creating native Windows notifications.
 
-Zroya2 is in beta testing. I would be grateful for any bug reports.
+In contrast to first version of zroya, zroya2 is a Python extension built around C++
+[WinToast](https://github.com/mohabouje/WinToast) library.
+
+**Note**: Zroya2 is in beta testing. I would be grateful for any bug reports.
 
 ## Prerequisites
 
