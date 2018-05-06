@@ -18,6 +18,12 @@ TemplateType
 .. autoclass:: zroya.TemplateType
     :members:
 
+TemplateDuration
+^^^^^^^^^^^^^^^^
+
+.. autoclass:: zroya.TemplateDuration
+    :members:
+
 Audio
 -----
 

@@ -276,6 +276,28 @@
 		);
 		PyObject *zroya_template_getAttribution(zroya_Template *self, PyObject *arg);
 
+		PyDoc_STRVAR(zroya_template_setDuration__doc__,
+			"setDuration()\n"
+			"--\n\n"
+			"Sets the duration of notification being shown before it is moved to Action Center. \n"
+			"\n"
+			"Args: \n"
+			"\tduration (:py:class:`zroya.TemplateDuration`): On of available duration values."
+			"Returns: \n"
+			"\tbool: Always returns True."
+		);
+		PyObject *zroya_template_setDuration(zroya_Template *self, PyObject *arg, PyObject *kwarg);
+
+		PyDoc_STRVAR(zroya_template_getDuration__doc__,
+			"getDuration()\n"
+			"--\n\n"
+			"Get duration of notification being shown before it is moved to Action Center. \n"
+			"\n"
+			"Returns: \n"
+			"\t:py:class:`zroya.TemplateDuration`: One of duration values."
+		);
+		PyObject *zroya_template_getDuration(zroya_Template *self, PyObject *arg);
+
         /// Create new empty zroya.Template object without inner values set up.
         PyObject *zroya_template_new(PyTypeObject *type, PyObject *args, PyObject *kwargs);
 

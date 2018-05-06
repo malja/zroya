@@ -293,3 +293,27 @@ class TemplateType(IntEnum):
     One string of bold text on the first line, one string of regular text on the second line, one string of
     regular text on the third line.
     """
+
+
+class TemplateDuration(Enum):
+    """
+    All allowed values for :py:meth:`zroya.Template.setDuration` and return values of
+    :py:meth:`zroya.Template.getDuration`.
+
+    Duration sets the time notification is shown before it is moved to Action Center.
+    """
+
+    System = "system"
+    """
+    Default duration based on system configuration.
+    """
+
+    Long = "long"
+    """
+    Long duration.
+    """
+
+    Short = "short"
+    """
+    Shord duration
+    """

@@ -6,7 +6,7 @@
   <head>
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>API Documentation &#8212; Zroya 0.2.2 documentation</title>
+    <title>API Documentation &#8212; Zroya 0.2.4 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/css/styles.css" type="text/css" />
@@ -145,6 +145,16 @@ Each notification got its own ID counting up from zero. This ID is handed back t
 </dd></dl>
 
 <dl class="method">
+<dt id="zroya.Template.getDuration">
+<code class="descname">getDuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getDuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get duration of notification being shown before it is moved to Action Center.</p>
+<dl class="docutils">
+<dt>Returns: </dt>
+<dd><a class="reference internal" href="#zroya.TemplateDuration" title="zroya.TemplateDuration"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.TemplateDuration</span></code></a>: One of duration values.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="zroya.Template.getExpiration">
 <code class="descname">getExpiration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.getExpiration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get expiration time in milliseconds. Expiration time is time before the notification is removed from Action Center. This fires up the onDismiss event with dismiss reason set to <a class="reference internal" href="#zroya.DismissReason.Expired" title="zroya.DismissReason.Expired"><code class="xref py py-attr docutils literal notranslate"><span class="pre">zroya.DismissReason.Expired</span></code></a>.</p>
@@ -223,6 +233,17 @@ Audio mode sets how, or even if the sound is played.</p>
 mode (int): One of modes available from <a class="reference internal" href="#zroya.AudioMode" title="zroya.AudioMode"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.AudioMode</span></code></a>. Or leave it empty for <a class="reference internal" href="#zroya.AudioMode.Default" title="zroya.AudioMode.Default"><code class="xref py py-attr docutils literal notranslate"><span class="pre">zroya.AudioMode.Default</span></code></a>.</dd>
 <dt>Returns: </dt>
 <dd>bool:True if audio was set, false otherwise.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="zroya.Template.setDuration">
+<code class="descname">setDuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zroya.Template.setDuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the duration of notification being shown before it is moved to Action Center.</p>
+<dl class="docutils">
+<dt>Args: </dt>
+<dd>duration (<a class="reference internal" href="#zroya.TemplateDuration" title="zroya.TemplateDuration"><code class="xref py py-class docutils literal notranslate"><span class="pre">zroya.TemplateDuration</span></code></a>): On of available duration values.Returns: 
+bool: Always returns True.</dd>
 </dl>
 </dd></dl>
 
@@ -363,6 +384,35 @@ lines.</p>
 <code class="descname">Text4</code><em class="property"> = 7</em><a class="headerlink" href="#zroya.TemplateType.Text4" title="Permalink to this definition">¶</a></dt>
 <dd><p>One string of bold text on the first line, one string of regular text on the second line, one string of
 regular text on the third line.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="templateduration">
+<h3>TemplateDuration<a class="headerlink" href="#templateduration" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="zroya.TemplateDuration">
+<em class="property">class </em><code class="descclassname">zroya.</code><code class="descname">TemplateDuration</code><a class="headerlink" href="#zroya.TemplateDuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>All allowed values for <a class="reference internal" href="#zroya.Template.setDuration" title="zroya.Template.setDuration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.setDuration()</span></code></a> and return values of
+<a class="reference internal" href="#zroya.Template.getDuration" title="zroya.Template.getDuration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">zroya.Template.getDuration()</span></code></a>.</p>
+<p>Duration sets the time notification is shown before it is moved to Action Center.</p>
+<dl class="attribute">
+<dt id="zroya.TemplateDuration.Long">
+<code class="descname">Long</code><em class="property"> = 'long'</em><a class="headerlink" href="#zroya.TemplateDuration.Long" title="Permalink to this definition">¶</a></dt>
+<dd><p>Long duration.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateDuration.Short">
+<code class="descname">Short</code><em class="property"> = 'short'</em><a class="headerlink" href="#zroya.TemplateDuration.Short" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shord duration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zroya.TemplateDuration.System">
+<code class="descname">System</code><em class="property"> = 'system'</em><a class="headerlink" href="#zroya.TemplateDuration.System" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default duration based on system configuration.</p>
 </dd></dl>
 
 </dd></dl>
@@ -592,6 +642,7 @@ of <a class="reference internal" href="#zroya.show" title="zroya.show"><code cla
 <li class="toctree-l2"><a class="reference internal" href="#module-zroya">Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#template">Template</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#templatetype">TemplateType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#templateduration">TemplateDuration</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#audio">Audio</a><ul>

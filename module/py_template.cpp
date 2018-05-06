@@ -410,6 +410,100 @@ PyObject *zroya_template_getAttribution(zroya_Template *self, PyObject *arg) {
 
 }
 
+PyObject *zroya_template_setDuration(zroya_Template *self, PyObject *arg, PyObject *kwarg) {
+
+	// List of supported keywords
+	char *keywords[] = { (char*)"duration", nullptr };
+
+	PyObject *duration_obj = nullptr;
+
+	// Parse arguments
+	if (!PyArg_ParseTupleAndKeywords(arg, kwarg, "O", keywords, &duration_obj)) {
+		return nullptr;
+	}
+
+	// Import python module zroya
+	PyObject *zroya_module = PyImport_ImportModule("zroya");
+	if (!zroya_module) {
+		PyErr_SetString(PyExc_ImportError, "Unable to import zroya module");
+		return nullptr;
+	}
+
+	// Import zroya.TemplateDuration
+	PyObject *zroya_TemplateDuration = PyObject_GetAttrString(zroya_module, "TemplateDuration");
+	if (!zroya_TemplateDuration) {
+		PyErr_SetString(PyExc_NameError, "Class zroya.TemplateDuration doesn't exist");
+		return nullptr;
+	}
+
+	wchar_t *duration = nullptr;
+	// Is it Enum zroya.TemplateDuration?
+	if (PyObject_IsInstance(duration_obj, zroya_TemplateDuration)) {
+		PyObject *duration_value = PyObject_GetAttrString(duration_obj, "value");
+		if (PyUnicode_Check(duration_value)) {
+			duration = PyUnicode_AsWideCharString(duration_value, nullptr);
+		}
+		Py_XDECREF(duration_value);
+
+	} else {
+		
+		// Unsuported parameter type
+		PyErr_SetString(PyExc_TypeError, "duration parameter is not of type zroya.TemplateDuration");
+		return nullptr;
+		
+	}
+
+	// Is duration value "long"?
+	if (wcscmp(duration, L"long") == 0) {
+		self->_template->setDuration(WinToastLib::WinToastTemplate::Duration::Long);
+	// Is duration value "system"?
+	} else if(wcscmp(duration, L"system") == 0) {
+		self->_template->setDuration(WinToastLib::WinToastTemplate::Duration::System);
+	} else {
+		self->_template->setDuration(WinToastLib::WinToastTemplate::Duration::Short);
+	}
+
+	Py_INCREF(Py_True);
+	return Py_True;
+}
+
+PyObject *zroya_template_getDuration(zroya_Template *self, PyObject *arg) {
+
+	// Get duration
+	WinToastLib::WinToastTemplate::Duration duration = self->_template->duration();
+
+	// Import python module zroya
+	PyObject *zroya_module = PyImport_ImportModule("zroya");
+	if (!zroya_module) {
+		PyErr_SetString(PyExc_ImportError, "Unable to import zroya module");
+		return nullptr;
+	}
+
+	// Import zroya.TemplateDuration
+	PyObject *zroya_TemplateDuration = PyObject_GetAttrString(zroya_module, "TemplateDuration");
+	if (!zroya_TemplateDuration) {
+		PyErr_SetString(PyExc_NameError, "Class zroya.TemplateDuration doesn't exist");
+		return nullptr;
+	}
+
+	
+	// Return zroya.TemplateDuration instance based on current duration
+	switch (duration) {
+		case WinToastLib::WinToastTemplate::Duration::Long:
+			return PyObject_CallFunction(zroya_TemplateDuration, "u", L"long");
+			break;
+		case WinToastLib::WinToastTemplate::Duration::Short:
+			return PyObject_CallFunction(zroya_TemplateDuration, "u", L"short");
+			break;
+		default:
+			return PyObject_CallFunction(zroya_TemplateDuration, "u", L"system");
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// END OF METHODS DEFINITION
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 PyObject *zroya_template_new(PyTypeObject *type, PyObject *args, PyObject *kwargs) {
 
     zroya_Template *self = (zroya_Template *)type->tp_alloc(type, 0);
@@ -497,7 +591,11 @@ PyMethodDef zroya_template_methods[] = {
 	{ "addAction", (PyCFunction)zroya_template_addAction, METH_VARARGS | METH_KEYWORDS, zroya_template_addAction__doc__ },
 
 	{ "setAttribution", (PyCFunction)zroya_template_setAttribution, METH_VARARGS | METH_KEYWORDS, zroya_template_setAttribution__doc__ },
-	{ "getAttribution", (PyCFunction)zroya_template_getAttribution, METH_VARARGS | METH_KEYWORDS, zroya_template_getAttribution__doc__ },
+	{ "getAttribution", (PyCFunction)zroya_template_getAttribution, METH_VARARGS, zroya_template_getAttribution__doc__ },
+
+	{ "setDuration", (PyCFunction)zroya_template_setDuration, METH_VARARGS | METH_KEYWORDS, zroya_template_setDuration__doc__ },
+	{ "getDuration", (PyCFunction)zroya_template_getDuration, METH_VARARGS, zroya_template_getDuration__doc__ },
+
     { nullptr, nullptr, 0, nullptr }
 };
 

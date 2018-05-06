@@ -152,3 +152,25 @@ class zroya_Template(unittest.TestCase):
         path = os.path.abspath("./tests/files/image.png")
         template.setImage(path)
         self.assertEqual(template.getImage(), path)
+
+    ### Duration
+    def test_setDuration_InvalidParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertRaises(TypeError, lambda: template.setDuration(-1))
+
+    def test_setDuration_InvalidParams2(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertRaises(TypeError, lambda: template.setDuration("error"))
+
+    def test_setDuration_EmptyParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertRaises(TypeError, lambda: template.setDuration())
+
+    def test_setDuration_ProperParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertTrue(template.setDuration(zroya.TemplateDuration.Long))
+
+    def test_getDuration(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        template.setDuration(zroya.TemplateDuration.Long)
+        self.assertEqual(template.getDuration(), zroya.TemplateDuration.Long)
