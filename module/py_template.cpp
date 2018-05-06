@@ -1,5 +1,3 @@
-#include <string>
-
 #include "py_template.h"
 #include "py_utils.h"
 

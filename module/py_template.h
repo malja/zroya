@@ -1,6 +1,8 @@
 #pragma once
 
+#include <string>
 #include <Python.h>
+
 #include "wintoastlib.h"
 
 #ifdef __cplusplus
