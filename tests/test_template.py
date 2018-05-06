@@ -174,3 +174,34 @@ class zroya_Template(unittest.TestCase):
         template = zroya.Template(zroya.TemplateType.ImageAndText1)
         template.setDuration(zroya.TemplateDuration.Long)
         self.assertEqual(template.getDuration(), zroya.TemplateDuration.Long)
+
+    ### Actions
+    def test_addAction_InvalidParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertRaises(TypeError, lambda: template.addAction(-1))
+
+    def test_addAction_EmptyParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertRaises(TypeError, lambda: template.addAction())
+
+    def test_addAction_ProperParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertEquals(template.addAction("First"), 0)
+
+    def test_countAction_ProperParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        template.addAction("First")
+        self.assertEquals(template.countActions(), 1)
+
+    def test_getAction_InvalidParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertRaises(IndexError, lambda: template.getAction(-1))
+
+    def test_getAction_EmptyParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        self.assertRaises(TypeError, lambda: template.getAction())
+
+    def test_getAction_ProperParams(self):
+        template = zroya.Template(zroya.TemplateType.ImageAndText1)
+        template.addAction("First")
+        self.assertEquals(template.getAction(0), "First")

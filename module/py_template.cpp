@@ -365,6 +365,32 @@ PyObject *zroya_template_addAction(zroya_Template *self, PyObject *arg, PyObject
 	return Py_BuildValue("i", index);
 }
 
+PyObject *zroya_template_getAction(zroya_Template *self, PyObject *arg, PyObject *kwarg) {
+	
+	// List of supported keywords
+	char *keywords[] = { (char*)"index", nullptr };
+
+	int index = -1;
+
+	// Parse arguments
+	if (!PyArg_ParseTupleAndKeywords(arg, kwarg, "i", keywords, &index)) {
+		return nullptr;
+	}
+
+	// Check if index is in range
+	if (index < 0 || index > self->_template->actionsCount() - 1) {
+		PyErr_SetString(PyExc_IndexError, "invalid action index");
+		return nullptr;
+	}
+
+	return Py_BuildValue("u", self->_template->actionLabel(index).c_str());
+}
+
+PyObject *zroya_template_countActions(zroya_Template *self, PyObject *arg) {
+	return Py_BuildValue("i", self->_template->actionsCount());
+}
+
+
 PyObject *zroya_template_setAttribution(zroya_Template *self, PyObject *arg, PyObject *kwarg) {
 
 	// List of supported keywords
@@ -589,6 +615,8 @@ PyMethodDef zroya_template_methods[] = {
 	{ "getExpiration", (PyCFunction)zroya_template_getExpiration, METH_VARARGS, zroya_template_getExpiration__doc__ },
 
 	{ "addAction", (PyCFunction)zroya_template_addAction, METH_VARARGS | METH_KEYWORDS, zroya_template_addAction__doc__ },
+	{ "getAction", (PyCFunction)zroya_template_getAction, METH_VARARGS | METH_KEYWORDS, zroya_template_getAction__doc__ },
+	{ "countActions", (PyCFunction)zroya_template_countActions, METH_VARARGS, zroya_template_countActions__doc__ },
 
 	{ "setAttribution", (PyCFunction)zroya_template_setAttribution, METH_VARARGS | METH_KEYWORDS, zroya_template_setAttribution__doc__ },
 	{ "getAttribution", (PyCFunction)zroya_template_getAttribution, METH_VARARGS, zroya_template_getAttribution__doc__ },

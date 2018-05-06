@@ -239,6 +239,32 @@
 		);
 		PyObject *zroya_template_addAction(zroya_Template *self, PyObject *arg, PyObject *kwarg);
 
+		PyDoc_STRVAR(zroya_template_getAction__doc__,
+			"getAction(index)\n"
+			"--\n\n"
+			"Get action text from it's index.\n"
+			"\n"
+			"Args: \n"
+			"\tindex (int): Action index. First added action has index 0, second 1 and so on. \n"
+			"\n"
+			"Throws: \n"
+			"\tIndexError When action with selected index does not exist."
+			"\n"
+			"Returns: \n"
+			"\tstr: Text of action with selected index."
+		);
+		PyObject *zroya_template_getAction(zroya_Template *self, PyObject *arg, PyObject *kwarg);
+
+		PyDoc_STRVAR(zroya_template_countActions__doc__,
+			"countActions()\n"
+			"--\n\n"
+			"Get number of actions added to template.\n"
+			"\n"
+			"Returns: \n"
+			"\tint: Number of actions within template."
+		);
+		PyObject *zroya_template_countActions(zroya_Template *self, PyObject *arg);
+
 		PyDoc_STRVAR(zroya_template_setAttribution__doc__,
 			"setAttribution(label)\n"
 			"--\n\n"
@@ -277,7 +303,7 @@
 		PyObject *zroya_template_getAttribution(zroya_Template *self, PyObject *arg);
 
 		PyDoc_STRVAR(zroya_template_setDuration__doc__,
-			"setDuration()\n"
+			"setDuration(duration)\n"
 			"--\n\n"
 			"Sets the duration of notification being shown before it is moved to Action Center. \n"
 			"\n"
